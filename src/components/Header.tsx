@@ -30,7 +30,7 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-1">
               <Mail size={14} />
-              <span>info@sharnjitinsurance.com</span>
+              <span>info@insurancewitharjun.com</span>
             </div>
           </div>
           <div className="text-sm">
@@ -44,10 +44,10 @@ const Header = () => {
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">S</span>
+              <span className="text-white font-bold text-xl">A</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-blue-900">Sharnjit Insurance Hut</h1>
+              <h1 className="text-2xl font-bold text-blue-900">Insurance With Arjun</h1>
               <p className="text-sm text-gray-600">Your Trusted Insurance Partner</p>
             </div>
           </Link>
