@@ -1,10 +1,9 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Car, Home, Heart, Building, Shield, Phone, Star, CheckCircle } from 'lucide-react';
+import { Car, Home, HeartPulse, Building, Shield, Phone, Star, CheckCircle } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [
@@ -21,10 +20,10 @@ const Index = () => {
       features: ["Property Protection", "Personal Belongings", "Liability Coverage", "Additional Living Expenses"]
     },
     {
-      icon: <Heart className="w-12 h-12 text-blue-600" />,
-      title: "Life Insurance",
-      description: "Secure your family's financial future with our life insurance policies.",
-      features: ["Term Life Insurance", "Whole Life Insurance", "Universal Life", "Final Expense"]
+      icon: <HeartPulse className="w-12 h-12 text-blue-600" />,
+      title: "Critical Illness Insurance",
+      description: "Financial protection when you're diagnosed with a serious illness, providing peace of mind during challenging times.",
+      features: ["Cancer Coverage", "Heart Attack Protection", "Stroke Benefits", "Kidney Failure Coverage"]
     },
     {
       icon: <Building className="w-12 h-12 text-blue-600" />,
@@ -145,7 +144,7 @@ const Index = () => {
                   <option value="">Select Insurance Type</option>
                   <option value="auto">Auto Insurance</option>
                   <option value="home">Home Insurance</option>
-                  <option value="life">Life Insurance</option>
+                  <option value="critical-illness">Critical Illness Insurance</option>
                   <option value="business">Business Insurance</option>
                 </select>
                 <button
