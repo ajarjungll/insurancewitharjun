@@ -48,7 +48,7 @@ const Index = () => {
     {
       name: "Emily Rodriguez",
       rating: 5,
-      text: "When I had a claim, they made the process so easy. Great customer service and fast claim processing."
+      text: "Insurance with Arjun gave me a better plan for my father's super visa insurance. Great rates and excellent coverage!"
     }
   ];
 
