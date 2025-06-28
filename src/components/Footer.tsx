@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-
 const Footer = () => {
-  return (
-    <footer className="bg-gray-900 text-white">
+  return <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -15,12 +12,10 @@ const Footer = () => {
                 <span className="text-white font-bold">S</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold">Sharnjit Insurance Hut</h3>
+                <h3 className="text-xl font-bold">Insurance with Arjun</h3>
               </div>
             </div>
-            <p className="text-gray-300 mb-4">
-              Your trusted insurance partner since 1995. We provide comprehensive coverage solutions for all your needs.
-            </p>
+            <p className="text-gray-300 mb-4">Your trusted insurance partner since 2022. We provide comprehensive coverage solutions for all your needs.</p>
             <div className="flex space-x-4">
               <Facebook size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer" />
               <Twitter size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer" />
@@ -84,8 +79,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
