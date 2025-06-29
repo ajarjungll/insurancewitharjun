@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -44,9 +45,8 @@ const Contact = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-2">Office</h3>
               <p className="text-gray-600 mb-2">Visit us in person</p>
               <p className="text-gray-800">
-                123 Insurance Drive<br />
-                Suite 100<br />
-                Your City, State 12345
+                Unit-5, 360 Keewatin Street.<br />
+                Winnipeg, MB R2X2Y3.
               </p>
             </div>
           </div>
@@ -188,7 +188,7 @@ const Contact = () => {
             <div className="text-center">
               <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600 text-lg">Interactive Map Coming Soon</p>
-              <p className="text-gray-500">123 Insurance Drive, Suite 100, Your City, State 12345</p>
+              <p className="text-gray-500">Unit-5, 360 Keewatin Street. Winnipeg, MB R2X2Y3.</p>
             </div>
           </div>
         </div>

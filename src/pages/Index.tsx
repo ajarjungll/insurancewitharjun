@@ -84,7 +84,7 @@ const Index = () => {
                   <Shield className="w-8 h-8 text-blue-600 mt-1" />
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Trusted Experience</h3>
-                    <p className="text-gray-600">Over 25 years of experience in the insurance industry with a proven track record.</p>
+                    <p className="text-gray-600">Over 3+ years of experience in the insurance industry with a proven track record.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
