@@ -1,15 +1,18 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+
 const Footer = () => {
-  return <footer className="bg-gray-900 text-white">
+  return (
+    <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">S</span>
+                <span className="text-white font-bold">A</span>
               </div>
               <div>
                 <h3 className="text-xl font-bold">Insurance with Arjun</h3>
@@ -54,11 +57,11 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
-                <span className="text-gray-300">(555) 123-4567</span>
+                <span className="text-gray-300">(431) 338-2078</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail size={16} />
-                <span className="text-gray-300">info@sharnjitinsurance.com</span>
+                <span className="text-gray-300">insurancewitharjun@gmail.com</span>
               </div>
               <div className="flex items-start space-x-2">
                 <MapPin size={16} className="mt-1" />
@@ -74,11 +77,13 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-300">
-            © 2024 Sharnjit Insurance Hut. All rights reserved. | 
+            © 2024 Insurance with Arjun. All rights reserved. | 
             <span className="ml-2">Licensed Insurance Agency</span>
           </p>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;

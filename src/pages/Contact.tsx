@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -28,7 +27,7 @@ const Contact = () => {
               <Phone className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Phone</h3>
               <p className="text-gray-600 mb-2">Call us for immediate assistance</p>
-              <p className="text-2xl font-bold text-blue-600">(555) 123-4567</p>
+              <p className="text-2xl font-bold text-blue-600">(431) 338-2078</p>
               <p className="text-sm text-gray-500 mt-2">24/7 Claims Hotline Available</p>
             </div>
             
@@ -36,7 +35,7 @@ const Contact = () => {
               <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600 mb-2">Send us your questions</p>
-              <p className="text-lg font-semibold text-blue-600">info@sharnjitinsurance.com</p>
+              <p className="text-lg font-semibold text-blue-600">insurancewitharjun@gmail.com</p>
               <p className="text-sm text-gray-500 mt-2">We respond within 24 hours</p>
             </div>
             

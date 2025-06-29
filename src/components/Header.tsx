@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Menu, X } from 'lucide-react';
@@ -29,11 +30,11 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-1">
               <Mail size={14} />
-              <span>info@insurancewitharjun.com</span>
+              <span>insurancewitharjun@gmail.com</span>
             </div>
           </div>
           <div className="text-sm">
-            Licensed Insurance Agent | Serving Communities Since 1995
+            Licensed Insurance Agent | Serving Communities Since 2022
           </div>
         </div>
       </div>
