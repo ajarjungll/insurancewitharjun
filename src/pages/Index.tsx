@@ -28,17 +28,17 @@ const Index = () => {
     features: ["Health & Medical Coverage", "International Student Plans", "Emergency Services", "Prescription Benefits"]
   }];
   const testimonials = [{
-    name: "Sarah Johnson",
+    name: "Simranpreet Kaur",
     rating: 5,
-    text: "Sharnjit Insurance has been amazing! They helped me save over $800 on my auto insurance while getting better coverage."
+    text: "Arjun Singh Gill helped me get the perfect life insurance policy for my family. His knowledge and dedication gave me complete peace of mind knowing my loved ones are protected."
   }, {
-    name: "Mike Chen",
+    name: "Harpreet Singh",
     rating: 5,
-    text: "Professional, knowledgeable, and always available when I need them. Highly recommend for all your insurance needs."
+    text: "Getting super visa insurance for my parents was so easy with Arjun Singh Gill. He explained everything clearly and got them excellent coverage at a great price."
   }, {
-    name: "Emily Rodriguez",
+    name: "Jasbir Kaur",
     rating: 5,
-    text: "When I had a claim, they made the process so easy. Great customer service and fast claim processing."
+    text: "When I needed life insurance, Arjun Singh Gill made the whole process simple and stress-free. Professional service and competitive rates - highly recommend!"
   }];
   return <div className="min-h-screen">
       <Header />
