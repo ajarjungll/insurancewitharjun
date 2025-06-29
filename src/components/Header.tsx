@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Menu, X } from 'lucide-react';
@@ -26,7 +25,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1">
               <Phone size={14} />
-              <span>(555) 123-4567</span>
+              <span>(431) 338-2078</span>
             </div>
             <div className="flex items-center space-x-1">
               <Mail size={14} />
