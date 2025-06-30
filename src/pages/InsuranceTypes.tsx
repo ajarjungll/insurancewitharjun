@@ -1,49 +1,48 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Car, Home, Heart, Building, Umbrella, Shield } from 'lucide-react';
+import { Car, Home, Heart, Building, Umbrella, Shield, FileText } from 'lucide-react';
 
 const InsuranceTypes = () => {
   const insuranceTypes = [
     {
-      icon: <Car className="w-16 h-16 text-blue-600" />,
-      title: "Auto Insurance",
-      subtitle: "Protect Your Vehicle and Yourself",
-      description: "Comprehensive auto insurance coverage to protect you on the road. Whether you drive a car, truck, motorcycle, or RV, we have the right coverage for you.",
+      icon: <Heart className="w-16 h-16 text-blue-600" />,
+      title: "Critical Illness Insurance",
+      subtitle: "Financial Protection When You Need It Most",
+      description: "Critical illness insurance provides a lump sum payment when you're diagnosed with a serious illness, giving you financial freedom to focus on recovery without worrying about expenses.",
       coverage: [
-        "Liability Coverage - Protects against bodily injury and property damage claims",
-        "Collision Coverage - Covers damage to your vehicle from accidents",
-        "Comprehensive Coverage - Protects against theft, vandalism, and weather damage",
-        "Uninsured/Underinsured Motorist - Protection when others don't have adequate coverage",
-        "Personal Injury Protection - Medical expenses and lost wages coverage",
-        "Rental Car Reimbursement - Transportation while your car is being repaired"
+        "Cancer Coverage - Comprehensive protection for all types of cancer diagnoses",
+        "Heart Attack & Stroke Protection - Coverage for cardiovascular emergencies",
+        "Major Organ Transplant Coverage - Financial support for organ transplant procedures",
+        "Kidney Failure Coverage - Protection against renal failure diagnosis",
+        "Multiple Sclerosis Coverage - Support for chronic neurological conditions",
+        "Parkinson's Disease Coverage - Financial assistance for degenerative disorders"
       ],
       benefits: [
-        "Competitive rates with multiple carrier options",
-        "Discounts for safe driving, multiple vehicles, and bundling",
-        "24/7 claims service and roadside assistance",
-        "Flexible payment options"
+        "Lump sum benefit payment upon diagnosis",
+        "No restrictions on how funds are used",
+        "Family history considerations in underwriting",
+        "Return of premium options available"
       ]
     },
     {
       icon: <Home className="w-16 h-16 text-blue-600" />,
-      title: "Home Insurance",
-      subtitle: "Protect Your Most Valuable Asset",
-      description: "Your home is likely your largest investment. Our homeowner's insurance policies provide comprehensive protection for your dwelling, personal belongings, and liability exposure.",
+      title: "Dental Insurance",
+      subtitle: "Comprehensive Oral Health Protection",
+      description: "Dental insurance helps make oral healthcare affordable for you and your family, covering everything from routine cleanings to major dental procedures.",
       coverage: [
-        "Dwelling Coverage - Protects the structure of your home",
-        "Personal Property - Covers your belongings inside and outside your home",
-        "Liability Protection - Covers legal responsibility for injuries on your property",
-        "Additional Living Expenses - Covers extra costs if you can't live in your home",
-        "Medical Payments - Covers medical expenses for injuries on your property",
-        "Natural Disaster Coverage - Protection against storms, hail, and other perils"
+        "Preventive Care Coverage - Regular cleanings, exams, and X-rays at 100%",
+        "Basic Procedures Protection - Fillings, extractions, and root canals",
+        "Major Dental Work Coverage - Crowns, bridges, and dentures",
+        "Orthodontic Benefits - Braces and alignment treatments for children and adults",
+        "Emergency Dental Care - Urgent treatment for dental emergencies",
+        "Periodontal Treatment - Coverage for gum disease treatment"
       ],
       benefits: [
-        "Replacement cost coverage for your home and belongings",
-        "Discounts for security systems and safety features",
-        "Claims assistance and preferred contractor networks",
-        "Bundle with auto insurance for additional savings"
+        "Network of qualified dental professionals",
+        "No waiting periods for preventive care",
+        "Family plan options with discounts",
+        "Direct billing to reduce out-of-pocket costs"
       ]
     },
     {
@@ -88,42 +87,42 @@ const InsuranceTypes = () => {
     },
     {
       icon: <Umbrella className="w-16 h-16 text-blue-600" />,
-      title: "Umbrella Insurance",
-      subtitle: "Extra Protection When You Need It Most",
-      description: "Umbrella insurance provides additional liability coverage above and beyond your existing auto and home insurance policies, protecting your assets and future earnings.",
+      title: "Super Visa Insurance",
+      subtitle: "Mandatory Coverage for Super Visa Applicants",
+      description: "Super Visa insurance is mandatory health coverage required for parents and grandparents applying for a Super Visa to visit Canada. Our policies meet all government requirements.",
       coverage: [
-        "Additional Liability Coverage - Extends beyond your primary policies",
-        "Personal Injury Protection - Covers libel, slander, and invasion of privacy",
-        "Property Damage - Additional coverage for damage you cause to others' property",
-        "Legal Defense Costs - Covers attorney fees and court costs",
-        "Worldwide Coverage - Protection anywhere in the world",
-        "False Arrest and Imprisonment - Coverage for wrongful detention claims"
+        "Minimum $100,000 Coverage - Meets Canadian government requirements",
+        "Valid for Minimum 1 Year - Coverage duration as required by immigration",
+        "Emergency Medical Coverage - Hospital and medical emergency expenses",
+        "Hospital & Doctor Visits - Inpatient and outpatient medical care",
+        "Prescription Drug Coverage - Necessary medications during stay",
+        "Repatriation Benefits - Coverage for return to home country if needed"
       ],
       benefits: [
-        "Affordable way to increase liability protection",
-        "Covers gaps in your existing policies",
-        "Protects your assets and future income",
-        "Peace of mind for high-net-worth individuals"
+        "Government-compliant coverage amounts",
+        "Fast approval and certificate issuance",
+        "Competitive rates for extended stays",
+        "24/7 emergency assistance services"
       ]
     },
     {
-      icon: <Shield className="w-16 h-16 text-blue-600" />,
-      title: "Specialty Insurance",
-      subtitle: "Unique Coverage for Unique Needs",
-      description: "We offer specialized insurance products for unique situations and valuable items that may not be fully covered by standard policies.",
+      icon: <FileText className="w-16 h-16 text-blue-600" />,
+      title: "Student Insurance",
+      subtitle: "Comprehensive Coverage for Students Abroad",
+      description: "Student insurance provides essential health coverage for students studying away from home, whether domestically or internationally, ensuring access to healthcare when needed.",
       coverage: [
-        "Motorcycle Insurance - Coverage for bikes, scooters, and ATVs",
-        "Boat Insurance - Protection for watercraft and marine equipment",
-        "RV Insurance - Coverage for recreational vehicles and travel trailers",
-        "Valuable Items Coverage - Protection for jewelry, art, and collectibles",
-        "Flood Insurance - Essential coverage not included in standard home policies",
-        "Renters Insurance - Protection for tenants' personal property and liability"
+        "Emergency Medical Coverage - Unexpected illness and injury treatment",
+        "Prescription Drug Benefits - Coverage for necessary medications",
+        "Dental & Vision Care - Basic dental and vision care coverage",
+        "Mental Health Support - Counseling and mental health services",
+        "Sports Injury Coverage - Protection for athletic activities",
+        "Trip Interruption Protection - Coverage if studies are interrupted"
       ],
       benefits: [
-        "Specialized coverage for unique risks",
-        "Expert knowledge of specialty markets",
-        "Competitive rates with specialty carriers",
-        "Personalized service for unique needs"
+        "Affordable rates designed for student budgets",
+        "Coverage available for domestic and international students",
+        "24/7 emergency assistance hotline",
+        "Easy online claims submission process"
       ]
     }
   ];
@@ -138,7 +137,7 @@ const InsuranceTypes = () => {
           <h1 className="text-5xl font-bold mb-6">Insurance Types We Offer</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Comprehensive coverage options for every aspect of your life. From protecting your 
-            vehicle to securing your family's future, we have the right insurance solution for you.
+            health to securing your family's future, we have the right insurance solution for you.
           </p>
         </div>
       </section>
