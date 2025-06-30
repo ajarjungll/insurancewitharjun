@@ -7,29 +7,29 @@ import { Car, Home, Heart, Building, Umbrella, FileText, Phone, Clock } from 'lu
 const Services = () => {
   const services = [
     {
-      icon: <Car className="w-12 h-12 text-blue-600" />,
-      title: "Auto Insurance",
-      description: "Comprehensive vehicle protection with competitive rates",
+      icon: <Heart className="w-12 h-12 text-blue-600" />,
+      title: "Critical Illness Insurance",
+      description: "Financial protection when you're diagnosed with a serious illness",
       features: [
-        "Liability Coverage",
-        "Collision & Comprehensive",
-        "Uninsured Motorist Protection",
-        "Rental Car Coverage",
-        "Gap Insurance",
-        "Multi-Vehicle Discounts"
+        "Cancer Coverage",
+        "Heart Attack & Stroke Protection",
+        "Major Organ Transplant Coverage",
+        "Lump Sum Benefit Payment",
+        "No Restrictions on Fund Usage",
+        "Family History Considerations"
       ]
     },
     {
       icon: <Home className="w-12 h-12 text-blue-600" />,
-      title: "Home Insurance",
-      description: "Complete protection for your home and personal belongings",
+      title: "Dental Insurance",
+      description: "Comprehensive dental care coverage for you and your family",
       features: [
-        "Dwelling Coverage",
-        "Personal Property Protection",
-        "Liability Protection",
-        "Additional Living Expenses",
-        "Natural Disaster Coverage",
-        "Home Security Discounts"
+        "Preventive Care Coverage",
+        "Basic Procedures Protection",
+        "Major Dental Work Coverage",
+        "Orthodontic Benefits",
+        "Emergency Dental Care",
+        "Family Plan Options"
       ]
     },
     {
@@ -60,28 +60,28 @@ const Services = () => {
     },
     {
       icon: <Umbrella className="w-12 h-12 text-blue-600" />,
-      title: "Umbrella Insurance",
-      description: "Extra liability protection beyond your standard policies",
+      title: "Super Visa Insurance",
+      description: "Mandatory health coverage for Super Visa applicants",
       features: [
-        "Additional Liability Coverage",
-        "Personal Injury Protection",
-        "Property Damage Coverage",
-        "Legal Defense Costs",
-        "Worldwide Coverage",
-        "Affordable Premium Options"
+        "Minimum $100,000 Coverage",
+        "Valid for Minimum 1 Year",
+        "Emergency Medical Coverage",
+        "Hospital & Doctor Visits",
+        "Prescription Drug Coverage",
+        "Repatriation Benefits"
       ]
     },
     {
       icon: <FileText className="w-12 h-12 text-blue-600" />,
-      title: "Claims Assistance",
-      description: "Expert guidance through the claims process",
+      title: "Student Insurance",
+      description: "Comprehensive coverage for students studying abroad",
       features: [
-        "24/7 Claims Reporting",
-        "Claims Status Updates",
-        "Damage Assessment Help",
-        "Settlement Negotiation",
-        "Paperwork Assistance",
-        "Direct Repair Programs"
+        "Emergency Medical Coverage",
+        "Prescription Drug Benefits",
+        "Dental & Vision Care",
+        "Mental Health Support",
+        "Sports Injury Coverage",
+        "Trip Interruption Protection"
       ]
     }
   ];
