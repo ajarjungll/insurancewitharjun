@@ -136,13 +136,7 @@ const About = () => {
           
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="w-32 h-32 mx-auto mb-6 overflow-hidden rounded-full">
-                <img 
-                  src="/lovable-uploads/55ab474a-5f3a-4ae3-a14e-6de458f76ad6.png" 
-                  alt="Deep Grewal" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Deep Grewal</h3>
               <p className="text-blue-600 mb-4">Founder & CEO</p>
               <p className="text-gray-600">
@@ -152,11 +146,17 @@ const About = () => {
             </div>
             
             <div className="text-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Sarah Johnson</h3>
+              <div className="w-32 h-32 mx-auto mb-6 overflow-hidden rounded-full">
+                <img 
+                  src="/lovable-uploads/55ab474a-5f3a-4ae3-a14e-6de458f76ad6.png" 
+                  alt="Arjun Singh Gill" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Arjun Singh Gill</h3>
               <p className="text-blue-600 mb-4">Senior Insurance Advisor</p>
               <p className="text-gray-600">
-                Sarah specializes in personal lines insurance and has been helping 
+                Arjun specializes in personal lines insurance and has been helping 
                 families protect their assets for over 3+ years.
               </p>
             </div>
