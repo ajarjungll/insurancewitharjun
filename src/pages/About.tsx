@@ -12,9 +12,9 @@ const About = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">About Sharnjit Insurance Hut</h1>
+          <h1 className="text-5xl font-bold mb-6">About Insurance With Arjun</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Your trusted insurance partner since 1995, providing comprehensive coverage solutions 
+            Your trusted insurance partner since 2016, providing comprehensive coverage solutions 
             with personalized service and unmatched expertise.
           </p>
         </div>
@@ -27,10 +27,10 @@ const About = () => {
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 mb-6">
-                Founded in 1995 by Sharnjit Singh, our agency began with a simple mission: 
+                Founded in 2016 by Arjun Singh Gill, our agency began with a simple mission: 
                 to provide honest, reliable insurance services to our community. What started 
                 as a small local office has grown into a trusted insurance agency serving 
-                thousands of families and businesses.
+                hundreds of families and businesses.
               </p>
               <p className="text-lg text-gray-600 mb-6">
                 Over the years, we've built our reputation on trust, integrity, and exceptional 
@@ -104,12 +104,12 @@ const About = () => {
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
               <Clock className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold mb-2">25+</h3>
+              <h3 className="text-4xl font-bold mb-2">3+</h3>
               <p className="text-blue-100">Years of Experience</p>
             </div>
             <div>
               <Users className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold mb-2">5,000+</h3>
+              <h3 className="text-4xl font-bold mb-2">500+</h3>
               <p className="text-blue-100">Satisfied Clients</p>
             </div>
             <div>
@@ -137,10 +137,10 @@ const About = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Sharnjit Singh</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Arjun Singh Gill</h3>
               <p className="text-blue-600 mb-4">Founder & CEO</p>
               <p className="text-gray-600">
-                With over 25 years in the insurance industry, Sharnjit founded the company 
+                With over 3+ years in the insurance industry, Arjun founded the company 
                 with a vision to provide honest, reliable insurance services.
               </p>
             </div>
