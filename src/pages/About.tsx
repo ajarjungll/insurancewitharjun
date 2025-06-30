@@ -134,13 +134,19 @@ const About = () => {
             <p className="text-xl text-gray-600">Experienced professionals dedicated to serving you</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Arjun Singh Gill</h3>
+              <div className="w-32 h-32 mx-auto mb-6 overflow-hidden rounded-full">
+                <img 
+                  src="/lovable-uploads/55ab474a-5f3a-4ae3-a14e-6de458f76ad6.png" 
+                  alt="Deep Grewal" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Deep Grewal</h3>
               <p className="text-blue-600 mb-4">Founder & CEO</p>
               <p className="text-gray-600">
-                With over 3+ years in the insurance industry, Arjun founded the company 
+                With over 11+ years in the insurance industry, Deep founded the company 
                 with a vision to provide honest, reliable insurance services.
               </p>
             </div>
@@ -148,20 +154,10 @@ const About = () => {
             <div className="text-center">
               <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Sarah Johnson</h3>
-              <p className="text-blue-600 mb-4">Senior Insurance Agent</p>
+              <p className="text-blue-600 mb-4">Senior Insurance Advisor</p>
               <p className="text-gray-600">
                 Sarah specializes in personal lines insurance and has been helping 
-                families protect their assets for over 15 years.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Michael Chen</h3>
-              <p className="text-blue-600 mb-4">Commercial Insurance Specialist</p>
-              <p className="text-gray-600">
-                Michael focuses on business insurance solutions and risk management 
-                for small to medium-sized businesses.
+                families protect their assets for over 3+ years.
               </p>
             </div>
           </div>
