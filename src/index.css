@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -101,5 +102,33 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* 3D Button Styles */
+  .btn-3d {
+    @apply shadow-lg transform transition-all duration-200 active:scale-95 active:shadow-md;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-3d:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 15px 35px -5px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 3D Card Styles */
+  .card-3d {
+    @apply shadow-lg transform transition-all duration-300 hover:-translate-y-1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-3d:hover {
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25), 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 25px 50px -10px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Click to call styling */
+  .click-to-call {
+    @apply text-blue-600 hover:text-blue-800 cursor-pointer transition-colors duration-200 hover:underline;
   }
 }

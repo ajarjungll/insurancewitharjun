@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -24,22 +23,26 @@ const Contact = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
-            <div className="text-center p-8 bg-gray-50 rounded-xl">
+            <div className="text-center p-8 bg-gray-50 rounded-xl card-3d">
               <Phone className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Phone</h3>
               <p className="text-gray-600 mb-2">Call us for immediate assistance</p>
-              <p className="text-2xl font-bold text-blue-600">(431) 338-2078</p>
+              <a href="tel:+14313382078" className="text-2xl font-bold text-blue-600 hover:text-blue-800 transition-colors click-to-call">
+                (431) 338-2078
+              </a>
             </div>
             
-            <div className="text-center p-8 bg-gray-50 rounded-xl">
+            <div className="text-center p-8 bg-gray-50 rounded-xl card-3d">
               <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600 mb-2">Send us your questions</p>
-              <p className="text-lg font-semibold text-blue-600">insurancewitharjun@gmail.com</p>
+              <a href="mailto:insurancewitharjun@gmail.com" className="text-lg font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                insurancewitharjun@gmail.com
+              </a>
               <p className="text-sm text-gray-500 mt-2">We respond within 24 hours</p>
             </div>
             
-            <div className="text-center p-8 bg-gray-50 rounded-xl">
+            <div className="text-center p-8 bg-gray-50 rounded-xl card-3d">
               <MapPin className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Office</h3>
               <p className="text-gray-600 mb-2">Visit us in person</p>
@@ -57,7 +60,7 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="bg-white rounded-xl p-8 shadow-lg">
+            <div className="bg-white rounded-xl p-8 card-3d">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
               <form className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
@@ -103,7 +106,7 @@ const Contact = () => {
                 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors btn-3d"
                 >
                   Send Message
                 </button>
@@ -112,7 +115,7 @@ const Contact = () => {
             
             {/* Office Hours and Additional Info */}
             <div className="space-y-8">
-              <div className="bg-white rounded-xl p-8 shadow-lg">
+              <div className="bg-white rounded-xl p-8 card-3d">
                 <div className="flex items-center mb-6">
                   <Clock className="w-8 h-8 text-blue-600 mr-4" />
                   <h3 className="text-2xl font-bold text-gray-900">Office Hours</h3>
@@ -133,7 +136,7 @@ const Contact = () => {
                 </div>
               </div>
               
-              <div className="bg-white rounded-xl p-8 shadow-lg">
+              <div className="bg-white rounded-xl p-8 card-3d">
                 <div className="flex items-center mb-6">
                   <Users className="w-8 h-8 text-blue-600 mr-4" />
                   <h3 className="text-2xl font-bold text-gray-900">Meet Our Team</h3>
@@ -150,7 +153,7 @@ const Contact = () => {
                 </ul>
               </div>
               
-              <div className="bg-white rounded-xl p-8 shadow-lg">
+              <div className="bg-white rounded-xl p-8 card-3d">
                 <div className="flex items-center mb-6">
                   <MessageCircle className="w-8 h-8 text-blue-600 mr-4" />
                   <h3 className="text-2xl font-bold text-gray-900">Other Ways to Connect</h3>
@@ -158,7 +161,10 @@ const Contact = () => {
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-semibold text-gray-900">Text Us</h4>
-                    <p className="text-gray-600">Quick questions? Text us at (431) 338-2078</p>
+                    <p className="text-gray-600">
+                      Quick questions? Text us at 
+                      <a href="tel:+14313382078" className="click-to-call ml-1">(431) 338-2078</a>
+                    </p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Social Media</h4>
@@ -179,7 +185,7 @@ const Contact = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Find Our Office</h2>
-          <div className="h-96 rounded-xl overflow-hidden shadow-lg">
+          <div className="h-96 rounded-xl overflow-hidden card-3d">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.8765432109876!2d-97.22872668437499!3d49.91234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52ea73c123456789%3A0x1234567890abcdef!2s360%20Keewatin%20St%2C%20Winnipeg%2C%20MB%20R2X%202Y3%2C%20Canada!5e0!3m2!1sen!2sca!4v1234567890123!5m2!1sen!2sca"
               width="100%"
@@ -206,22 +212,22 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-6 rounded-xl card-3d">
               <h3 className="text-lg font-bold text-gray-900 mb-3">What are your response times?</h3>
               <p className="text-gray-600">We respond to all inquiries within 24 hours during business days.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-6 rounded-xl card-3d">
               <h3 className="text-lg font-bold text-gray-900 mb-3">Do you offer free consultations?</h3>
               <p className="text-gray-600">Yes! We provide free insurance consultations to help you understand your coverage options and needs.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-6 rounded-xl card-3d">
               <h3 className="text-lg font-bold text-gray-900 mb-3">Can I get quotes online?</h3>
               <p className="text-gray-600">While we prefer personalized service, we can provide preliminary quotes via phone, email, or our online form.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-6 rounded-xl card-3d">
               <h3 className="text-lg font-bold text-gray-900 mb-3">Do you work with multiple insurance companies?</h3>
               <p className="text-gray-600">Absolutely! We work with over 20 insurance carriers to find you the best coverage at competitive rates.</p>
             </div>

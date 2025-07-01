@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center card-3d">
                 <span className="text-white font-bold">A</span>
               </div>
               <div>
@@ -20,10 +20,10 @@ const Footer = () => {
             </div>
             <p className="text-gray-300 mb-4">Your trusted insurance partner since 2022. We provide comprehensive coverage solutions for all your needs.</p>
             <div className="flex space-x-4">
-              <Facebook size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer" />
-              <Twitter size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer" />
-              <Linkedin size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer" />
-              <Instagram size={20} className="text-pink-400 hover:text-pink-300 cursor-pointer" />
+              <Facebook size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer transition-colors hover:scale-110 transform duration-200" />
+              <Twitter size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer transition-colors hover:scale-110 transform duration-200" />
+              <Linkedin size={20} className="text-blue-400 hover:text-blue-300 cursor-pointer transition-colors hover:scale-110 transform duration-200" />
+              <Instagram size={20} className="text-pink-400 hover:text-pink-300 cursor-pointer transition-colors hover:scale-110 transform duration-200" />
             </div>
           </div>
 
@@ -31,11 +31,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-gray-300 hover:text-white">About Us</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-white">Services</Link></li>
-              <li><Link to="/insurance-types" className="text-gray-300 hover:text-white">Insurance Types</Link></li>
-              <li><Link to="/investment-types" className="text-gray-300 hover:text-white">Investment Types</Link></li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-white">Contact Us</Link></li>
+              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-white transition-colors">Services</Link></li>
+              <li><Link to="/insurance-types" className="text-gray-300 hover:text-white transition-colors">Insurance Types</Link></li>
+              <li><Link to="/investment-types" className="text-gray-300 hover:text-white transition-colors">Investment Types</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -57,11 +57,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
-                <span className="text-gray-300">(431) 338-2078</span>
+                <a href="tel:+14313382078" className="click-to-call text-gray-300 hover:text-white">
+                  (431) 338-2078
+                </a>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail size={16} />
-                <span className="text-gray-300">insurancewitharjun@gmail.com</span>
+                <a href="mailto:insurancewitharjun@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+                  insurancewitharjun@gmail.com
+                </a>
               </div>
               <div className="flex items-start space-x-2">
                 <MapPin size={16} className="mt-1" />

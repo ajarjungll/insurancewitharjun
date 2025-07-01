@@ -26,11 +26,15 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1">
               <Phone size={14} />
-              <span>(431) 338-2078</span>
+              <a href="tel:+14313382078" className="click-to-call text-white hover:text-blue-200">
+                (431) 338-2078
+              </a>
             </div>
             <div className="flex items-center space-x-1">
               <Mail size={14} />
-              <span>insurancewitharjun@gmail.com</span>
+              <a href="mailto:insurancewitharjun@gmail.com" className="hover:text-blue-200 transition-colors">
+                insurancewitharjun@gmail.com
+              </a>
             </div>
           </div>
           <div className="text-sm">
@@ -43,7 +47,7 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center card-3d">
               <span className="text-white font-bold text-xl">A</span>
             </div>
             <div>
@@ -67,7 +71,7 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-medium"
+              className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-medium btn-3d"
             >
               Get Quote
             </Link>
@@ -75,7 +79,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden"
+            className="lg:hidden btn-3d p-2 rounded-lg bg-gray-100"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -99,7 +103,7 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className="block mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-medium text-center"
+              className="block mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-medium text-center btn-3d"
               onClick={() => setIsMenuOpen(false)}
             >
               Get Quote

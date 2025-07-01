@@ -90,7 +90,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {insuranceTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            {insuranceTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d">
                 <div className="text-center mb-4">
                   {type.icon}
                   <h3 className="text-xl font-bold text-gray-900 mt-4">{type.title}</h3>
@@ -102,7 +102,7 @@ const Index = () => {
                       {feature}
                     </li>)}
                 </ul>
-                <Link to="/quote" className="block mt-6 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <Link to="/quote" className="block mt-6 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors btn-3d">
                   Get Quote
                 </Link>
               </div>)}
@@ -119,7 +119,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {investmentTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-200">
+            {investmentTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d border border-gray-200">
                 <div className="text-center mb-4">
                   {type.icon}
                   <h3 className="text-xl font-bold text-gray-900 mt-4">{type.title}</h3>
@@ -131,7 +131,7 @@ const Index = () => {
                       {feature}
                     </li>)}
                 </ul>
-                <Link to="/investment-types" className="block mt-6 bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition-colors">
+                <Link to="/investment-types" className="block mt-6 bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition-colors btn-3d">
                   Learn More
                 </Link>
               </div>)}
@@ -169,7 +169,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-blue-50 p-8 rounded-xl">
+            <div className="bg-blue-50 p-8 rounded-xl card-3d">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Get Your Free Quote Today</h3>
               <form className="space-y-4">
                 <input type="text" placeholder="Full Name" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
@@ -182,7 +182,7 @@ const Index = () => {
                   <option value="critical-illness">Critical Illness Insurance</option>
                   <option value="student">Student Insurance</option>
                 </select>
-                <button type="submit" className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors">
+                <button type="submit" className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors btn-3d">
                   Get Free Quote
                 </button>
               </form>
@@ -200,7 +200,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => <div key={index} className="bg-gray-50 rounded-xl p-6 shadow-lg">
+            {testimonials.map((testimonial, index) => <div key={index} className="bg-gray-50 rounded-xl p-6 card-3d">
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => <Star key={i} size={20} className="text-yellow-400 fill-current" />)}
                 </div>
