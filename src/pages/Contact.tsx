@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -28,7 +29,6 @@ const Contact = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-2">Phone</h3>
               <p className="text-gray-600 mb-2">Call us for immediate assistance</p>
               <p className="text-2xl font-bold text-blue-600">(431) 338-2078</p>
-              <p className="text-sm text-gray-500 mt-2">24/7 Claims Hotline Available</p>
             </div>
             
             <div className="text-center p-8 bg-gray-50 rounded-xl">
@@ -89,7 +89,7 @@ const Contact = () => {
                 <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
                   <option value="">How can we help you?</option>
                   <option value="quote">Get an Insurance Quote</option>
-                  <option value="claim">File a Claim</option>
+                  <option value="investment">Investment Consultation</option>
                   <option value="policy">Policy Questions</option>
                   <option value="payment">Payment Questions</option>
                   <option value="other">Other Inquiry</option>
@@ -120,20 +120,16 @@ const Contact = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Monday - Friday</span>
-                    <span className="font-semibold">8:00 AM - 6:00 PM</span>
+                    <span className="font-semibold">10:00 AM - 5:00 PM</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Saturday</span>
-                    <span className="font-semibold">9:00 AM - 1:00 PM</span>
+                    <span className="font-semibold">10:00 AM - 1:00 PM</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Sunday</span>
                     <span className="font-semibold">Closed</span>
                   </div>
-                </div>
-                <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <p className="text-blue-800 font-semibold">Emergency Claims Available 24/7</p>
-                  <p className="text-blue-700 text-sm">Call our emergency hotline for urgent claims</p>
                 </div>
               </div>
               
@@ -162,7 +158,7 @@ const Contact = () => {
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-semibold text-gray-900">Text Us</h4>
-                    <p className="text-gray-600">Quick questions? Text us at (555) 123-4567</p>
+                    <p className="text-gray-600">Quick questions? Text us at (431) 338-2078</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Social Media</h4>
@@ -212,7 +208,7 @@ const Contact = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <h3 className="text-lg font-bold text-gray-900 mb-3">What are your response times?</h3>
-              <p className="text-gray-600">We respond to all inquiries within 24 hours during business days. Emergency claims are handled immediately.</p>
+              <p className="text-gray-600">We respond to all inquiries within 24 hours during business days.</p>
             </div>
             
             <div className="bg-white p-6 rounded-xl shadow-sm">

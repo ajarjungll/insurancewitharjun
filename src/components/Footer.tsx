@@ -43,11 +43,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Insurance Types</h4>
             <ul className="space-y-2">
-              <li><span className="text-gray-300">Auto Insurance</span></li>
-              <li><span className="text-gray-300">Home Insurance</span></li>
+              <li><span className="text-gray-300">Critical Illness Insurance</span></li>
+              <li><span className="text-gray-300">Dental Insurance</span></li>
               <li><span className="text-gray-300">Life Insurance</span></li>
-              <li><span className="text-gray-300">Business Insurance</span></li>
-              <li><span className="text-gray-300">Health Insurance</span></li>
+              <li><span className="text-gray-300">Super Visa Insurance</span></li>
+              <li><span className="text-gray-300">Student Insurance</span></li>
             </ul>
           </div>
 
