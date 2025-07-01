@@ -9,10 +9,10 @@ const Header = () => {
 
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'About Us', path: '/about' },
     { name: 'Services', path: '/services' },
     { name: 'Insurance Types', path: '/insurance-types' },
     { name: 'Investment Types', path: '/investment-types' },
+    { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -38,7 +38,7 @@ const Header = () => {
             </div>
           </div>
           <div className="text-sm">
-            Licensed Insurance Agent | Serving Communities Since 2022
+            Licensed Insurance Agent | Office Hours: Mon-Fri 10AM-5PM, Sat 10AM-1PM
           </div>
         </div>
       </div>
@@ -57,13 +57,13 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-gray-700 hover:text-blue-600 font-medium transition-colors ${
-                  isActive(item.path) ? 'text-blue-600 border-b-2 border-blue-600' : ''
+                className={`text-gray-700 hover:text-blue-600 font-medium transition-all px-4 py-2 rounded-lg btn-3d ${
+                  isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
                 }`}
               >
                 {item.name}
@@ -93,8 +93,8 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`block py-2 text-gray-700 hover:text-blue-600 ${
-                  isActive(item.path) ? 'text-blue-600 font-medium' : ''
+                className={`block py-2 px-4 my-1 rounded-lg text-gray-700 hover:text-blue-600 btn-3d transition-all ${
+                  isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
