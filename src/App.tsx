@@ -8,7 +8,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import InsuranceTypes from "./pages/InsuranceTypes";
-import Claims from "./pages/Claims";
+import InvestmentTypes from "./pages/InvestmentTypes";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import NotFound from "./pages/NotFound";
@@ -26,7 +26,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/insurance-types" element={<InsuranceTypes />} />
-          <Route path="/claims" element={<Claims />} />
+          <Route path="/investment-types" element={<InvestmentTypes />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

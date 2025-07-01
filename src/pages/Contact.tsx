@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -180,16 +179,28 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
+      {/* Map Section with Google Map */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Find Our Office</h2>
-          <div className="bg-gray-200 h-96 rounded-xl flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg">Interactive Map Coming Soon</p>
-              <p className="text-gray-500">Unit-5, 360 Keewatin Street. Winnipeg, MB R2X2Y3.</p>
+          <div className="h-96 rounded-xl overflow-hidden shadow-lg">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.8765432109876!2d-97.22872668437499!3d49.91234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52ea73c123456789%3A0x1234567890abcdef!2s360%20Keewatin%20St%2C%20Winnipeg%2C%20MB%20R2X%202Y3%2C%20Canada!5e0!3m2!1sen!2sca!4v1234567890123!5m2!1sen!2sca"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Insurance with Arjun Office Location"
+            ></iframe>
+          </div>
+          <div className="text-center mt-6">
+            <div className="flex items-center justify-center space-x-2 text-gray-600">
+              <MapPin className="w-5 h-5" />
+              <span>Unit-5, 360 Keewatin Street, Winnipeg, MB R2X2Y3</span>
             </div>
+            <p className="text-sm text-gray-500 mt-2">Click on the map for directions</p>
           </div>
         </div>
       </section>
