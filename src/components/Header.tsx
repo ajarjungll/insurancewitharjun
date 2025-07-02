@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Menu, X } from 'lucide-react';
+import Logo3D from './Logo3D';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,14 +47,8 @@ const Header = () => {
       {/* Main Navigation */}
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center card-3d">
-              <span className="text-white font-bold text-xl">A</span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-blue-900">Insurance With Arjun</h1>
-              <p className="text-sm text-gray-600">Your Trusted Insurance Partner</p>
-            </div>
+          <Link to="/">
+            <Logo3D />
           </Link>
 
           {/* Desktop Navigation */}

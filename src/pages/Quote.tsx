@@ -174,15 +174,24 @@ const Quote = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                       />
                       <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
-                        <option value="">State</option>
-                        <option value="CA">California</option>
-                        <option value="TX">Texas</option>
-                        <option value="FL">Florida</option>
-                        <option value="NY">New York</option>
+                        <option value="">Province</option>
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NL">Newfoundland and Labrador</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="ON">Ontario</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="QC">Quebec</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NU">Nunavut</option>
+                        <option value="YT">Yukon</option>
                       </select>
                       <input
                         type="text"
-                        placeholder="ZIP Code"
+                        placeholder="Postal Code"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                       />
                     </div>
@@ -296,17 +305,17 @@ const Quote = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Why Get Your Quote With Us?</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div>
+            <div className="bg-white rounded-xl p-8 card-3d">
               <Shield className="w-16 h-16 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Licensed Professionals</h3>
               <p className="text-gray-600">Our experienced agents are licensed and trained to find you the best coverage.</p>
             </div>
-            <div>
+            <div className="bg-white rounded-xl p-8 card-3d">
               <Calculator className="w-16 h-16 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Compare Multiple Carriers</h3>
               <p className="text-gray-600">We work with over 20 insurance companies to find you the best rates.</p>
             </div>
-            <div>
+            <div className="bg-white rounded-xl p-8 card-3d">
               <Award className="w-16 h-16 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Personalized Service</h3>
               <p className="text-gray-600">We take time to understand your needs and provide tailored solutions.</p>

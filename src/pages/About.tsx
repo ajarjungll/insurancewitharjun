@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,18 +10,8 @@ const About = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 relative overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url('/lovable-uploads/05222d16-48f5-4552-be91-faade99d71c2.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        ></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
+      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
+        <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">About Insurance With Arjun</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Your trusted insurance partner since 2022, providing comprehensive coverage solutions 
@@ -30,18 +21,8 @@ const About = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `url('/lovable-uploads/287673fd-2359-4e48-b6e0-f6a391443b6f.png')`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'right center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        ></div>
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
@@ -79,17 +60,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-16 bg-gray-50 relative overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `url('/lovable-uploads/6c7fc101-7b93-4674-8552-8ac8048711c5.png')`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'left center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        ></div>
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Core Values</h2>
@@ -128,17 +99,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-blue-900 text-white relative overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url('/lovable-uploads/1a0f32fd-a464-4bd2-add0-1924f0c7e575.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        ></div>
+      <section className="py-16 bg-blue-900 text-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
@@ -166,29 +127,8 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        {/* Background Illusion Effect */}
-        <div className="absolute inset-0 opacity-5">
-          <div 
-            className="absolute top-0 right-0 w-1/3 h-full"
-            style={{
-              backgroundImage: `url('/lovable-uploads/05222d16-48f5-4552-be91-faade99d71c2.png')`,
-              backgroundSize: 'contain',
-              backgroundPosition: 'right top',
-              backgroundRepeat: 'no-repeat'
-            }}
-          ></div>
-          <div 
-            className="absolute bottom-0 left-0 w-1/3 h-full"
-            style={{
-              backgroundImage: `url('/lovable-uploads/287673fd-2359-4e48-b6e0-f6a391443b6f.png')`,
-              backgroundSize: 'contain',
-              backgroundPosition: 'left bottom',
-              backgroundRepeat: 'no-repeat'
-            }}
-          ></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
             <p className="text-xl text-gray-600">Experienced professionals dedicated to serving you</p>
