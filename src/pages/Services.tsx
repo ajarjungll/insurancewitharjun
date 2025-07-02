@@ -129,25 +129,40 @@ const Services = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow">
-                <div className="text-center mb-6">
-                  {service.icon}
-                  <h3 className="text-2xl font-bold text-gray-900 mt-4">{service.title}</h3>
-                  <p className="text-gray-600 mt-2">{service.description}</p>
+              <div key={index} className="relative bg-white rounded-2xl p-8 transform transition-all duration-300 hover:-translate-y-2 card-3d" 
+                   style={{ 
+                     boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.15), 0 8px 16px -4px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                     background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)'
+                   }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent rounded-2xl"></div>
+                <div className="relative z-10">
+                  <div className="text-center mb-6">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mt-4">{service.title}</h3>
+                    <p className="text-gray-600 mt-2">{service.description}</p>
+                  </div>
+                  
+                  <ul className="space-y-3 mb-6">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 shadow-sm"></div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <div className="flex flex-col gap-3">
+                    <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                      Get Quote
+                    </button>
+                    <a href="tel:+14313382078" className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+                      <Phone size={18} />
+                      Call Now
+                    </a>
+                  </div>
                 </div>
-                
-                <ul className="space-y-3">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-gray-700">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <button className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
-                  Get Quote
-                </button>
               </div>
             ))}
           </div>
@@ -164,8 +179,12 @@ const Services = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             {additionalServices.map((service, index) => (
-              <div key={index} className="bg-white rounded-xl p-8 shadow-lg text-center">
-                <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div key={index} className="bg-white rounded-2xl p-8 text-center transform transition-all duration-300 hover:-translate-y-1 card-3d"
+                   style={{ 
+                     boxShadow: '0 15px 30px -8px rgba(0, 0, 0, 0.12), 0 6px 12px -2px rgba(0, 0, 0, 0.08)',
+                     background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)'
+                   }}>
+                <div className="bg-gradient-to-br from-orange-100 to-orange-200 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{service.title}</h3>
@@ -186,7 +205,7 @@ const Services = () => {
           
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
                 1
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Us</h3>
@@ -194,7 +213,7 @@ const Services = () => {
             </div>
             
             <div className="text-center">
-              <div className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
                 2
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Get Quotes</h3>
@@ -202,7 +221,7 @@ const Services = () => {
             </div>
             
             <div className="text-center">
-              <div className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
                 3
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Coverage</h3>
@@ -210,7 +229,7 @@ const Services = () => {
             </div>
             
             <div className="text-center">
-              <div className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
                 4
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Stay Protected</h3>
@@ -229,12 +248,13 @@ const Services = () => {
             and find out how we can protect what matters most to you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-colors">
+            <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
               Get Free Quote
             </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-colors">
-              Contact Us Today
-            </button>
+            <a href="tel:+14313382078" className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+              <Phone size={20} />
+              Call (431) 338-2078
+            </a>
           </div>
         </div>
       </section>

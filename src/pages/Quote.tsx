@@ -95,10 +95,10 @@ const Quote = () => {
                   <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">What type of insurance do you need?</h2>
                   <div className="grid md:grid-cols-2 gap-6">
                     {[
-                      { value: 'auto', title: 'Auto Insurance', description: 'Car, truck, motorcycle coverage' },
-                      { value: 'home', title: 'Home Insurance', description: 'Homeowners and renters insurance' },
+                      { value: 'critical-illness', title: 'Critical Illness Insurance', description: 'Financial protection for serious illness' },
+                      { value: 'super-visa', title: 'Super Visa Insurance', description: 'Mandatory coverage for Super Visa applicants' },
                       { value: 'life', title: 'Life Insurance', description: 'Term and permanent life coverage' },
-                      { value: 'business', title: 'Business Insurance', description: 'Commercial and liability coverage' }
+                      { value: 'loss-of-income', title: 'Loss of Income Insurance', description: 'Income protection and disability coverage' }
                     ].map((option) => (
                       <label key={option.value} className="cursor-pointer">
                         <input
