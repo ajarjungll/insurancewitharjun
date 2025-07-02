@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, MessageSquare, Send, Users } from 'lucide-react';
 
 const Contact = () => {
   return (
