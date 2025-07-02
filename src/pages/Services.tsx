@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -105,12 +104,22 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
+      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 opacity-15"
+          style={{
+            backgroundImage: `url('/lovable-uploads/05222d16-48f5-4552-be91-faade99d71c2.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        ></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl font-bold mb-6">Our Insurance Services</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Comprehensive insurance solutions tailored to protect what matters most to you. 
@@ -120,8 +129,38 @@ const Services = () => {
       </section>
 
       {/* Main Services Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-white relative overflow-hidden">
+        {/* Background Illusion Effect */}
+        <div className="absolute inset-0 opacity-3">
+          <div 
+            className="absolute top-10 right-10 w-64 h-64"
+            style={{
+              backgroundImage: `url('/lovable-uploads/287673fd-2359-4e48-b6e0-f6a391443b6f.png')`,
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          ></div>
+          <div 
+            className="absolute bottom-10 left-10 w-64 h-64"
+            style={{
+              backgroundImage: `url('/lovable-uploads/6c7fc101-7b93-4674-8552-8ac8048711c5.png')`,
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          ></div>
+          <div 
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72"
+            style={{
+              backgroundImage: `url('/lovable-uploads/1a0f32fd-a464-4bd2-add0-1924f0c7e575.png')`,
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          ></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Insurance Products We Offer</h2>
             <p className="text-xl text-gray-600">Protecting your assets with comprehensive coverage options</p>
@@ -170,8 +209,18 @@ const Services = () => {
       </section>
 
       {/* Additional Services Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-gray-50 relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `url('/lovable-uploads/05222d16-48f5-4552-be91-faade99d71c2.png')`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'right center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        ></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Additional Services</h2>
             <p className="text-xl text-gray-600">Going beyond insurance to serve you better</p>
@@ -196,8 +245,18 @@ const Services = () => {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-white relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `url('/lovable-uploads/287673fd-2359-4e48-b6e0-f6a391443b6f.png')`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'left center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        ></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Simple Process</h2>
             <p className="text-xl text-gray-600">Getting the right insurance has never been easier</p>
@@ -240,8 +299,18 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-blue-900 text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 bg-blue-900 text-white relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `url('/lovable-uploads/6c7fc101-7b93-4674-8552-8ac8048711c5.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        ></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
             Don't wait until it's too late. Contact us today for a free consultation 
