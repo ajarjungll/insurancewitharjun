@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,19 +7,10 @@ import { Award, Users, Shield, Clock, Heart, HandHeart } from 'lucide-react';
 const About = () => {
   return (
     <div className="min-h-screen relative">
-      {/* Background Image */}
-      <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-5 pointer-events-none z-0"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2671&q=80")'
-        }}
-      />
+      <Header />
       
-      <div className="relative z-10">
-        <Header />
-        
-        {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">About Insurance With Arjun</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
@@ -172,8 +164,7 @@ const About = () => {
         </div>
       </section>
 
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };
