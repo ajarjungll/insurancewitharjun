@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Car, Home, Heart, Building, Umbrella, Shield, FileText, Phone } from 'lucide-react';
+import { Car, Home, Heart, Building, Umbrella, Shield, FileText, Phone, Wrench, Truck, Flag } from 'lucide-react';
 
 const InsuranceTypes = () => {
   const insuranceTypes = [
@@ -124,6 +124,51 @@ const InsuranceTypes = () => {
         "Emergency assistance hotline",
         "Easy online claims submission process"
       ]
+    },
+    {
+      icon: <Wrench className="w-16 h-16 text-blue-600" />,
+      title: "Loss of Income Due to Injury",
+      subtitle: "Specialized Coverage for Trade Workers",
+      description: "Essential income protection for truck drivers, construction workers, electricians, plumbers, and mechanics who depend on their physical ability to work. Get financial support when injury prevents you from earning.",
+      coverage: [
+        "Truck Driver Coverage - Protection for commercial and long-haul drivers",
+        "Construction Worker Protection - Coverage for all construction trades",
+        "Electrician Benefits - Specialized coverage for electrical work injuries",
+        "Plumber Protection - Coverage for plumbing and pipe fitting work",
+        "Mechanic Coverage - Protection for automotive and heavy equipment mechanics",
+        "Temporary Total Disability - Full income replacement during recovery"
+      ],
+      benefits: [
+        "Up to 70% income replacement during disability",
+        "Coverage for both short-term and long-term disabilities",
+        "No waiting period for accident-related injuries",
+        "Rehabilitation and retraining benefits included",
+        "Flexible benefit periods from 2 years to age 65",
+        "Cost-of-living adjustments available"
+      ]
+    },
+    {
+      icon: <Truck className="w-16 h-16 text-blue-600" />,
+      title: "Travel Insurance for Truck Drivers",
+      subtitle: "Cross-Border Protection Up to $5 Million",
+      description: "Comprehensive travel insurance designed specifically for truck drivers traveling to the USA. Coverage up to $5 million for medical emergencies, vehicle breakdown, and cargo protection.",
+      coverage: [
+        "Emergency Medical Coverage - Up to $5 million for medical emergencies in USA",
+        "Vehicle Breakdown Protection - Roadside assistance and towing services",
+        "Cargo Insurance - Protection for goods being transported",
+        "Trip Interruption Coverage - Compensation for delayed or cancelled trips",
+        "Repatriation Benefits - Emergency transportation back to Canada",
+        "Legal Assistance - Support for legal issues while in the USA"
+      ],
+      benefits: [
+        "Specialized coverage for commercial drivers",
+        "24/7 emergency assistance hotline",
+        "Multi-trip annual policies available",
+        "Competitive rates for frequent travelers",
+        "Fast claims processing and direct billing",
+        "Coverage includes both driver and vehicle protection"
+      ],
+      specialBackground: true
     }
   ];
 
@@ -164,8 +209,20 @@ const InsuranceTypes = () => {
         <section className="py-16 bg-white relative">
           <div className="container mx-auto px-4">
             {insuranceTypes.map((insurance, index) => (
-              <div key={index} className={`mb-16 ${index % 2 === 1 ? 'bg-gray-50/50 -mx-4 px-4 py-12 rounded-xl card-3d' : ''}`}>
-                <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <div key={index} className={`mb-16 ${index % 2 === 1 ? 'bg-gray-50/50 -mx-4 px-4 py-12 rounded-xl card-3d' : ''} ${insurance.specialBackground ? 'relative' : ''}`}>
+                {/* USA Flag Background for Travel Insurance */}
+                {insurance.specialBackground && (
+                  <div 
+                    className="absolute inset-0 z-0 opacity-5 rounded-xl"
+                    style={{
+                      backgroundImage: 'url("https://images.unsplash.com/photo-1606844893634-e486cbeb9bcd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat'
+                    }}
+                  />
+                )}
+                <div className="grid lg:grid-cols-2 gap-12 items-start relative z-10">
                   <div className="card-3d bg-white p-8 rounded-xl">
                     <div className="flex items-center mb-6">
                       <div className="card-3d p-4 rounded-xl bg-blue-50">
