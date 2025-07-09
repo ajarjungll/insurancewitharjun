@@ -1,10 +1,11 @@
 
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote, Passport, GraduationCap } from 'lucide-react';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote, GraduationCap } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [{
@@ -23,7 +24,7 @@ const Index = () => {
     description: "Comprehensive travel protection for your domestic and international trips.",
     features: ["Emergency Medical Coverage", "Trip Cancellation", "Lost Baggage Protection", "Emergency Evacuation"]
   }, {
-    icon: <Passport className="w-12 h-12 text-blue-600" />,
+    icon: <Plane className="w-12 h-12 text-blue-600" />,
     title: "Super Visa Insurance",
     description: "Specialized insurance coverage for super visa applicants and their extended stays in Canada.",
     features: ["Medical Coverage", "Emergency Care", "Hospitalization", "Prescription Drugs"]
@@ -228,3 +229,4 @@ const Index = () => {
     </div>;
 };
 export default Index;
+
