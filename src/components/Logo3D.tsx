@@ -17,8 +17,8 @@ const Logo3D = () => {
           {/* Logo image with enhanced effects */}
           <div className="absolute inset-2 flex items-center justify-center">
             <img 
-              src="/lovable-uploads/55ab474a-5f3a-4ae3-a14e-6de458f76ad6.png" 
-              alt="Insurance With Arjun Logo" 
+              src="/lovable-uploads/1b840fd9-56c0-4b16-a862-874fe554da35.png" 
+              alt="Arjun Gill Logo" 
               className="w-full h-full object-contain relative z-10 drop-shadow-lg"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3)) drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
