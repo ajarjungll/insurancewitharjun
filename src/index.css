@@ -106,77 +106,29 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Enhanced 3D Button Styles */
+  /* 3D Button Styles */
   .btn-3d {
-    @apply shadow-2xl transform transition-all duration-300 active:scale-95 active:shadow-lg;
-    box-shadow: 
-      0 8px 25px -5px rgba(0, 0, 0, 0.2), 
-      0 4px 10px -2px rgba(0, 0, 0, 0.1), 
-      0 20px 40px -10px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    background: linear-gradient(145deg, currentColor, currentColor);
-    position: relative;
+    @apply shadow-lg transform transition-all duration-200 active:scale-95 active:shadow-md;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 8px 15px -3px rgba(0, 0, 0, 0.1);
   }
   
   .btn-3d:hover {
-    @apply -translate-y-1 scale-105;
-    box-shadow: 
-      0 15px 35px -5px rgba(0, 0, 0, 0.25), 
-      0 8px 20px -4px rgba(0, 0, 0, 0.15), 
-      0 30px 60px -15px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    @apply -translate-y-0.5;
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 15px 35px -5px rgba(0, 0, 0, 0.15);
   }
 
-  .btn-3d::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border-radius: inherit;
-    pointer-events: none;
-  }
-
-  /* Enhanced 3D Card Styles */
+  /* 3D Card Styles */
   .card-3d {
-    @apply shadow-2xl transform transition-all duration-500 hover:-translate-y-2;
-    box-shadow: 
-      0 10px 30px -5px rgba(0, 0, 0, 0.15), 
-      0 4px 15px -2px rgba(0, 0, 0, 0.1), 
-      0 25px 50px -10px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    @apply shadow-lg transform transition-all duration-300 hover:-translate-y-1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
   }
   
   .card-3d:hover {
-    box-shadow: 
-      0 25px 60px -12px rgba(0, 0, 0, 0.35), 
-      0 12px 25px -4px rgba(0, 0, 0, 0.2), 
-      0 40px 80px -15px rgba(0, 0, 0, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25), 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 25px 50px -10px rgba(0, 0, 0, 0.15);
   }
 
   /* Click to call styling */
   .click-to-call {
     @apply text-blue-600 hover:text-blue-800 cursor-pointer transition-colors duration-200 hover:underline;
-  }
-
-  /* 3D Perspective utilities */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  .rotate-y-12 {
-    transform: rotateY(12deg);
-  }
-
-  /* Gradient radial utility */
-  .bg-gradient-radial {
-    background: radial-gradient(circle, var(--tw-gradient-stops));
   }
 }
