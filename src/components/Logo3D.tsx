@@ -6,31 +6,42 @@ const Logo3D = () => {
     <div className="flex items-center space-x-3">
       <div className="relative">
         {/* Main logo container with enhanced 3D effect */}
-        <div className="w-16 h-16 relative transform-gpu perspective-1000">
+        <div className="w-20 h-20 relative transform-gpu perspective-1000">
           {/* Logo image with 3D transformations */}
           <div className="w-full h-full relative transform transition-all duration-300 hover:rotate-y-12 hover:scale-110">
             <img 
-              src="/lovable-uploads/bd067cbb-e9f3-4b2b-b16e-7d648ce0c42c.png" 
+              src="/lovable-uploads/55ab474a-5f3a-4ae3-a14e-6de458f76ad6.png" 
               alt="Arjun Gill Insurance Logo" 
               className="w-full h-full object-contain drop-shadow-2xl"
               style={{
-                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3)) drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
+                filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.4)) drop-shadow(0 6px 12px rgba(0,0,0,0.3)) drop-shadow(0 3px 6px rgba(0,0,0,0.2))'
               }}
             />
             
-            {/* 3D depth shadow */}
+            {/* Enhanced 3D depth shadow */}
             <div 
-              className="absolute inset-0 -z-10 transform translate-x-1 translate-y-1 opacity-30"
+              className="absolute inset-0 -z-10 transform translate-x-2 translate-y-2 opacity-40"
               style={{
-                background: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)',
-                borderRadius: '12px',
+                background: 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%)',
+                borderRadius: '16px',
+                filter: 'blur(3px)'
+              }}
+            />
+            
+            {/* Additional depth layer */}
+            <div 
+              className="absolute inset-0 -z-20 transform translate-x-1 translate-y-1 opacity-25"
+              style={{
+                background: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.15) 100%)',
+                borderRadius: '14px',
                 filter: 'blur(2px)'
               }}
             />
           </div>
           
-          {/* Subtle glow effect */}
-          <div className="absolute inset-0 -z-20 bg-gradient-radial from-blue-400/20 via-transparent to-transparent rounded-xl blur-lg opacity-60" />
+          {/* Enhanced glow effect */}
+          <div className="absolute inset-0 -z-30 bg-gradient-radial from-blue-400/30 via-blue-300/20 to-transparent rounded-xl blur-xl opacity-70" />
+          <div className="absolute inset-0 -z-40 bg-gradient-radial from-orange-400/20 via-transparent to-transparent rounded-xl blur-2xl opacity-50" />
         </div>
       </div>
       
