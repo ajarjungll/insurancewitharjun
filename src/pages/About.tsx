@@ -116,7 +116,7 @@ const About = () => {
             <div className="grid md:grid-cols-4 gap-8 text-center">
               <div>
                 <Clock className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-                <h3 className="text-4xl font-bold mb-2">2+</h3>
+                <h3 className="text-4xl font-bold mb-2">3+</h3>
                 <p className="text-blue-100">Years of Experience</p>
               </div>
               <div>
@@ -169,7 +169,7 @@ const About = () => {
                 <p className="text-blue-600 mb-4">Founder & Senior Insurance Advisor</p>
                 <p className="text-gray-600">
                   Arjun founded Insurance With Arjun in 2022 and specializes in personal lines insurance, 
-                  helping families protect their assets for over 2+ years.
+                  helping families protect their assets for over 3+ years.
                 </p>
               </div>
             </div>

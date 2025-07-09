@@ -12,7 +12,7 @@ const HeroSection = () => {
               Protect What Matters Most With 
               <span className="text-orange-400"> Trusted Insurance</span>
             </h1>
-            <p className="text-xl mb-8 text-blue-100">Over 3+ years of experience providing comprehensive insurance solutions. From auto to home, life to business - we've got you covered.</p>
+            <p className="text-xl mb-8 text-blue-100">Over 3+ years of experience providing comprehensive insurance solutions. From life to travel, critical illness to super visa - we've got you covered.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/quote" className="bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-colors text-center btn-3d">
                 Get Free Quote

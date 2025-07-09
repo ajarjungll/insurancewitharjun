@@ -1,10 +1,9 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, GraduationCap, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote } from 'lucide-react';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote, PassportIcon as Passport } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [{
@@ -13,20 +12,20 @@ const Index = () => {
     description: "Secure your family's financial future with comprehensive life insurance coverage.",
     features: ["Term Life Insurance", "Whole Life Coverage", "Accidental Death Benefits", "Family Protection"]
   }, {
-    icon: <Shield className="w-12 h-12 text-blue-600" />,
-    title: "Super Visa Insurance",
-    description: "Specialized insurance coverage for super visa applicants and their extended stays in Canada.",
-    features: ["Medical Coverage", "Emergency Care", "Hospitalization", "Prescription Drugs"]
-  }, {
     icon: <HeartPulse className="w-12 h-12 text-blue-600" />,
     title: "Critical Illness Insurance",
     description: "Financial protection when you're diagnosed with a serious illness, providing peace of mind during challenging times.",
     features: ["Cancer Coverage", "Heart Attack Protection", "Stroke Benefits", "Kidney Failure Coverage"]
   }, {
-    icon: <GraduationCap className="w-12 h-12 text-blue-600" />,
-    title: "Student Insurance",
-    description: "Comprehensive insurance coverage designed specifically for students studying in Canada.",
-    features: ["Health & Medical Coverage", "International Student Plans", "Emergency Services", "Prescription Benefits"]
+    icon: <Plane className="w-12 h-12 text-blue-600" />,
+    title: "Travel Insurance",
+    description: "Comprehensive travel protection for your domestic and international trips.",
+    features: ["Emergency Medical Coverage", "Trip Cancellation", "Lost Baggage Protection", "Emergency Evacuation"]
+  }, {
+    icon: <Passport className="w-12 h-12 text-blue-600" />,
+    title: "Super Visa Insurance",
+    description: "Specialized insurance coverage for super visa applicants and their extended stays in Canada.",
+    features: ["Medical Coverage", "Emergency Care", "Hospitalization", "Prescription Drugs"]
   }];
 
   const investmentTypes = [{
