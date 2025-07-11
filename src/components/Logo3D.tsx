@@ -5,17 +5,17 @@ const Logo3D = () => {
   return (
     <div className="flex items-center space-x-4">
       <div className="relative">
-        {/* Main logo container with enhanced 3D effect */}
-        <div className="w-20 h-20 relative card-3d overflow-hidden rounded-2xl">
-          {/* Enhanced 3D background with multiple layers */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 rounded-2xl"></div>
+        {/* Main logo container with enhanced 3D effect - increased size */}
+        <div className="w-28 h-28 relative card-3d overflow-hidden rounded-2xl">
+          {/* White background instead of blue gradient */}
+          <div className="absolute inset-0 bg-white rounded-2xl border border-gray-200"></div>
           
           {/* Multiple highlight layers for depth */}
-          <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/30 to-transparent rounded-t-2xl"></div>
-          <div className="absolute top-2 left-2 w-4 h-4 bg-white/20 rounded-full blur-sm"></div>
+          <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-gray-100/50 to-transparent rounded-t-2xl"></div>
+          <div className="absolute top-2 left-2 w-4 h-4 bg-white/40 rounded-full blur-sm"></div>
           
           {/* Logo image with enhanced effects */}
-          <div className="absolute inset-2 flex items-center justify-center">
+          <div className="absolute inset-3 flex items-center justify-center">
             <img 
               src="/lovable-uploads/1b840fd9-56c0-4b16-a862-874fe554da35.png" 
               alt="Arjun Gill Logo" 
