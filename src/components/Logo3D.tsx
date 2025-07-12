@@ -14,8 +14,8 @@ const Logo3D = () => {
           <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-gray-100/50 to-transparent rounded-t-2xl"></div>
           <div className="absolute top-2 left-2 w-4 h-4 bg-white/40 rounded-full blur-sm"></div>
           
-          {/* Logo image with enhanced effects */}
-          <div className="absolute inset-4 flex items-center justify-center">
+          {/* Logo image with enhanced effects - reduced padding to make logo bigger */}
+          <div className="absolute inset-2 flex items-center justify-center">
             <img 
               src="/lovable-uploads/1b840fd9-56c0-4b16-a862-874fe554da35.png" 
               alt="Arjun Gill Logo" 

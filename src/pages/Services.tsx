@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,7 +7,7 @@ import { Car, Home, Heart, Building, Umbrella, FileText, Phone, Clock } from 'lu
 const Services = () => {
   const services = [
     {
-      icon: <Heart className="w-12 h-12 text-blue-600" />,
+      icon: <Heart className="w-8 h-8 text-white" />,
       title: "Critical Illness Insurance",
       description: "Financial protection when you're diagnosed with a serious illness",
       features: [
@@ -19,7 +20,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Home className="w-12 h-12 text-blue-600" />,
+      icon: <Home className="w-8 h-8 text-white" />,
       title: "Dental Insurance",
       description: "Comprehensive dental care coverage for you and your family",
       features: [
@@ -32,7 +33,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Heart className="w-12 h-12 text-blue-600" />,
+      icon: <Heart className="w-8 h-8 text-white" />,
       title: "Life Insurance",
       description: "Secure your family's financial future",
       features: [
@@ -45,7 +46,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Building className="w-12 h-12 text-blue-600" />,
+      icon: <Building className="w-8 h-8 text-white" />,
       title: "Business Insurance",
       description: "Comprehensive protection for your business",
       features: [
@@ -58,7 +59,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Umbrella className="w-12 h-12 text-blue-600" />,
+      icon: <Umbrella className="w-8 h-8 text-white" />,
       title: "Super Visa Insurance",
       description: "Mandatory health coverage for Super Visa applicants",
       features: [
@@ -71,7 +72,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <FileText className="w-12 h-12 text-blue-600" />,
+      icon: <FileText className="w-8 h-8 text-white" />,
       title: "Student Insurance",
       description: "Comprehensive coverage for students studying abroad",
       features: [
@@ -188,8 +189,16 @@ const Services = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent rounded-2xl"></div>
                   <div className="relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        {service.icon}
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 card-3d relative overflow-hidden shadow-xl">
+                        {/* Multiple depth layers for enhanced 3D effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-800 rounded-2xl"></div>
+                        <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/20 to-transparent rounded-t-2xl"></div>
+                        <div className="absolute top-1 left-1 w-3 h-3 bg-white/30 rounded-full blur-sm"></div>
+                        <div className="relative z-10">
+                          {service.icon}
+                        </div>
+                        {/* Bottom shadow for depth */}
+                        <div className="absolute bottom-0 left-1 right-1 h-1 bg-black/30 rounded-full blur-sm"></div>
                       </div>
                       <h3 className="text-2xl font-bold text-gray-900 mt-4">{service.title}</h3>
                       <p className="text-gray-600 mt-2">{service.description}</p>
@@ -245,8 +254,14 @@ const Services = () => {
                        boxShadow: '0 15px 30px -8px rgba(0, 0, 0, 0.12), 0 6px 12px -2px rgba(0, 0, 0, 0.08)',
                        background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)'
                      }}>
-                  <div className="bg-gradient-to-br from-orange-100 to-orange-200 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                    {service.icon}
+                  <div className="bg-gradient-to-br from-orange-100 to-orange-200 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg card-3d relative overflow-hidden">
+                    {/* Enhanced 3D effect for additional services icons */}
+                    <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/30 to-transparent rounded-t-2xl"></div>
+                    <div className="absolute top-1 left-1 w-2 h-2 bg-white/40 rounded-full blur-sm"></div>
+                    <div className="relative z-10">
+                      {service.icon}
+                    </div>
+                    <div className="absolute bottom-0 left-1 right-1 h-1 bg-black/20 rounded-full blur-sm"></div>
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-4">{service.title}</h3>
                   <p className="text-gray-600">{service.description}</p>
@@ -276,32 +291,36 @@ const Services = () => {
             
             <div className="grid md:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
-                  1
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg card-3d relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/20 to-transparent rounded-t-full"></div>
+                  <div className="relative z-10">1</div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Us</h3>
                 <p className="text-gray-600">Call, email, or visit us to discuss your insurance needs</p>
               </div>
               
               <div className="text-center">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
-                  2
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg card-3d relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/20 to-transparent rounded-t-full"></div>
+                  <div className="relative z-10">2</div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Get Quotes</h3>
                 <p className="text-gray-600">We'll compare rates from multiple carriers to find you the best deal</p>
               </div>
               
               <div className="text-center">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
-                  3
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg card-3d relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/20 to-transparent rounded-t-full"></div>
+                  <div className="relative z-10">3</div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Coverage</h3>
                 <p className="text-gray-600">Select the policy that best fits your needs and budget</p>
               </div>
               
               <div className="text-center">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
-                  4
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg card-3d relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/20 to-transparent rounded-t-full"></div>
+                  <div className="relative z-10">4</div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Stay Protected</h3>
                 <p className="text-gray-600">Enjoy peace of mind with ongoing support and service</p>
