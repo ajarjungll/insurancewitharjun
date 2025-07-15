@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <header className={`bg-gray-50 shadow-lg sticky top-0 z-50 transition-all duration-300`}>
-      {/* Top Bar */}
+      {/* Top Bar - Only this shrinks */}
       <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-1 text-sm' : 'py-3'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-6">
@@ -55,22 +55,20 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
+      {/* Main Navigation - This stays the same size */}
+      <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className={`transition-transform duration-300 ${isScrolled ? 'scale-60' : 'scale-100'}`}>
+          <Link to="/" className={`transition-transform duration-300 ${isScrolled ? 'scale-75' : 'scale-100'}`}>
             <Logo3D />
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Buttons stay same size */}
           <div className="hidden lg:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d ${
-                  isScrolled ? 'px-2 py-1 text-xs' : 'px-4 py-2'
-                } rounded-lg ${
+                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d px-4 py-2 rounded-lg ${
                   isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
                 }`}
               >
@@ -79,22 +77,18 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className={`bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d ${
-                isScrolled ? 'px-3 py-1 text-xs' : 'px-6 py-2'
-              }`}
+              className="bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d px-6 py-2"
             >
               Get Quote
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Stays same size */}
           <button
-            className={`lg:hidden btn-3d rounded-lg bg-gray-100 transition-all duration-300 ${
-              isScrolled ? 'p-0.5' : 'p-2'
-            }`}
+            className="lg:hidden btn-3d rounded-lg bg-gray-100 p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X size={isScrolled ? 18 : 24} /> : <Menu size={isScrolled ? 18 : 24} />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 

@@ -1,11 +1,9 @@
-
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote, GraduationCap } from 'lucide-react';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote, GraduationCap, Truck, DollarSign, Users, Smile, BookOpen } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [{
@@ -15,7 +13,7 @@ const Index = () => {
     features: ["Term Life Insurance", "Whole Life Coverage", "Accidental Death Benefits", "Family Protection"]
   }, {
     icon: <HeartPulse className="w-12 h-12 text-blue-600" />,
-    title: "Critical Illness Insurance",
+    title: "Critical Illness Insurance", 
     description: "Financial protection when you're diagnosed with a serious illness, providing peace of mind during challenging times.",
     features: ["Cancer Coverage", "Heart Attack Protection", "Stroke Benefits", "Kidney Failure Coverage"]
   }, {
@@ -28,6 +26,36 @@ const Index = () => {
     title: "Super Visa Insurance",
     description: "Specialized insurance coverage for super visa applicants and their extended stays in Canada.",
     features: ["Medical Coverage", "Emergency Care", "Hospitalization", "Prescription Drugs"]
+  }, {
+    icon: <Truck className="w-12 h-12 text-blue-600" />,
+    title: "Travel Insurance for Truckers",
+    description: "Specialized travel insurance designed for professional truck drivers and long-haul transportation.",
+    features: ["Cross-Border Coverage", "Commercial Vehicle Protection", "Emergency Medical", "Trip Interruption"]
+  }, {
+    icon: <DollarSign className="w-12 h-12 text-blue-600" />,
+    title: "Loss of Income Insurance",
+    description: "Protect your earning capacity with coverage that replaces lost income during unexpected events.",
+    features: ["Income Replacement", "Business Interruption", "Partial Disability", "Return to Work Benefits"]
+  }, {
+    icon: <Users className="w-12 h-12 text-blue-600" />,
+    title: "Disability Insurance",
+    description: "Financial protection when illness or injury prevents you from working and earning income.",
+    features: ["Short-Term Disability", "Long-Term Disability", "Partial Benefits", "Rehabilitation Support"]
+  }, {
+    icon: <Smile className="w-12 h-12 text-blue-600" />,
+    title: "Dental Insurance",
+    description: "Comprehensive dental coverage for routine care, major procedures, and emergency treatments.",
+    features: ["Routine Cleanings", "Major Procedures", "Emergency Care", "Orthodontic Coverage"]
+  }, {
+    icon: <HeartPulse className="w-12 h-12 text-blue-600" />,
+    title: "Health Insurance",
+    description: "Complete health coverage for medical expenses, prescription drugs, and wellness programs.",
+    features: ["Medical Coverage", "Prescription Drugs", "Hospital Benefits", "Wellness Programs"]
+  }, {
+    icon: <BookOpen className="w-12 h-12 text-blue-600" />,
+    title: "Student Insurance",
+    description: "Affordable insurance coverage designed specifically for students studying in Canada.",
+    features: ["Medical Coverage", "Emergency Care", "Prescription Drugs", "Mental Health Support"]
   }];
 
   const investmentTypes = [{
@@ -102,7 +130,7 @@ const Index = () => {
               <p className="text-xl text-gray-600">Comprehensive coverage options tailored to your needs</p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {insuranceTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d">
                   <div className="text-center mb-4">
                     {type.icon}
@@ -194,6 +222,11 @@ const Index = () => {
                     <option value="super-visa">Super Visa Insurance</option>
                     <option value="critical-illness">Critical Illness Insurance</option>
                     <option value="student">Student Insurance</option>
+                    <option value="trucker-travel">Travel Insurance for Truckers</option>
+                    <option value="loss-income">Loss of Income Insurance</option>
+                    <option value="disability">Disability Insurance</option>
+                    <option value="dental">Dental Insurance</option>
+                    <option value="health">Health Insurance</option>
                   </select>
                   <button type="submit" className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors btn-3d">
                     Get Free Quote
@@ -229,4 +262,3 @@ const Index = () => {
     </div>;
 };
 export default Index;
-
