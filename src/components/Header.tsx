@@ -31,25 +31,25 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`bg-white shadow-lg sticky top-0 z-50 transition-all duration-300`}>
+    <header className={`bg-gray-50 shadow-lg sticky top-0 z-50 transition-all duration-300`}>
       {/* Top Bar */}
-      <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-0.5 text-xs' : 'py-2'}`}>
-        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-1">
-              <Phone size={isScrolled ? 10 : 14} />
-              <a href="tel:+14313382078" className="click-to-call text-white hover:text-blue-200">
+      <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-1 text-sm' : 'py-3'}`}>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
+              <Phone size={isScrolled ? 14 : 18} />
+              <a href="tel:+14313382078" className={`click-to-call text-white hover:text-blue-200 ${isScrolled ? 'text-sm' : 'text-base'}`}>
                 (431) 338-2078
               </a>
             </div>
-            <div className="flex items-center space-x-1">
-              <Mail size={isScrolled ? 10 : 14} />
-              <a href="mailto:insurancewitharjun@gmail.com" className="hover:text-blue-200 transition-colors">
+            <div className="flex items-center space-x-2">
+              <Mail size={isScrolled ? 14 : 18} />
+              <a href="mailto:insurancewitharjun@gmail.com" className={`hover:text-blue-200 transition-colors ${isScrolled ? 'text-sm' : 'text-base'}`}>
                 insurancewitharjun@gmail.com
               </a>
             </div>
           </div>
-          <div className={`transition-all duration-300 ${isScrolled ? 'text-xs hidden md:block' : 'text-sm'}`}>
+          <div className={`transition-all duration-300 ${isScrolled ? 'text-sm hidden md:block' : 'text-base'}`}>
             Licensed Insurance Agent | Office Hours: Mon-Fri 10AM-5PM, Sat 10AM-1PM
           </div>
         </div>
