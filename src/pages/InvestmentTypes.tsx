@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { TrendingUp, PiggyBank, Home, Shield, Calculator, DollarSign, CreditCard, GraduationCap, Building, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const InvestmentTypes = () => {
   const investmentTypes = [
@@ -211,9 +212,12 @@ const InvestmentTypes = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d">
+                      <Link 
+                        to={`/investment-types/${investment.title.toLowerCase().split(' ')[0]}`}
+                        className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-center"
+                      >
                         Learn More About {investment.title}
-                      </button>
+                      </Link>
                       <a href="tel:+14313382078" className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold btn-3d flex items-center justify-center gap-2">
                         <Phone size={18} />
                         Call Now
