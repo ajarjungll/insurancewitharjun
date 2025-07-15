@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +13,10 @@ import RRSPDetails from "./pages/RRSPDetails";
 import FHSADetails from "./pages/FHSADetails";
 import TFSADetails from "./pages/TFSADetails";
 import RESPDetails from "./pages/RESPDetails";
+import CriticalIllnessDetails from "./pages/CriticalIllnessDetails";
+import DentalInsuranceDetails from "./pages/DentalInsuranceDetails";
+import LifeInsuranceDetails from "./pages/LifeInsuranceDetails";
+import BusinessInsuranceDetails from "./pages/BusinessInsuranceDetails";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import NotFound from "./pages/NotFound";
@@ -29,6 +34,10 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/insurance-types" element={<InsuranceTypes />} />
+          <Route path="/insurance-types/critical-illness" element={<CriticalIllnessDetails />} />
+          <Route path="/insurance-types/dental" element={<DentalInsuranceDetails />} />
+          <Route path="/insurance-types/life" element={<LifeInsuranceDetails />} />
+          <Route path="/insurance-types/business" element={<BusinessInsuranceDetails />} />
           <Route path="/investment-types" element={<InvestmentTypes />} />
           <Route path="/investment-types/rrsp" element={<RRSPDetails />} />
           <Route path="/investment-types/fhsa" element={<FHSADetails />} />

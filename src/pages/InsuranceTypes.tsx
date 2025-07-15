@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -24,7 +23,8 @@ const InsuranceTypes = () => {
         "No restrictions on how funds are used",
         "Family history considerations in underwriting",
         "Return of premium options available"
-      ]
+      ],
+      detailLink: "/insurance-types/critical-illness"
     },
     {
       icon: <Home className="w-12 h-12 sm:w-16 sm:h-16 text-blue-600" />,
@@ -44,7 +44,8 @@ const InsuranceTypes = () => {
         "No waiting periods for preventive care",
         "Family plan options with discounts",
         "Direct billing to reduce out-of-pocket costs"
-      ]
+      ],
+      detailLink: "/insurance-types/dental"
     },
     {
       icon: <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-blue-600" />,
@@ -64,7 +65,8 @@ const InsuranceTypes = () => {
         "Competitive rates for all ages and health conditions",
         "Flexible payment schedules",
         "Professional guidance on coverage amounts"
-      ]
+      ],
+      detailLink: "/insurance-types/life"
     },
     {
       icon: <Building className="w-12 h-12 sm:w-16 sm:h-16 text-blue-600" />,
@@ -84,7 +86,8 @@ const InsuranceTypes = () => {
         "Risk management and safety resources",
         "Claims advocacy and support",
         "Flexible payment terms for businesses"
-      ]
+      ],
+      detailLink: "/insurance-types/business"
     },
     {
       icon: <Umbrella className="w-12 h-12 sm:w-16 sm:h-16 text-blue-600" />,
@@ -225,6 +228,8 @@ const InsuranceTypes = () => {
                 )}
                 <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-start relative z-10">
                   <div className="card-3d bg-white p-4 sm:p-8 rounded-xl order-2 lg:order-1">
+                    
+                    
                     <div className="flex flex-col sm:flex-row items-start sm:items-center mb-4 sm:mb-6">
                       <div className="card-3d p-3 sm:p-4 rounded-xl bg-blue-50 mb-4 sm:mb-0">
                         {insurance.icon}
@@ -249,9 +254,15 @@ const InsuranceTypes = () => {
                     </div>
                     
                     <div className="flex flex-col gap-3 sm:gap-4">
-                      <button className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-sm sm:text-base">
-                        Get Quote for {insurance.title}
-                      </button>
+                      {insurance.detailLink ? (
+                        <a href={insurance.detailLink} className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-sm sm:text-base text-center">
+                          Learn More About {insurance.title}
+                        </a>
+                      ) : (
+                        <button className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-sm sm:text-base">
+                          Learn More About {insurance.title}
+                        </button>
+                      )}
                       <a href="tel:+14313382078" className="bg-green-600 text-white px-6 sm:px-8 py-3 sm:py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold btn-3d flex items-center justify-center gap-2 text-sm sm:text-base">
                         <Phone size={16} className="sm:w-[18px] sm:h-[18px]" />
                         Call Now
@@ -260,6 +271,7 @@ const InsuranceTypes = () => {
                   </div>
                   
                   <div className="card-3d bg-white p-4 sm:p-8 rounded-xl order-1 lg:order-2">
+                    
                     <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Coverage Options:</h3>
                     <div className="space-y-3 sm:space-y-4">
                       {insurance.coverage.map((coverage, idx) => (
