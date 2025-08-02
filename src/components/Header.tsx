@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Menu, X } from 'lucide-react';
@@ -55,22 +54,20 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Main Navigation - Significantly reduced padding when scrolled */}
-      <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
+      {/* Main Navigation - Drastically reduce height when scrolled */}
+      <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-0.5' : 'py-4'}`}>
         <div className="flex justify-between items-center">
-          <Link to="/" className={`transition-transform duration-300 ${isScrolled ? 'scale-50' : 'scale-100'}`}>
+          <Link to="/" className="transition-transform duration-300">
             <Logo3D />
           </Link>
 
-          {/* Desktop Navigation - Smaller buttons when scrolled */}
+          {/* Desktop Navigation - Keep buttons normal size */}
           <div className="hidden lg:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d rounded-lg ${
-                  isScrolled ? 'px-2 py-1 text-sm' : 'px-4 py-2'
-                } ${
+                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d px-4 py-2 rounded-lg ${
                   isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
                 }`}
               >
@@ -79,22 +76,18 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className={`bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d ${
-                isScrolled ? 'px-3 py-1 text-sm' : 'px-6 py-2'
-              }`}
+              className="bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d px-6 py-2"
             >
               Get Quote
             </Link>
           </div>
 
-          {/* Mobile Menu Button - Smaller when scrolled */}
+          {/* Mobile Menu Button - Keep normal size */}
           <button
-            className={`lg:hidden btn-3d rounded-lg bg-gray-100 transition-all duration-300 ${
-              isScrolled ? 'p-1' : 'p-2'
-            }`}
+            className="lg:hidden btn-3d rounded-lg bg-gray-100 p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X size={isScrolled ? 20 : 24} /> : <Menu size={isScrolled ? 20 : 24} />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
