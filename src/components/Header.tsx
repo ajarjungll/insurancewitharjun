@@ -31,7 +31,7 @@ const Header = () => {
 
   return (
     <header className={`bg-gray-50 shadow-lg sticky top-0 z-50 transition-all duration-300`}>
-      {/* Top Bar - Significantly reduced when scrolled */}
+      {/* Top Bar - Keep unchanged */}
       <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-0.5 text-xs' : 'py-3'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-6">
@@ -54,8 +54,8 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Main Navigation - Drastically reduce height when scrolled */}
-      <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-0.5' : 'py-4'}`}>
+      {/* Main Navigation - Make white banner much smaller when scrolled */}
+      <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
         <div className="flex justify-between items-center">
           <Link to="/" className="transition-transform duration-300">
             <Logo3D />
