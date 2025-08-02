@@ -32,43 +32,45 @@ const Header = () => {
 
   return (
     <header className={`bg-gray-50 shadow-lg sticky top-0 z-50 transition-all duration-300`}>
-      {/* Top Bar - Only this shrinks */}
-      <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-1 text-sm' : 'py-3'}`}>
+      {/* Top Bar - Significantly reduced when scrolled */}
+      <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-0.5 text-xs' : 'py-3'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
-              <Phone size={isScrolled ? 14 : 18} />
-              <a href="tel:+14313382078" className={`click-to-call text-white hover:text-blue-200 ${isScrolled ? 'text-sm' : 'text-base'}`}>
+              <Phone size={isScrolled ? 12 : 18} />
+              <a href="tel:+14313382078" className={`click-to-call text-white hover:text-blue-200 ${isScrolled ? 'text-xs' : 'text-base'}`}>
                 (431) 338-2078
               </a>
             </div>
             <div className="flex items-center space-x-2">
-              <Mail size={isScrolled ? 14 : 18} />
-              <a href="mailto:insurancewitharjun@gmail.com" className={`hover:text-blue-200 transition-colors ${isScrolled ? 'text-sm' : 'text-base'}`}>
+              <Mail size={isScrolled ? 12 : 18} />
+              <a href="mailto:insurancewitharjun@gmail.com" className={`hover:text-blue-200 transition-colors ${isScrolled ? 'text-xs' : 'text-base'}`}>
                 insurancewitharjun@gmail.com
               </a>
             </div>
           </div>
-          <div className={`transition-all duration-300 ${isScrolled ? 'text-sm hidden md:block' : 'text-base'}`}>
+          <div className={`transition-all duration-300 ${isScrolled ? 'text-xs hidden lg:block' : 'text-base hidden md:block'}`}>
             Licensed Insurance Agent | Office Hours: Mon-Fri 10AM-5PM, Sat 10AM-1PM
           </div>
         </div>
       </div>
 
-      {/* Main Navigation - This stays the same size */}
-      <nav className="container mx-auto px-4 py-4">
+      {/* Main Navigation - Significantly reduced padding when scrolled */}
+      <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
         <div className="flex justify-between items-center">
-          <Link to="/" className={`transition-transform duration-300 ${isScrolled ? 'scale-75' : 'scale-100'}`}>
+          <Link to="/" className={`transition-transform duration-300 ${isScrolled ? 'scale-50' : 'scale-100'}`}>
             <Logo3D />
           </Link>
 
-          {/* Desktop Navigation - Buttons stay same size */}
+          {/* Desktop Navigation - Smaller buttons when scrolled */}
           <div className="hidden lg:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d px-4 py-2 rounded-lg ${
+                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d rounded-lg ${
+                  isScrolled ? 'px-2 py-1 text-sm' : 'px-4 py-2'
+                } ${
                   isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
                 }`}
               >
@@ -77,18 +79,22 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className="bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d px-6 py-2"
+              className={`bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d ${
+                isScrolled ? 'px-3 py-1 text-sm' : 'px-6 py-2'
+              }`}
             >
               Get Quote
             </Link>
           </div>
 
-          {/* Mobile Menu Button - Stays same size */}
+          {/* Mobile Menu Button - Smaller when scrolled */}
           <button
-            className="lg:hidden btn-3d rounded-lg bg-gray-100 p-2"
+            className={`lg:hidden btn-3d rounded-lg bg-gray-100 transition-all duration-300 ${
+              isScrolled ? 'p-1' : 'p-2'
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={isScrolled ? 20 : 24} /> : <Menu size={isScrolled ? 20 : 24} />}
           </button>
         </div>
 
