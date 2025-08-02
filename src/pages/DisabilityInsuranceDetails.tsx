@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Wheelchair, Phone, ArrowLeft, CheckCircle, Shield, Heart, Users } from 'lucide-react';
+import { Accessibility, Phone, ArrowLeft, CheckCircle, Shield, Heart, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 
@@ -31,7 +31,7 @@ const DisabilityInsuranceDetails = () => {
             </Link>
             <div className="flex items-center mb-6">
               <div className="card-3d p-4 rounded-xl bg-purple-50 mr-6">
-                <Wheelchair className="w-16 h-16 text-purple-600" />
+                <Accessibility className="w-16 h-16 text-purple-600" />
               </div>
               <div>
                 <h1 className="text-5xl font-bold mb-4">Disability Insurance</h1>

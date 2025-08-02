@@ -1,8 +1,7 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Shield, Heart, Smile, Building, Truck, DollarSign, Wheelchair, Activity, GraduationCap } from 'lucide-react';
+import { Shield, Heart, Smile, Building, Truck, DollarSign, Accessibility, Activity, GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const InsuranceTypes = () => {
@@ -50,7 +49,7 @@ const InsuranceTypes = () => {
       link: "/insurance-types/loss-of-income"
     },
     {
-      icon: <Wheelchair className="w-12 h-12 text-purple-600" />,
+      icon: <Accessibility className="w-12 h-12 text-purple-600" />,
       title: "Disability Insurance",
       description: "Comprehensive protection when illness or injury prevents you from working.",
       features: ["Own occupation coverage", "Partial disability benefits", "Cost of living adjustments"],
