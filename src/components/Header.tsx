@@ -6,6 +6,8 @@ import Logo3D from './Logo3D';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
 
   const navItems = [
@@ -22,15 +24,33 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
+      
+      // Determine if scrolled
       setIsScrolled(scrollTop > 50);
+      
+      // Header visibility logic
+      if (scrollTop === 0) {
+        // At the top - always show header
+        setIsHeaderVisible(true);
+      } else if (scrollTop < lastScrollY) {
+        // Scrolling up - show header
+        setIsHeaderVisible(true);
+      } else if (scrollTop > lastScrollY && scrollTop > 100) {
+        // Scrolling down and past 100px - hide header
+        setIsHeaderVisible(false);
+      }
+      
+      setLastScrollY(scrollTop);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   return (
-    <header className={`shadow-lg sticky top-0 z-50 transition-all duration-300`}>
+    <header className={`bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 ${
+      isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+    }`}>
       {/* Top Bar - Keep unchanged */}
       <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-0.5 text-xs' : 'py-3'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
@@ -54,7 +74,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Main Navigation - Make transparent */}
+      {/* Main Navigation */}
       <nav className={`container mx-auto px-4 transition-all duration-300 ${isScrolled ? 'py-0.5' : 'py-1'}`}>
         <div className="flex justify-between items-center">
           <Link to="/" className="transition-transform duration-300">
