@@ -5,22 +5,21 @@ const Logo3D = () => {
   return (
     <div className="flex items-center space-x-4">
       <div className="relative">
-        {/* Logo image with enhanced 3D effects - no container shape */}
-        <div className="relative">
-          <img 
-            src="/lovable-uploads/1b840fd9-56c0-4b16-a862-874fe554da35.png" 
-            alt="Arjun Gill Logo" 
-            className="w-36 h-36 object-contain relative z-10"
-            style={{
-              filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3)) drop-shadow(0 4px 8px rgba(0,0,0,0.2)) drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
-            }}
-          />
-        </div>
-        
-        {/* Enhanced floating badge */}
-        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-xl card-3d">
-          <span className="relative z-10">A</span>
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/30 to-transparent rounded-t-full"></div>
+        {/* Animated 3D Logo Text */}
+        <div className="relative transform-gpu">
+          <h1 className="text-5xl font-bold bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent relative z-10 animate-pulse">
+            AG
+          </h1>
+          {/* 3D shadow layers */}
+          <div className="absolute top-0 left-0 text-5xl font-bold text-blue-400/30 -z-10 transform translate-x-1 translate-y-1">
+            AG
+          </div>
+          <div className="absolute top-0 left-0 text-5xl font-bold text-blue-300/20 -z-20 transform translate-x-2 translate-y-2">
+            AG
+          </div>
+          <div className="absolute top-0 left-0 text-5xl font-bold text-blue-200/10 -z-30 transform translate-x-3 translate-y-3">
+            AG
+          </div>
         </div>
       </div>
       
