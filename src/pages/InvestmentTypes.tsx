@@ -185,11 +185,11 @@ const InvestmentTypes = () => {
         <section className="py-16 bg-white relative">
           <div className="container mx-auto px-4">
             {investmentTypes.map((investment, index) => (
-              <div key={index} className={`mb-16 ${index % 2 === 1 ? 'bg-gray-50/50 -mx-4 px-4 py-12 rounded-xl card-3d' : ''}`}>
+              <div key={index} className={`mb-16 ${index % 2 === 1 ? 'bg-gradient-to-br from-gray-50 to-gray-100 -mx-4 px-4 py-12 rounded-xl card-3d hover:shadow-2xl transition-all duration-300' : ''}`}>
                 <div className="grid lg:grid-cols-2 gap-12 items-start">
-                  <div className="card-3d bg-white p-8 rounded-xl">
+                  <div className="card-3d bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border border-gray-200">
                     <div className="flex items-center mb-6">
-                      <div className="card-3d p-4 rounded-xl bg-blue-50">
+                      <div className="card-3d p-4 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg">
                         {investment.icon}
                       </div>
                       <div className="ml-4">
@@ -214,22 +214,22 @@ const InvestmentTypes = () => {
                     <div className="flex flex-col sm:flex-row gap-4">
                       <Link 
                         to={`/investment-types/${investment.title.toLowerCase().split(' ')[0]}`}
-                        className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-center"
+                        className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold btn-3d text-center shadow-lg"
                       >
                         Learn More About {investment.title}
                       </Link>
-                      <a href="tel:+14313382078" className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold btn-3d flex items-center justify-center gap-2">
+                      <a href="tel:+14313382078" className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold btn-3d flex items-center justify-center gap-2 shadow-lg">
                         <Phone size={18} />
                         Call Now
                       </a>
                     </div>
                   </div>
                   
-                  <div className="card-3d bg-white p-8 rounded-xl">
+                  <div className="card-3d bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border border-gray-200">
                     <h3 className="text-xl font-bold text-gray-900 mb-6">Features & Details:</h3>
                     <div className="space-y-4">
                       {investment.coverage.map((coverage, idx) => (
-                        <div key={idx} className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg shadow-sm border-l-4 border-blue-600 card-3d">
+                        <div key={idx} className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg shadow-md border-l-4 border-blue-600 card-3d hover:shadow-lg transition-all duration-300">
                           <p className="text-gray-700 font-medium">{coverage}</p>
                         </div>
                       ))}
@@ -242,13 +242,13 @@ const InvestmentTypes = () => {
         </section>
 
         {/* Investment Comparison Section */}
-        <section className="py-16 bg-gray-50 relative">
+        <section className="py-16 bg-gradient-to-br from-gray-50 to-gray-100 relative">
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">Account Comparison</h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <div className="bg-white p-8 rounded-xl shadow-lg card-3d">
+              <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-xl card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-200">
                 <div className="flex items-center mb-6">
-                  <div className="card-3d p-3 rounded-xl bg-blue-50">
+                  <div className="card-3d p-3 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg">
                     <PiggyBank className="w-12 h-12 text-blue-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 ml-4">RRSP</h3>
@@ -269,9 +269,9 @@ const InvestmentTypes = () => {
                 </ul>
               </div>
               
-              <div className="bg-white p-8 rounded-xl shadow-lg card-3d">
+              <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-xl card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-200">
                 <div className="flex items-center mb-6">
-                  <div className="card-3d p-3 rounded-xl bg-blue-50">
+                  <div className="card-3d p-3 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg">
                     <TrendingUp className="w-12 h-12 text-blue-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 ml-4">TFSA</h3>
@@ -292,9 +292,9 @@ const InvestmentTypes = () => {
                 </ul>
               </div>
 
-              <div className="bg-white p-8 rounded-xl shadow-lg card-3d">
+              <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-xl card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-200">
                 <div className="flex items-center mb-6">
-                  <div className="card-3d p-3 rounded-xl bg-blue-50">
+                  <div className="card-3d p-3 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg">
                     <Home className="w-12 h-12 text-blue-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 ml-4">FHSA</h3>
@@ -331,10 +331,10 @@ const InvestmentTypes = () => {
               strategies to meet your retirement, homeownership, and education goals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-colors btn-3d">
+              <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-300 btn-3d shadow-lg">
                 Schedule Investment Consultation
               </button>
-              <a href="tel:+14313382078" className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-colors btn-3d flex items-center justify-center gap-2">
+              <a href="tel:+14313382078" className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300 btn-3d flex items-center justify-center gap-2 shadow-lg">
                 <Phone size={20} />
                 Call (431) 338-2078
               </a>

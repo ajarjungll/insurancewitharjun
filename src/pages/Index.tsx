@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -131,9 +132,11 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {insuranceTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d">
+              {insuranceTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100">
                   <div className="text-center mb-4">
-                    {type.icon}
+                    <div className="card-3d inline-block p-3 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 mb-3">
+                      {type.icon}
+                    </div>
                     <h3 className="text-xl font-bold text-gray-900 mt-4">{type.title}</h3>
                   </div>
                   <p className="text-gray-600 mb-4">{type.description}</p>
@@ -143,7 +146,7 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/insurance-types" className="block mt-6 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors btn-3d">
+                  <Link to="/insurance-types" className="block mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 btn-3d shadow-lg">
                     Learn More
                   </Link>
                 </div>)}
@@ -160,9 +163,11 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {investmentTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d border border-gray-200">
+              {investmentTypes.map((type, index) => <div key={index} className="bg-white rounded-xl p-6 card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-200">
                   <div className="text-center mb-4">
-                    {type.icon}
+                    <div className="card-3d inline-block p-3 rounded-xl bg-gradient-to-br from-green-50 to-green-100 mb-3">
+                      {type.icon}
+                    </div>
                     <h3 className="text-xl font-bold text-gray-900 mt-4">{type.title}</h3>
                   </div>
                   <p className="text-gray-600 mb-4">{type.description}</p>
@@ -172,7 +177,7 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/investment-types" className="block mt-6 bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition-colors btn-3d">
+                  <Link to="/investment-types" className="block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 btn-3d shadow-lg">
                     Learn More
                   </Link>
                 </div>)}
@@ -210,13 +215,13 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-blue-50 p-8 rounded-xl card-3d">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl card-3d hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border border-blue-200">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Get Your Free Quote Today</h3>
                 <form className="space-y-4">
-                  <input type="text" placeholder="Full Name" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
-                  <input type="email" placeholder="Email Address" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
-                  <input type="tel" placeholder="Phone Number" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                  <input type="text" placeholder="Full Name" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm" />
+                  <input type="email" placeholder="Email Address" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm" />
+                  <input type="tel" placeholder="Phone Number" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm" />
+                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm">
                     <option value="">Select Insurance Type</option>
                     <option value="life">Life Insurance</option>
                     <option value="super-visa">Super Visa Insurance</option>
@@ -228,7 +233,7 @@ const Index = () => {
                     <option value="dental">Dental Insurance</option>
                     <option value="health">Health Insurance</option>
                   </select>
-                  <button type="submit" className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors btn-3d">
+                  <button type="submit" className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-300 btn-3d shadow-lg">
                     Get Free Quote
                   </button>
                 </form>
@@ -246,7 +251,7 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => <div key={index} className="bg-gray-50 rounded-xl p-6 card-3d">
+              {testimonials.map((testimonial, index) => <div key={index} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-200">
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => <Star key={i} size={20} className="text-yellow-400 fill-current" />)}
                   </div>
