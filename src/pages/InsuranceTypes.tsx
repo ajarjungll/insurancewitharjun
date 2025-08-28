@@ -1,11 +1,12 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Shield, Heart, Smile, Building, Truck, DollarSign, Accessibility, Activity, GraduationCap, Plane } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const InsuranceTypes = () => {
+  const navigate = useNavigate();
+
   const insuranceProducts = [
     {
       icon: <Heart className="w-12 h-12 text-red-600" />,
@@ -80,7 +81,7 @@ const InsuranceTypes = () => {
   ];
 
   const openDetailPage = (detailPage: string) => {
-    window.open(detailPage, '_blank');
+    navigate(detailPage);
   };
 
   return (
