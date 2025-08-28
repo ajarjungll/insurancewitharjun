@@ -143,8 +143,8 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/quote" className="block mt-6 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors btn-3d">
-                    Get Quote
+                  <Link to="/insurance-types" className="block mt-6 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors btn-3d">
+                    Learn More
                   </Link>
                 </div>)}
             </div>
