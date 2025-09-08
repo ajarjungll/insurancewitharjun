@@ -109,7 +109,7 @@ const SuperVisaInsuranceDetails = () => {
                   },
                   {
                     title: "Prescription Medications",
-                    description: "Emergency prescription drugs related to covered conditions",
+                    description: "Standard plan: $500 per prescription | Enhanced plan: $1000 per prescription | Some companies offer up to $100K total coverage",
                     icon: <CheckCircle className="w-12 h-12 text-green-600" />
                   },
                   {
@@ -126,6 +126,11 @@ const SuperVisaInsuranceDetails = () => {
                     title: "Repatriation",
                     description: "Transportation back to home country if medically necessary",
                     icon: <Users className="w-12 h-12 text-indigo-600" />
+                  },
+                  {
+                    title: "Accidental Death & Dismemberment",
+                    description: "Coverage up to $100,000 for accidental death and dismemberment",
+                    icon: <Shield className="w-12 h-12 text-red-600" />
                   }
                 ].map((coverage, index) => (
                   <div key={index} className="bg-white p-8 rounded-xl shadow-lg border">

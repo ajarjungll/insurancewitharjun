@@ -146,7 +146,7 @@ const TravelInsuranceTruckersDetails = () => {
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Medical Coverage:</span>
-                        <span className="font-semibold">Up to $2M</span>
+                        <span className="font-semibold">Up to $5M</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Trip Duration:</span>
