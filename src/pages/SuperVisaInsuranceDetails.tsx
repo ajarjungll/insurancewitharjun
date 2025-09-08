@@ -64,7 +64,7 @@ const SuperVisaInsuranceDetails = () => {
                     This specialized insurance provides comprehensive emergency medical coverage for visitors staying in Canada for up to 2 years at a time, ensuring they have access to quality healthcare without burdening the Canadian healthcare system.
                   </p>
                 </div>
-                <div className="bg-blue-50 p-8 rounded-xl">
+                <div className="bg-blue-50 p-8 rounded-xl card-3d">
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Government Requirements</h3>
                   <ul className="space-y-3">
                     <li className="flex items-start">
@@ -133,7 +133,7 @@ const SuperVisaInsuranceDetails = () => {
                     icon: <Shield className="w-12 h-12 text-red-600" />
                   }
                 ].map((coverage, index) => (
-                  <div key={index} className="bg-white p-8 rounded-xl shadow-lg border">
+                  <div key={index} className="bg-white p-8 rounded-xl card-3d-super border">
                     <div className="text-center mb-6">
                       {coverage.icon}
                       <h3 className="text-xl font-bold text-gray-900 mt-4">{coverage.title}</h3>
@@ -152,7 +152,7 @@ const SuperVisaInsuranceDetails = () => {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Eligibility & Application Process</h2>
               <div className="grid md:grid-cols-2 gap-12">
-                <div className="bg-blue-50 p-8 rounded-xl">
+                <div className="bg-blue-50 p-8 rounded-xl card-3d">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Who Can Apply</h3>
                   <ul className="space-y-4">
                     <li className="flex items-start">
@@ -173,7 +173,7 @@ const SuperVisaInsuranceDetails = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="bg-green-50 p-8 rounded-xl">
+                <div className="bg-green-50 p-8 rounded-xl card-3d">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Application Steps</h3>
                   <ol className="space-y-4">
                     <li className="flex items-start">
@@ -204,24 +204,24 @@ const SuperVisaInsuranceDetails = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Important Information</h2>
-              <div className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="grid md:grid-cols-2 gap-8 text-left">
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-3">Pre-Existing Conditions</h4>
-                    <p className="text-gray-600 mb-4">Coverage may be limited for pre-existing medical conditions. Medical questionnaire may be required.</p>
-                    
-                    <h4 className="font-bold text-gray-900 mb-3">Age Restrictions</h4>
-                    <p className="text-gray-600">Available for visitors typically up to age 85, with some insurers offering coverage to age 89.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-3">Policy Duration</h4>
-                    <p className="text-gray-600 mb-4">Must be valid for at least 1 year, but can be purchased for up to 2 years to match super visa validity.</p>
-                    
-                    <h4 className="font-bold text-gray-900 mb-3">Premium Payment</h4>
-                    <p className="text-gray-600">Full premium must be paid before policy becomes effective and super visa application submission.</p>
+                <div className="bg-white p-8 rounded-xl card-3d">
+                  <div className="grid md:grid-cols-2 gap-8 text-left">
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-3">Pre-Existing Conditions</h4>
+                      <p className="text-gray-600 mb-4">Coverage may be limited for pre-existing medical conditions. Medical questionnaire may be required.</p>
+                      
+                      <h4 className="font-bold text-gray-900 mb-3">Age Restrictions</h4>
+                      <p className="text-gray-600">Available for visitors typically up to age 85, with some insurers offering coverage to age 89.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-3">Policy Duration</h4>
+                      <p className="text-gray-600 mb-4">Must be valid for at least 1 year, but can be purchased for up to 2 years to match super visa validity.</p>
+                      
+                      <h4 className="font-bold text-gray-900 mb-3">Premium Payment</h4>
+                      <p className="text-gray-600">Full premium must be paid before policy becomes effective and super visa application submission.</p>
+                    </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </section>

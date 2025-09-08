@@ -106,25 +106,63 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* 3D Button Styles */
+  /* Enhanced 3D Button Styles */
   .btn-3d {
-    @apply shadow-lg transform transition-all duration-200 active:scale-95 active:shadow-md;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+    @apply shadow-xl transform transition-all duration-300 active:scale-95 active:shadow-lg;
+    box-shadow: 
+      0 6px 12px -2px rgba(0, 0, 0, 0.15), 
+      0 3px 7px -3px rgba(0, 0, 0, 0.1), 
+      0 12px 25px -5px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
   .btn-3d:hover {
-    @apply -translate-y-0.5;
-    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 15px 35px -5px rgba(0, 0, 0, 0.15);
+    @apply -translate-y-1 scale-105;
+    box-shadow: 
+      0 15px 35px -5px rgba(0, 0, 0, 0.2), 
+      0 6px 15px -3px rgba(0, 0, 0, 0.15), 
+      0 20px 45px -8px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
-  /* 3D Card Styles */
+  /* Enhanced 3D Card Styles */
   .card-3d {
-    @apply shadow-lg transform transition-all duration-300 hover:-translate-y-1;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+    @apply shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:scale-105;
+    box-shadow: 
+      0 8px 25px -5px rgba(0, 0, 0, 0.1), 
+      0 4px 12px -3px rgba(0, 0, 0, 0.08), 
+      0 15px 35px -8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .card-3d:hover {
-    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25), 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 25px 50px -10px rgba(0, 0, 0, 0.15);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.25), 
+      0 10px 25px -5px rgba(0, 0, 0, 0.15), 
+      0 35px 75px -15px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Super Enhanced Card for Special Elements */
+  .card-3d-super {
+    @apply shadow-2xl transform transition-all duration-300 hover:-translate-y-3 hover:scale-110;
+    box-shadow: 
+      0 12px 35px -8px rgba(0, 0, 0, 0.15), 
+      0 6px 18px -5px rgba(0, 0, 0, 0.12), 
+      0 20px 45px -10px rgba(0, 0, 0, 0.15),
+      inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .card-3d-super:hover {
+    box-shadow: 
+      0 35px 70px -15px rgba(0, 0, 0, 0.3), 
+      0 15px 35px -8px rgba(0, 0, 0, 0.2), 
+      0 50px 100px -20px rgba(0, 0, 0, 0.25),
+      inset 0 2px 4px rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.25);
   }
 
   /* Click to call styling */

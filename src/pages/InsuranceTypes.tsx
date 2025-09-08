@@ -121,38 +121,36 @@ const InsuranceTypes = () => {
             <div className="max-w-7xl mx-auto">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {insuranceProducts.map((product, index) => (
-                  <div key={index} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border">
-                    <div className="p-8">
-                      <div className="flex justify-center mb-6">
-                        <div className="p-3 bg-gray-50 rounded-full">
-                          {product.icon}
-                        </div>
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">{product.title}</h3>
-                      <p className="text-gray-600 mb-6 text-center">{product.description}</p>
-                      
-                      <div className="mb-8">
-                        <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
-                        <ul className="space-y-2">
-                          {product.features.map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-start">
-                              <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                              <span className="text-gray-600 text-sm">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="text-center">
-                        <button 
-                          onClick={() => openDetailPage(product.detailPage)}
-                          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-                        >
-                          Learn More
-                        </button>
-                      </div>
+                <div key={index} className="bg-white rounded-xl p-8 card-3d-super">
+                  <div className="flex justify-center mb-6">
+                    <div className="p-4 bg-gray-50 rounded-full card-3d">
+                      {product.icon}
                     </div>
                   </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">{product.title}</h3>
+                  <p className="text-gray-600 mb-6 text-center">{product.description}</p>
+                  
+                  <div className="mb-8">
+                    <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
+                    <ul className="space-y-2">
+                      {product.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                          <span className="text-gray-600 text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="text-center">
+                    <button 
+                      onClick={() => openDetailPage(product.detailPage)}
+                      className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d"
+                    >
+                      Learn More
+                    </button>
+                  </div>
+                </div>
                 ))}
               </div>
             </div>

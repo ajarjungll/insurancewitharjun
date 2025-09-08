@@ -36,7 +36,7 @@ const Contact = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-3 gap-8 mb-12">
-              <div className="text-center p-8 bg-gray-50 rounded-xl card-3d">
+              <div className="text-center p-8 bg-gray-50 rounded-xl card-3d-super">
                 <Phone className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Phone</h3>
                 <p className="text-gray-600 mb-2">Call us for immediate assistance</p>
@@ -45,7 +45,7 @@ const Contact = () => {
                 </a>
               </div>
               
-              <div className="text-center p-8 bg-gray-50 rounded-xl card-3d">
+              <div className="text-center p-8 bg-gray-50 rounded-xl card-3d-super">
                 <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Email</h3>
                 <p className="text-gray-600 mb-2">Send us your questions</p>
@@ -55,7 +55,7 @@ const Contact = () => {
                 <p className="text-sm text-gray-500 mt-2">We respond within 24 hours</p>
               </div>
               
-              <div className="text-center p-8 bg-gray-50 rounded-xl card-3d">
+              <div className="text-center p-8 bg-gray-50 rounded-xl card-3d-super">
                 <MapPin className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Office</h3>
                 <p className="text-gray-600 mb-2">Visit us in person</p>
@@ -227,22 +227,22 @@ const Contact = () => {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className="bg-white p-6 rounded-xl card-3d">
+              <div className="bg-white p-6 rounded-xl card-3d-super">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">What are your response times?</h3>
                 <p className="text-gray-600">We respond to all inquiries within 24 hours during business days.</p>
               </div>
               
-              <div className="bg-white p-6 rounded-xl card-3d">
+              <div className="bg-white p-6 rounded-xl card-3d-super">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">Do you offer free consultations?</h3>
                 <p className="text-gray-600">Yes! We provide free insurance consultations to help you understand your coverage options and needs.</p>
               </div>
               
-              <div className="bg-white p-6 rounded-xl card-3d">
+              <div className="bg-white p-6 rounded-xl card-3d-super">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">Can I get quotes online?</h3>
                 <p className="text-gray-600">While we prefer personalized service, we can provide preliminary quotes via phone, email, or our online form.</p>
               </div>
               
-              <div className="bg-white p-6 rounded-xl card-3d">
+              <div className="bg-white p-6 rounded-xl card-3d-super">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">Do you work with multiple insurance companies?</h3>
                 <p className="text-gray-600">Absolutely! We work with over 20 insurance carriers to find you the best coverage at competitive rates.</p>
               </div>

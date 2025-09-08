@@ -84,11 +84,33 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float-up': {
+					'0%': {
+						transform: 'translateY(0px) scale(1)',
+						boxShadow: '0 8px 25px -5px rgba(0, 0, 0, 0.1)'
+					},
+					'100%': {
+						transform: 'translateY(-8px) scale(1.02)',
+						boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+					}
+				},
+				'card-hover': {
+					'0%': {
+						transform: 'translateY(0px) scale(1)',
+						boxShadow: '0 4px 12px -3px rgba(0, 0, 0, 0.08)'
+					},
+					'100%': {
+						transform: 'translateY(-6px) scale(1.03)',
+						boxShadow: '0 20px 40px -8px rgba(0, 0, 0, 0.2)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float-up': 'float-up 0.3s ease-out forwards',
+				'card-hover': 'card-hover 0.3s ease-out forwards'
 			}
 		}
 	},

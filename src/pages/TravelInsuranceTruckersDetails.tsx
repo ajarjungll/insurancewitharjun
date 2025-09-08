@@ -126,7 +126,7 @@ const TravelInsuranceTruckersDetails = () => {
 
               {/* Sidebar */}
               <div className="lg:col-span-1">
-                <div className="bg-orange-50 p-8 rounded-xl card-3d sticky top-8">
+                <div className="bg-orange-50 p-8 rounded-xl card-3d-super sticky top-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Get Protected Today</h3>
                   <p className="text-gray-600 mb-6">
                     Don't let unexpected events derail your route. Get comprehensive travel insurance designed for truckers.
