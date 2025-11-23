@@ -102,7 +102,7 @@ const RRSPDetails = () => {
                   <div className="space-y-4">
                     <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg border-l-4 border-blue-600">
                       <h4 className="text-lg font-semibold text-gray-900 mb-2">Home Buyers' Plan (HBP)</h4>
-                      <p className="text-gray-600">Withdraw up to $35,000 tax-free to purchase your first home. Must be repaid over 15 years.</p>
+                      <p className="text-gray-600">Withdraw up to $60,000 per person tax-free to purchase your first home. Must be repaid over 15 years.</p>
                     </div>
                     <div className="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-lg border-l-4 border-green-600">
                       <h4 className="text-lg font-semibold text-gray-900 mb-2">Lifelong Learning Plan (LLP)</h4>
