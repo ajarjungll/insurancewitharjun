@@ -165,6 +165,43 @@ const RRSPDetails = () => {
                 </div>
 
                 <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Increase Your Canada Child Benefit (CCB)</h3>
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-xl card-3d border-2 border-purple-200">
+                    <div className="mb-6">
+                      <p className="text-lg text-gray-700 mb-4">
+                        Did you know that RRSP contributions can increase your Canada Child Benefit (CCB) payments? 
+                        CCB is calculated based on your <span className="font-semibold">family net income</span>, not gross income.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-white p-6 rounded-lg mb-4">
+                      <h4 className="text-xl font-semibold text-gray-900 mb-3">How It Works:</h4>
+                      <div className="space-y-3">
+                        <div className="flex items-start">
+                          <CheckCircle size={20} className="text-purple-600 mr-3 mt-1 flex-shrink-0" />
+                          <p className="text-gray-600">RRSP contributions <span className="font-semibold">reduce your net income</span> for tax purposes</p>
+                        </div>
+                        <div className="flex items-start">
+                          <CheckCircle size={20} className="text-purple-600 mr-3 mt-1 flex-shrink-0" />
+                          <p className="text-gray-600">Lower net income means <span className="font-semibold">higher CCB payments</span> from the government</p>
+                        </div>
+                        <div className="flex items-start">
+                          <CheckCircle size={20} className="text-purple-600 mr-3 mt-1 flex-shrink-0" />
+                          <p className="text-gray-600">You get both an <span className="font-semibold">income tax refund AND increased CCB benefits</span></p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-purple-100 p-4 rounded-lg">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-semibold">💡 Pro Tip:</span> Contributing to both RRSP and FHSA accounts 
+                        maximizes your tax savings while boosting your monthly CCB payments, creating a double benefit for families.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Investment Options</h3>
                   <div className="grid md:grid-cols-3 gap-4">
                     {[
