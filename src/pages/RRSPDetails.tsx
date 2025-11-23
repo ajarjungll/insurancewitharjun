@@ -116,6 +116,55 @@ const RRSPDetails = () => {
                 </div>
 
                 <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Tax Refund Example (2025)</h3>
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl card-3d border-2 border-green-200">
+                    <div className="mb-6">
+                      <h4 className="text-xl font-semibold text-gray-900 mb-4">Manitoba Resident Scenario</h4>
+                      <div className="grid md:grid-cols-2 gap-6 mb-6">
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-1">Annual Income</p>
+                          <p className="text-2xl font-bold text-gray-900">$100,000</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-1">RRSP Contribution</p>
+                          <p className="text-2xl font-bold text-blue-600">$20,000</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4 mb-6">
+                      <div className="bg-white p-4 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-semibold text-gray-900">Federal Tax Savings</span>
+                          <span className="text-lg font-bold text-blue-600">$4,100</span>
+                        </div>
+                        <p className="text-sm text-gray-600">$20,000 × 20.50% (marginal rate)</p>
+                      </div>
+                      
+                      <div className="bg-white p-4 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-semibold text-gray-900">Manitoba Provincial Tax Savings</span>
+                          <span className="text-lg font-bold text-blue-600">$2,550</span>
+                        </div>
+                        <p className="text-sm text-gray-600">$20,000 × 12.75% (marginal rate)</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-green-600 text-white p-6 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xl font-bold">Total Tax Refund</span>
+                        <span className="text-3xl font-bold">$6,650</span>
+                      </div>
+                      <p className="text-green-100 mt-2 text-sm">33.25% effective tax savings on your RRSP contribution</p>
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mt-4 italic">
+                      * Tax savings based on 2025 federal and Manitoba provincial tax brackets. Your actual savings may vary depending on your specific tax situation.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Investment Options</h3>
                   <div className="grid md:grid-cols-3 gap-4">
                     {[
