@@ -110,6 +110,74 @@ const About = () => {
           </div>
         </section>
 
+        {/* Why Choose Insurance With Arjun Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Insurance With Arjun?</h2>
+              <p className="text-xl text-gray-600">Experience the difference of personalized insurance service</p>
+            </div>
+            
+            <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+              <div className="flex justify-center">
+                <img 
+                  src="/lovable-uploads/arjun-profile.jpg" 
+                  alt="Arjun Singh Gill - Insurance Professional" 
+                  className="rounded-3xl shadow-2xl w-full max-w-md object-cover"
+                />
+              </div>
+              
+              <div>
+                <div className="space-y-6">
+                  <div className="flex items-start">
+                    <Shield className="w-8 h-8 text-blue-600 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Expert Guidance</h3>
+                      <p className="text-gray-600">
+                        With years of experience and deep industry knowledge, we help you navigate 
+                        the complex world of insurance with confidence.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <Heart className="w-8 h-8 text-blue-600 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Personalized Service</h3>
+                      <p className="text-gray-600">
+                        We take the time to understand your unique needs and create customized 
+                        insurance solutions that truly protect what matters most to you.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <Users className="w-8 h-8 text-blue-600 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Client-First Approach</h3>
+                      <p className="text-gray-600">
+                        Your satisfaction is our priority. We're always available to answer questions, 
+                        provide support, and ensure you have the coverage you need.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <Award className="w-8 h-8 text-blue-600 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Trusted Reputation</h3>
+                      <p className="text-gray-600">
+                        Our commitment to honesty and integrity has earned us the trust of 
+                        hundreds of satisfied clients who recommend us to their friends and family.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Stats Section */}
         <section className="py-16 bg-blue-900 text-white">
           <div className="container mx-auto px-4">
