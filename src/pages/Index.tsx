@@ -188,26 +188,40 @@ const Index = () => {
         {/* Why Choose Us Section */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Insurance With Arjun?</h2>
+              <p className="text-xl text-gray-600">Experience the difference of personalized insurance service</p>
+            </div>
+            
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              {/* Professional Photo */}
+              <div className="flex justify-center">
+                <img 
+                  src="/lovable-uploads/arjun-profile.jpg" 
+                  alt="Arjun Singh Gill - Insurance Professional" 
+                  className="rounded-3xl shadow-2xl w-full max-w-sm object-cover card-3d hover:shadow-3xl transform hover:-translate-y-1 transition-all duration-300"
+                />
+              </div>
+              
+              {/* Benefits */}
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">Why Choose  Insurance With Arjun?</h2>
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <Shield className="w-8 h-8 text-blue-600 mt-1" />
+                    <Shield className="w-8 h-8 text-blue-600 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Trusted Experience</h3>
                       <p className="text-gray-600">Over 3+ years of experience in the insurance industry with a proven track record.</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-4">
-                    <Phone className="w-8 h-8 text-blue-600 mt-1" />
+                    <Phone className="w-8 h-8 text-blue-600 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Personal Service</h3>
                       <p className="text-gray-600">Direct access to your agent with personalized service and quick response times.</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-4">
-                    <Star className="w-8 h-8 text-blue-600 mt-1" />
+                    <Star className="w-8 h-8 text-blue-600 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Competitive Rates</h3>
                       <p className="text-gray-600">We work with multiple carriers to find you the best coverage at the most competitive rates.</p>
@@ -215,6 +229,8 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+              
+              {/* Quote Form */}
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl card-3d hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border border-blue-200">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Get Your Free Quote Today</h3>
                 <form className="space-y-4">
