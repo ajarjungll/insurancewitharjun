@@ -35,7 +35,17 @@ const About = () => {
         {/* Our Story Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-3 gap-8 items-center">
+              {/* Professional Photo with 3D Effect */}
+              <div className="flex justify-center lg:justify-start">
+                <img 
+                  src="/lovable-uploads/arjun-professional.jpg" 
+                  alt="Arjun Singh Gill - Founder" 
+                  className="rounded-3xl shadow-2xl w-full max-w-sm object-cover card-3d hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-300"
+                />
+              </div>
+              
+              {/* Our Story Text */}
               <div>
                 <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
                 <p className="text-lg text-gray-600 mb-6">
@@ -55,6 +65,8 @@ const About = () => {
                   puts your needs first.
                 </p>
               </div>
+              
+              {/* Mission & Vision */}
               <div className="bg-blue-50 p-8 rounded-xl">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Mission</h3>
                 <p className="text-gray-600 mb-6">
