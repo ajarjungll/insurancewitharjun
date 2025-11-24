@@ -93,7 +93,9 @@ const About = () => {
             
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-                <Shield className="w-16 h-16 text-blue-600 mx-auto mb-6" />
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl transform hover:scale-110 hover:-translate-y-2 transition-all duration-300" style={{ boxShadow: '0 10px 40px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset' }}>
+                  <Shield className="w-10 h-10 text-white" />
+                </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Integrity</h3>
                 <p className="text-gray-600">
                   We conduct our business with the highest ethical standards, 
@@ -102,7 +104,9 @@ const About = () => {
               </div>
               
               <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-                <Heart className="w-16 h-16 text-blue-600 mx-auto mb-6" />
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl transform hover:scale-110 hover:-translate-y-2 transition-all duration-300" style={{ boxShadow: '0 10px 40px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset' }}>
+                  <Heart className="w-10 h-10 text-white" />
+                </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Care</h3>
                 <p className="text-gray-600">
                   We genuinely care about our clients' well-being and work 
@@ -111,7 +115,9 @@ const About = () => {
               </div>
               
               <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-                <HandHeart className="w-16 h-16 text-blue-600 mx-auto mb-6" />
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl transform hover:scale-110 hover:-translate-y-2 transition-all duration-300" style={{ boxShadow: '0 10px 40px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset' }}>
+                  <HandHeart className="w-10 h-10 text-white" />
+                </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Service</h3>
                 <p className="text-gray-600">
                   We provide exceptional, personalized service that goes 
