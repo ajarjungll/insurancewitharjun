@@ -169,4 +169,22 @@ All colors MUST be HSL.
   .click-to-call {
     @apply text-blue-600 hover:text-blue-800 cursor-pointer transition-colors duration-200 hover:underline;
   }
+
+  /* Scrolling banner animation */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+
+  .animate-scroll-left:hover {
+    animation-play-state: paused;
+  }
 }

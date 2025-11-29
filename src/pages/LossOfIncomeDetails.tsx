@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Header from '../components/Header';
+import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import { DollarSign, Phone, ArrowLeft, CheckCircle, Shield, TrendingDown, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,7 @@ const LossOfIncomeDetails = () => {
 
       <div className="relative z-10">
         <Header />
+        <LogoBanner />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-red-900 to-red-700 text-white py-20">

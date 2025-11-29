@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import { TrendingUp, PiggyBank, Home, Shield, Calculator, DollarSign, CreditCard, GraduationCap, Building, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -163,6 +164,7 @@ const InvestmentTypes = () => {
 
       <div className="relative z-10">
         <Header />
+        <LogoBanner />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 relative overflow-hidden">
