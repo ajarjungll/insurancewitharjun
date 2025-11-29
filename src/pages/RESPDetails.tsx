@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Header from '../components/Header';
+import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import { GraduationCap, Phone, ArrowLeft, CheckCircle, Gift, TrendingUp, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -20,6 +21,7 @@ const RESPDetails = () => {
 
       <div className="relative z-10">
         <Header />
+        <LogoBanner />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-indigo-900 to-indigo-700 text-white py-20">

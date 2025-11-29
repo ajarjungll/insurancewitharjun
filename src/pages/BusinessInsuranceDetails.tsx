@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Header from '../components/Header';
+import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import { Building, Phone, Shield, CheckCircle, Users, Laptop } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -10,6 +11,7 @@ const BusinessInsuranceDetails = () => {
     <div className="min-h-screen relative">
       <div className="relative z-10">
         <Header />
+        <LogoBanner />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 relative overflow-hidden">
