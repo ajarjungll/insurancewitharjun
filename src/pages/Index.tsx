@@ -278,6 +278,62 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Partnership Section */}
+        <section className="py-16 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-10 left-10 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4">Proudly Partnered With</h2>
+              <p className="text-xl text-blue-100">Backed by Manitoba's trusted insurance leader</p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/20 card-3d-super">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  {/* Logo */}
+                  <div className="flex justify-center">
+                    <div className="bg-white rounded-2xl p-8 card-3d-super">
+                      <img 
+                        src="/lovable-uploads/sahara-logo.jpg" 
+                        alt="Sahara Insurance Group" 
+                        className="w-full max-w-xs mx-auto object-contain"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Info */}
+                  <div className="text-center md:text-left">
+                    <h3 className="text-3xl font-bold mb-4">Sahara Insurance Group</h3>
+                    <p className="text-blue-100 mb-6">
+                      Founded by <span className="font-semibold text-white">Kamaldeep Grewal</span> in 2011, 
+                      Sahara Insurance Group serves as our Managing General Agent (MGA), providing comprehensive 
+                      insurance services throughout Manitoba.
+                    </p>
+                    <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                      <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/30">
+                        <div className="font-bold text-2xl">2011</div>
+                        <div className="text-sm text-blue-200">Established</div>
+                      </div>
+                      <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/30">
+                        <div className="font-bold text-2xl">MGA</div>
+                        <div className="text-sm text-blue-200">Partner Status</div>
+                      </div>
+                      <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/30">
+                        <div className="font-bold text-2xl">MB</div>
+                        <div className="text-sm text-blue-200">Manitoba Wide</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <Footer />
       </div>
     </div>;
