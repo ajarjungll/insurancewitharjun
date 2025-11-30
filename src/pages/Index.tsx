@@ -1,7 +1,6 @@
 
 import React from 'react';
 import Header from '../components/Header';
-import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
@@ -119,9 +118,6 @@ const Index = () => {
           backgroundRepeat: 'no-repeat'
         }}
       />
-      
-      <Header />
-      <LogoBanner />
       
       <div className="relative z-10">
         <Header />
