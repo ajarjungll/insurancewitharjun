@@ -83,6 +83,75 @@ const About = () => {
           </div>
         </section>
 
+        {/* Partnership Section */}
+        <section className="py-16 bg-gradient-to-br from-blue-50 via-white to-blue-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Partnership</h2>
+              <p className="text-xl text-gray-600">Backed by industry-leading expertise and support</p>
+            </div>
+            
+            <div className="max-w-5xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                {/* Logo Section with 3D Effect */}
+                <div className="flex justify-center">
+                  <div className="card-3d-super bg-white p-12 rounded-3xl">
+                    <img 
+                      src="/lovable-uploads/sahara-logo.jpg" 
+                      alt="Sahara Insurance Group" 
+                      className="w-full max-w-sm mx-auto object-contain"
+                    />
+                  </div>
+                </div>
+                
+                {/* Partnership Information */}
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                      Sahara Insurance Group
+                    </h3>
+                    <p className="text-lg text-gray-600 mb-4">
+                      Insurance With Arjun is proud to partner with <span className="font-semibold text-blue-600">Sahara Insurance Group</span>, 
+                      a trusted name in Manitoba's insurance industry since 2011.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+                    <p className="text-gray-700 mb-3">
+                      <span className="font-semibold">Founded by Kamaldeep Grewal</span> in 2011, 
+                      Sahara Insurance Group has grown to become a leading Managing General Agent (MGA) 
+                      in Manitoba.
+                    </p>
+                    <p className="text-gray-700">
+                      As our MGA partner, Sahara Insurance Group provides us with comprehensive support, 
+                      access to top-tier insurance carriers, and the backing needed to deliver exceptional 
+                      service to our clients across Manitoba.
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white p-4 rounded-lg shadow-md text-center card-3d">
+                      <div className="text-3xl font-bold text-blue-600 mb-1">2011</div>
+                      <div className="text-sm text-gray-600">Founded</div>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-md text-center card-3d">
+                      <div className="text-3xl font-bold text-blue-600 mb-1">MGA</div>
+                      <div className="text-sm text-gray-600">Managing General Agent</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center text-gray-600">
+                    <Shield className="w-6 h-6 text-blue-600 mr-3" />
+                    <span className="text-sm">
+                      Providing comprehensive insurance services throughout Manitoba
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Values Section */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
