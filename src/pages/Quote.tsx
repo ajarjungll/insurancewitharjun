@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import { Calculator, Shield, Clock, Award } from 'lucide-react';
 
@@ -36,7 +35,6 @@ const Quote = () => {
       
       <div className="relative z-10">
         <Header />
-        <LogoBanner />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">

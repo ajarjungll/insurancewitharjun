@@ -1,7 +1,6 @@
 
 import React from 'react';
 import Header from '../components/Header';
-import LogoBanner from '../components/LogoBanner';
 import Footer from '../components/Footer';
 import { Accessibility, Phone, ArrowLeft, CheckCircle, Shield, Heart, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -22,7 +21,6 @@ const DisabilityInsuranceDetails = () => {
 
       <div className="relative z-10">
         <Header />
-        <LogoBanner />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-20">
