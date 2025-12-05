@@ -305,9 +305,9 @@ const About = () => {
               <div className="text-center">
                 <div className="w-32 h-32 mx-auto mb-6 overflow-hidden rounded-full">
                   <img 
-                    src="/lovable-uploads/deep-grewal.jpg" 
+                    src="/lovable-uploads/deep-grewal-cropped.jpg" 
                     alt="Deep Grewal" 
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Deep Grewal</h3>
