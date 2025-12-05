@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, Banknote, GraduationCap, Truck, DollarSign, Users, Smile, BookOpen } from 'lucide-react';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [{
@@ -17,11 +17,6 @@ const Index = () => {
     title: "Critical Illness Insurance", 
     description: "Financial protection when you're diagnosed with a serious illness, providing peace of mind during challenging times.",
     features: ["Cancer Coverage", "Heart Attack Protection", "Stroke Benefits", "Kidney Failure Coverage"]
-  }, {
-    icon: <Plane className="w-12 h-12 text-blue-600" />,
-    title: "Travel Insurance",
-    description: "Comprehensive travel protection for your domestic and international trips.",
-    features: ["Emergency Medical Coverage", "Trip Cancellation", "Lost Baggage Protection", "Emergency Evacuation"]
   }, {
     icon: <Plane className="w-12 h-12 text-blue-600" />,
     title: "Super Visa Insurance",
@@ -52,11 +47,6 @@ const Index = () => {
     title: "Health Insurance",
     description: "Complete health coverage for medical expenses, prescription drugs, and wellness programs.",
     features: ["Medical Coverage", "Prescription Drugs", "Hospital Benefits", "Wellness Programs"]
-  }, {
-    icon: <BookOpen className="w-12 h-12 text-blue-600" />,
-    title: "Student Insurance",
-    description: "Affordable insurance coverage designed specifically for students studying in Canada.",
-    features: ["Medical Coverage", "Emergency Care", "Prescription Drugs", "Mental Health Support"]
   }];
 
   const investmentTypes = [{
@@ -309,13 +299,13 @@ const Index = () => {
                   <div className="text-center md:text-left">
                     <h3 className="text-3xl font-bold mb-4">Sahara Insurance Group</h3>
                     <p className="text-blue-100 mb-6">
-                      Founded by <span className="font-semibold text-white">Kamaldeep Grewal</span> in 2011, 
+                      Founded by <span className="font-semibold text-white">Kamaldeep Grewal</span> in 2008, 
                       Sahara Insurance Group serves as our Managing General Agent (MGA), providing comprehensive 
                       insurance services throughout Manitoba.
                     </p>
                     <div className="flex flex-wrap justify-center md:justify-start gap-4">
                       <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/30">
-                        <div className="font-bold text-2xl">2011</div>
+                        <div className="font-bold text-2xl">2008</div>
                         <div className="text-sm text-blue-200">Established</div>
                       </div>
                       <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/30">
