@@ -112,13 +112,13 @@ const About = () => {
                     </h3>
                     <p className="text-lg text-gray-600 mb-4">
                       Insurance With Arjun is proud to partner with <span className="font-semibold text-blue-600">Sahara Insurance Group</span>, 
-                      a trusted name in Manitoba's insurance industry since 2011.
+                      a trusted name in Manitoba's insurance industry since 2008.
                     </p>
                   </div>
                   
                   <div className="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
                     <p className="text-gray-700 mb-3">
-                      <span className="font-semibold">Founded by Kamaldeep Grewal</span> in 2011, 
+                      <span className="font-semibold">Founded by Kamaldeep Grewal</span> in 2008, 
                       Sahara Insurance Group has grown to become a leading Managing General Agent (MGA) 
                       in Manitoba.
                     </p>
@@ -131,7 +131,7 @@ const About = () => {
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-white p-4 rounded-lg shadow-md text-center card-3d">
-                      <div className="text-3xl font-bold text-blue-600 mb-1">2011</div>
+                      <div className="text-3xl font-bold text-blue-600 mb-1">2008</div>
                       <div className="text-sm text-gray-600">Founded</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-md text-center card-3d">
@@ -303,11 +303,17 @@ const About = () => {
             
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6"></div>
+                <div className="w-32 h-32 mx-auto mb-6 overflow-hidden rounded-full">
+                  <img 
+                    src="/lovable-uploads/deep-grewal.jpg" 
+                    alt="Deep Grewal" 
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Deep Grewal</h3>
                 <p className="text-blue-600 mb-4">Founder & CEO</p>
                 <p className="text-gray-600">
-                  With over 11+ years in the insurance industry, Deep founded the company 
+                  With over 17+ years in the insurance industry, Deep founded the company 
                   with a vision to provide honest, reliable insurance services.
                 </p>
               </div>
