@@ -87,8 +87,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-gray-700 hover:text-blue-600 font-medium transition-all btn-3d px-4 py-2 rounded-lg ${
-                  isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
+                className={`font-medium transition-all px-4 py-2 rounded-lg ${
+                  isActive(item.path) 
+                    ? 'text-blue-700 bg-gradient-to-b from-blue-100 to-blue-200 shadow-[0_4px_0_0_#1e40af,0_6px_10px_rgba(30,64,175,0.3)] hover:shadow-[0_2px_0_0_#1e40af,0_4px_6px_rgba(30,64,175,0.3)] hover:translate-y-[2px]' 
+                    : 'text-blue-800 bg-gradient-to-b from-blue-50 to-blue-100 shadow-[0_4px_0_0_#3b82f6,0_6px_10px_rgba(59,130,246,0.25)] hover:shadow-[0_2px_0_0_#3b82f6,0_4px_6px_rgba(59,130,246,0.25)] hover:translate-y-[2px] hover:from-blue-100 hover:to-blue-200'
                 }`}
               >
                 {item.name}
@@ -96,7 +98,7 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className="bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all font-medium btn-3d px-6 py-2"
+              className="bg-gradient-to-b from-orange-500 to-orange-600 text-white rounded-lg transition-all font-medium px-6 py-2 shadow-[0_4px_0_0_#c2410c,0_6px_10px_rgba(194,65,12,0.3)] hover:shadow-[0_2px_0_0_#c2410c,0_4px_6px_rgba(194,65,12,0.3)] hover:translate-y-[2px]"
             >
               Get Quote
             </Link>
@@ -118,8 +120,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`block py-2 px-4 my-1 rounded-lg text-gray-700 hover:text-blue-600 btn-3d transition-all ${
-                  isActive(item.path) ? 'text-blue-600 bg-blue-50' : 'bg-white hover:bg-blue-50'
+                className={`block py-2 px-4 my-2 rounded-lg font-medium transition-all ${
+                  isActive(item.path) 
+                    ? 'text-blue-700 bg-gradient-to-b from-blue-100 to-blue-200 shadow-[0_3px_0_0_#1e40af,0_4px_8px_rgba(30,64,175,0.3)]' 
+                    : 'text-blue-800 bg-gradient-to-b from-blue-50 to-blue-100 shadow-[0_3px_0_0_#3b82f6,0_4px_8px_rgba(59,130,246,0.25)]'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -128,7 +132,7 @@ const Header = () => {
             ))}
             <Link
               to="/quote"
-              className="block mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-medium text-center btn-3d"
+              className="block mt-4 bg-gradient-to-b from-orange-500 to-orange-600 text-white px-6 py-2 rounded-lg transition-all font-medium text-center shadow-[0_3px_0_0_#c2410c,0_4px_8px_rgba(194,65,12,0.3)]"
               onClick={() => setIsMenuOpen(false)}
             >
               Get Quote
