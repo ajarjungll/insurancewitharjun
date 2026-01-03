@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { GraduationCap, Phone, ArrowLeft, CheckCircle, Gift, TrendingUp, Users } from 'lucide-react';
+import { GraduationCap, Phone, ArrowLeft, CheckCircle, Gift, TrendingUp, Users, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const RESPDetails = () => {
@@ -85,7 +85,9 @@ const RESPDetails = () => {
                       </div>
                       <ul className="space-y-2 text-gray-600">
                         <li>• Extra 10% or 20% for eligible families</li>
-                        <li>• Based on family net income</li>
+                        <li>• <strong>2026 Income Thresholds:</strong></li>
+                        <li className="ml-4">- 20% extra: Family income ≤ $55,867</li>
+                        <li className="ml-4">- 10% extra: Family income $55,867 - $111,733</li>
                         <li>• Up to $100 additional per year</li>
                       </ul>
                     </div>
@@ -96,7 +98,10 @@ const RESPDetails = () => {
                       </div>
                       <ul className="space-y-2 text-gray-600">
                         <li>• $500 initial payment + $100 annually</li>
-                        <li>• For low-income families (no contribution required)</li>
+                        <li>• No contribution required</li>
+                        <li>• <strong>2026 Income Threshold:</strong></li>
+                        <li className="ml-4">- Family income ≤ $55,867 (1 child)</li>
+                        <li className="ml-4">- Higher thresholds for more children</li>
                         <li>• Up to $2,000 total per child</li>
                       </ul>
                     </div>
@@ -225,14 +230,31 @@ const RESPDetails = () => {
               {/* Sidebar */}
               <div className="lg:col-span-1">
                 <div className="bg-indigo-50 p-8 rounded-xl card-3d sticky top-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Start Your Child's RESP</h3>
-                  <p className="text-gray-600 mb-6">
+                  <div className="flex flex-col items-center mb-6">
+                    <img 
+                      src="/lovable-uploads/arjun-professional.jpg" 
+                      alt="Arjun - Insurance & Investment Advisor"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-indigo-300 shadow-lg mb-4"
+                    />
+                    <h3 className="text-xl font-bold text-gray-900">Arjun</h3>
+                    <p className="text-sm text-indigo-600 font-medium">Insurance & Investment Advisor</p>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Start Your Child's RESP</h3>
+                  <p className="text-gray-600 mb-6 text-center">
                     Don't miss out on thousands in government grants. Start your child's education savings plan today.
                   </p>
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <a href="tel:+14313382078" className="block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors font-semibold btn-3d text-center">
                       <Phone size={18} className="inline mr-2" />
                       Call (431) 338-2078
+                    </a>
+                    <a href="mailto:arjun@insurancewitharjun.ca" className="block bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold btn-3d text-center">
+                      <Mail size={18} className="inline mr-2" />
+                      arjun@insurancewitharjun.ca
+                    </a>
+                    <a href="https://insurancewitharjun.ca" target="_blank" rel="noopener noreferrer" className="block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-center">
+                      <Globe size={18} className="inline mr-2" />
+                      insurancewitharjun.ca
                     </a>
                     <Link to="/quote" className="block bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors font-semibold btn-3d text-center">
                       Get Free Quote
