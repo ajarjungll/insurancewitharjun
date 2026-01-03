@@ -232,7 +232,7 @@ const RESPDetails = () => {
                 <div className="bg-indigo-50 p-8 rounded-xl card-3d sticky top-8">
                   <div className="flex flex-col items-center mb-6">
                     <img 
-                      src="/lovable-uploads/arjun-professional.jpg" 
+                      src="/lovable-uploads/arjun-profile.jpg" 
                       alt="Arjun - Insurance & Investment Advisor"
                       className="w-24 h-24 rounded-full object-cover border-4 border-indigo-300 shadow-lg mb-4"
                     />
@@ -248,13 +248,13 @@ const RESPDetails = () => {
                       <Phone size={18} className="inline mr-2" />
                       Call (431) 338-2078
                     </a>
-                    <a href="mailto:arjun@insurancewitharjun.ca" className="block bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold btn-3d text-center">
+                    <a href="mailto:insurancewitharjun@gmail.com" className="block bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold btn-3d text-center">
                       <Mail size={18} className="inline mr-2" />
-                      arjun@insurancewitharjun.ca
+                      insurancewitharjun@gmail.com
                     </a>
-                    <a href="https://insurancewitharjun.ca" target="_blank" rel="noopener noreferrer" className="block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-center">
+                    <a href="https://www.insurancewitharjun.com" target="_blank" rel="noopener noreferrer" className="block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-center">
                       <Globe size={18} className="inline mr-2" />
-                      insurancewitharjun.ca
+                      www.insurancewitharjun.com
                     </a>
                     <Link to="/quote" className="block bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors font-semibold btn-3d text-center">
                       Get Free Quote
