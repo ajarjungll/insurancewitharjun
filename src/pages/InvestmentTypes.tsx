@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { TrendingUp, PiggyBank, Home, GraduationCap } from 'lucide-react';
+import { TrendingUp, PiggyBank, Home, GraduationCap, Calculator } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const InvestmentTypes = () => {
@@ -39,6 +39,14 @@ const InvestmentTypes = () => {
       description: "Save for your child's education with government grants that boost your contributions.",
       features: ["20% government grant", "Tax-deferred growth", "Up to $50,000 lifetime"],
       detailPage: "/investment-types/resp"
+    },
+    {
+      icon: <Calculator className="w-12 h-12 text-emerald-600" />,
+      title: "Tax Calculator",
+      subtitle: "2026 Income Tax Calculator",
+      description: "Calculate your 2026 federal and Manitoba income tax with RRSP and FHSA contribution deductions.",
+      features: ["Federal & Manitoba brackets", "RRSP/FHSA deductions", "Tax savings breakdown"],
+      detailPage: "/investment-types/tax-calculator-2026"
     }
   ];
 
