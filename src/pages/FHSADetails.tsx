@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Home, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator } from 'lucide-react';
+import { Home, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const FHSADetails = () => {
@@ -193,14 +193,31 @@ const FHSADetails = () => {
               {/* Sidebar */}
               <div className="lg:col-span-1">
                 <div className="bg-green-50 p-8 rounded-xl card-3d sticky top-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Start Your FHSA Today</h3>
-                  <p className="text-gray-600 mb-6">
+                  <div className="flex flex-col items-center mb-6">
+                    <img 
+                      src="/lovable-uploads/arjun-profile.jpg" 
+                      alt="Arjun Singh Gill - Insurance & Investment Advisor"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-green-300 shadow-lg mb-4"
+                    />
+                    <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
+                    <p className="text-sm text-green-600 font-medium">Insurance & Investment Advisor</p>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Start Your FHSA Today</h3>
+                  <p className="text-gray-600 mb-6 text-center">
                     Begin saving for your first home with the most tax-efficient account available to first-time buyers.
                   </p>
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <a href="tel:+14313382078" className="block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold btn-3d text-center">
                       <Phone size={18} className="inline mr-2" />
                       Call (431) 338-2078
+                    </a>
+                    <a href="mailto:insurancewitharjun@gmail.com" className="block bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold btn-3d text-center">
+                      <Mail size={18} className="inline mr-2" />
+                      insurancewitharjun@gmail.com
+                    </a>
+                    <a href="https://www.insurancewitharjun.com" target="_blank" rel="noopener noreferrer" className="block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold btn-3d text-center">
+                      <Globe size={18} className="inline mr-2" />
+                      www.insurancewitharjun.com
                     </a>
                     <Link to="/quote" className="block bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors font-semibold btn-3d text-center">
                       Get Free Quote

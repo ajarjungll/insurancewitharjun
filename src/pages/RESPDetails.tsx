@@ -236,7 +236,7 @@ const RESPDetails = () => {
                       alt="Arjun - Insurance & Investment Advisor"
                       className="w-24 h-24 rounded-full object-cover border-4 border-indigo-300 shadow-lg mb-4"
                     />
-                    <h3 className="text-xl font-bold text-gray-900">Arjun</h3>
+                    <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
                     <p className="text-sm text-indigo-600 font-medium">Insurance & Investment Advisor</p>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Start Your Child's RESP</h3>
