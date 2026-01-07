@@ -116,7 +116,7 @@ const RRSPDetails = () => {
                 </div>
 
                 <div className="mb-12">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Tax Refund Example (2025)</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Tax Refund Example (2026)</h3>
                   <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl card-3d border-2 border-green-200">
                     <div className="mb-6">
                       <h4 className="text-xl font-semibold text-gray-900 mb-4">Manitoba Resident Scenario</h4>
@@ -159,7 +159,7 @@ const RRSPDetails = () => {
                     </div>
                     
                     <p className="text-sm text-gray-600 mt-4 italic">
-                      * Tax savings based on 2025 federal and Manitoba provincial tax brackets. Your actual savings may vary depending on your specific tax situation.
+                      * Tax savings based on 2026 federal and Manitoba provincial tax brackets. Your actual savings may vary depending on your specific tax situation.
                     </p>
                   </div>
                 </div>
@@ -256,11 +256,11 @@ const RRSPDetails = () => {
                   </div>
                   
                   <div className="mt-8 pt-8 border-t border-blue-200">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">2024 Contribution Limits</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4">2026 Contribution Limits</h4>
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Annual Limit:</span>
-                        <span className="font-semibold">$31,560</span>
+                        <span className="font-semibold">$32,490</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Based on Income:</span>

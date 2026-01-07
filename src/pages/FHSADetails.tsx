@@ -225,7 +225,7 @@ const FHSADetails = () => {
                   </div>
                   
                   <div className="mt-8 pt-8 border-t border-green-200">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">2024 Contribution Limits</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4">2026 Contribution Limits</h4>
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Annual Limit:</span>
