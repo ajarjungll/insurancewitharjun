@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Calculator, ArrowLeft, DollarSign, PiggyBank, Home, TrendingDown, Info } from 'lucide-react';
+import { Calculator, ArrowLeft, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // 2026 Federal Tax Brackets (estimated based on indexation)
 const federalBrackets = [
@@ -26,6 +27,28 @@ const manitobaBrackets = [
 const federalBPA = 16129;
 const manitobaBPA = 15780;
 
+// 2026 CPP/EI rates (estimated)
+const cpp1MaxEarnings = 71300; // YMPE - Year's Maximum Pensionable Earnings
+const cpp2MaxEarnings = 81200; // YAMPE - Year's Additional Maximum Pensionable Earnings
+const cppExemption = 3500;
+const cpp1Rate = 0.0595; // CPP base contribution rate
+const cpp2Rate = 0.04; // CPP2 enhanced contribution rate
+const eiMaxInsurableEarnings = 65700;
+const eiRate = 0.0164; // EI rate
+
+// Profession-specific expense types
+const professions = [
+  { id: 'general', name: 'General Employee', hasExpenses: false },
+  { id: 'long-haul-trucker', name: 'Long Haul Truck Driver', hasExpenses: true },
+  { id: 'transport-employee', name: 'Other Transport Employee', hasExpenses: true },
+  { id: 'sales-commission', name: 'Commission Sales Employee', hasExpenses: true },
+];
+
+// Long haul truck driver meal rates (CRA 2024 - applicable for 2025/2026 tax year)
+const truckDriverMealRate = 23; // $23 per meal (simplified method)
+const truckDriverMealDeductionRate = 0.80; // 80% deductible for long-haul truck drivers
+const maxMealsPerDay = 3;
+
 const calculateTax = (income: number, brackets: typeof federalBrackets): number => {
   let tax = 0;
   let remainingIncome = income;
@@ -41,51 +64,104 @@ const calculateTax = (income: number, brackets: typeof federalBrackets): number 
 };
 
 const TaxCalculator2026 = () => {
+  const [profession, setProfession] = useState<string>('general');
   const [grossIncome, setGrossIncome] = useState<string>('');
   const [rrspContribution, setRrspContribution] = useState<string>('');
   const [fhsaContribution, setFhsaContribution] = useState<string>('');
+  const [daysAway, setDaysAway] = useState<string>(''); // For truckers - days away from home
+  const [lodgingExpenses, setLodgingExpenses] = useState<string>(''); // Actual lodging costs
 
   const calculations = useMemo(() => {
     const income = parseFloat(grossIncome) || 0;
     const rrsp = Math.min(parseFloat(rrspContribution) || 0, 32490); // 2026 RRSP limit
     const fhsa = Math.min(parseFloat(fhsaContribution) || 0, 8000); // FHSA annual limit
+    const days = parseFloat(daysAway) || 0;
+    const lodging = parseFloat(lodgingExpenses) || 0;
 
-    const taxableIncome = Math.max(0, income - rrsp - fhsa);
+    // Calculate CPP contributions
+    const cpp1Pensionable = Math.max(0, Math.min(income, cpp1MaxEarnings) - cppExemption);
+    const cpp1Contribution = cpp1Pensionable * cpp1Rate;
+    
+    // CPP2 (enhanced) on earnings between YMPE and YAMPE
+    const cpp2Pensionable = Math.max(0, Math.min(income, cpp2MaxEarnings) - cpp1MaxEarnings);
+    const cpp2Contribution = cpp2Pensionable * cpp2Rate;
+    
+    const totalCppContribution = cpp1Contribution + cpp2Contribution;
+
+    // Calculate EI
+    const eiInsurable = Math.min(income, eiMaxInsurableEarnings);
+    const eiContribution = eiInsurable * eiRate;
+
+    // Calculate trucker-specific deductions
+    let mealExpenses = 0;
+    let mealDeduction = 0;
+    let lodgingDeduction = 0;
+    
+    if (profession === 'long-haul-trucker' && days > 0) {
+      // Using simplified method: $23 per meal, max 3 meals per day, 80% deductible
+      mealExpenses = days * maxMealsPerDay * truckDriverMealRate;
+      mealDeduction = mealExpenses * truckDriverMealDeductionRate;
+      lodgingDeduction = lodging; // Lodging is 100% deductible
+    } else if (profession === 'transport-employee' && days > 0) {
+      // Regular transport employees get 50% deduction
+      mealExpenses = days * maxMealsPerDay * truckDriverMealRate;
+      mealDeduction = mealExpenses * 0.50;
+      lodgingDeduction = lodging;
+    }
+
+    const employmentExpenses = mealDeduction + lodgingDeduction;
+    const taxableIncome = Math.max(0, income - rrsp - fhsa - employmentExpenses);
     
     // Calculate federal tax
     const federalTaxBeforeCredits = calculateTax(taxableIncome, federalBrackets);
     const federalTaxCredit = federalBPA * 0.15;
-    const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit);
+    // CPP and EI create non-refundable tax credits
+    const federalCppEiCredit = (totalCppContribution + eiContribution) * 0.15;
+    const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit);
 
     // Calculate Manitoba tax
     const manitobaTaxBeforeCredits = calculateTax(taxableIncome, manitobaBrackets);
     const manitobaTaxCredit = manitobaBPA * 0.108;
-    const manitobaTax = Math.max(0, manitobaTaxBeforeCredits - manitobaTaxCredit);
+    const manitobaCppEiCredit = (totalCppContribution + eiContribution) * 0.108;
+    const manitobaTax = Math.max(0, manitobaTaxBeforeCredits - manitobaTaxCredit - manitobaCppEiCredit);
 
     const totalTax = federalTax + manitobaTax;
+    
+    // Calculate tax savings from contributions
+    const incomeAfterRrsp = income - rrsp;
+    const incomeAfterFhsa = incomeAfterRrsp - fhsa;
+    
     const taxSavingsFromRRSP = rrsp > 0 ? calculateTax(income, federalBrackets) + calculateTax(income, manitobaBrackets) - 
-      (calculateTax(income - rrsp, federalBrackets) + calculateTax(income - rrsp, manitobaBrackets)) : 0;
-    const taxSavingsFromFHSA = fhsa > 0 ? calculateTax(income - rrsp, federalBrackets) + calculateTax(income - rrsp, manitobaBrackets) - 
-      (calculateTax(income - rrsp - fhsa, federalBrackets) + calculateTax(income - rrsp - fhsa, manitobaBrackets)) : 0;
+      (calculateTax(incomeAfterRrsp, federalBrackets) + calculateTax(incomeAfterRrsp, manitobaBrackets)) : 0;
+    const taxSavingsFromFHSA = fhsa > 0 ? calculateTax(incomeAfterRrsp, federalBrackets) + calculateTax(incomeAfterRrsp, manitobaBrackets) - 
+      (calculateTax(incomeAfterFhsa, federalBrackets) + calculateTax(incomeAfterFhsa, manitobaBrackets)) : 0;
 
     const effectiveRate = income > 0 ? (totalTax / income) * 100 : 0;
-    const netIncome = income - totalTax;
+    const netIncome = income - totalTax - totalCppContribution - eiContribution;
 
     return {
       grossIncome: income,
       rrspContribution: rrsp,
       fhsaContribution: fhsa,
+      cpp1Contribution,
+      cpp2Contribution,
+      totalCppContribution,
+      eiContribution,
+      mealExpenses,
+      mealDeduction,
+      lodgingDeduction,
+      employmentExpenses,
       taxableIncome,
       federalTax,
       manitobaTax,
       totalTax,
       taxSavingsFromRRSP,
       taxSavingsFromFHSA,
-      totalDeductions: rrsp + fhsa,
+      totalDeductions: rrsp + fhsa + employmentExpenses,
       effectiveRate,
       netIncome,
     };
-  }, [grossIncome, rrspContribution, fhsaContribution]);
+  }, [grossIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-CA', {
@@ -94,6 +170,8 @@ const TaxCalculator2026 = () => {
       minimumFractionDigits: 2,
     }).format(value);
   };
+
+  const selectedProfession = professions.find(p => p.id === profession);
 
   return (
     <div className="min-h-screen relative">
@@ -127,7 +205,7 @@ const TaxCalculator2026 = () => {
               </div>
             </div>
             <p className="text-xl text-emerald-100 max-w-4xl">
-              Calculate your 2026 income tax with RRSP and FHSA contribution deductions. 
+              Calculate your 2026 income tax with CPP, EI, RRSP, FHSA deductions and profession-specific expenses. 
               See how much you can save by contributing to registered accounts.
             </p>
           </div>
@@ -222,8 +300,74 @@ const TaxCalculator2026 = () => {
               </div>
             </div>
 
+            {/* CPP/EI Info */}
+            <div className="grid lg:grid-cols-3 gap-6 mb-16">
+              <div className="bg-purple-50 p-6 rounded-xl card-3d">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <User className="w-6 h-6 text-purple-600 mr-2" />
+                  CPP (Base) 2026
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Max Earnings (YMPE):</span>
+                    <span className="font-semibold">$71,300</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Exemption:</span>
+                    <span className="font-semibold">$3,500</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Rate:</span>
+                    <span className="font-semibold">5.95%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-indigo-50 p-6 rounded-xl card-3d">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <User className="w-6 h-6 text-indigo-600 mr-2" />
+                  CPP2 (Enhanced) 2026
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Max Earnings (YAMPE):</span>
+                    <span className="font-semibold">$81,200</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Range:</span>
+                    <span className="font-semibold">$71,300 - $81,200</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Rate:</span>
+                    <span className="font-semibold">4.00%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-orange-50 p-6 rounded-xl card-3d">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <Briefcase className="w-6 h-6 text-orange-600 mr-2" />
+                  EI 2026
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Max Insurable:</span>
+                    <span className="font-semibold">$65,700</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Rate:</span>
+                    <span className="font-semibold">1.64%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Max Premium:</span>
+                    <span className="font-semibold">$1,077.48</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Tax Calculator */}
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-5xl mx-auto">
               <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Income Tax Calculator</h2>
               
               <div className="grid lg:grid-cols-2 gap-8">
@@ -232,6 +376,26 @@ const TaxCalculator2026 = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-6">Enter Your Information</h3>
                   
                   <div className="space-y-6">
+                    {/* Profession Selector */}
+                    <div>
+                      <Label htmlFor="profession" className="text-gray-700 font-medium flex items-center mb-2">
+                        <Briefcase className="w-5 h-5 text-gray-500 mr-2" />
+                        Select Your Profession
+                      </Label>
+                      <Select value={profession} onValueChange={setProfession}>
+                        <SelectTrigger className="text-lg">
+                          <SelectValue placeholder="Select profession" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {professions.map((prof) => (
+                            <SelectItem key={prof.id} value={prof.id}>
+                              {prof.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     <div>
                       <Label htmlFor="grossIncome" className="text-gray-700 font-medium flex items-center mb-2">
                         <DollarSign className="w-5 h-5 text-gray-500 mr-2" />
@@ -278,6 +442,64 @@ const TaxCalculator2026 = () => {
                       />
                       <p className="text-sm text-gray-500 mt-1">Annual Limit: $8,000</p>
                     </div>
+
+                    {/* Trucker-specific fields */}
+                    {(profession === 'long-haul-trucker' || profession === 'transport-employee') && (
+                      <div className="border-t pt-6 mt-6">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                          <Truck className="w-5 h-5 text-orange-500 mr-2" />
+                          {profession === 'long-haul-trucker' ? 'Long Haul Truck Driver Expenses' : 'Transport Employee Expenses'}
+                        </h4>
+                        
+                        <div className="space-y-4">
+                          <div>
+                            <Label htmlFor="daysAway" className="text-gray-700 font-medium mb-2 block">
+                              Days Away From Home (Eligible Trips)
+                            </Label>
+                            <Input
+                              id="daysAway"
+                              type="number"
+                              placeholder="e.g., 200"
+                              value={daysAway}
+                              onChange={(e) => setDaysAway(e.target.value)}
+                              className="text-lg"
+                            />
+                            <p className="text-sm text-gray-500 mt-1">
+                              Meals: ${truckDriverMealRate}/meal × 3 meals/day × {profession === 'long-haul-trucker' ? '80%' : '50%'} deductible
+                            </p>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="lodgingExpenses" className="text-gray-700 font-medium mb-2 block">
+                              Lodging Expenses (Total Annual)
+                            </Label>
+                            <Input
+                              id="lodgingExpenses"
+                              type="number"
+                              placeholder="e.g., 5000"
+                              value={lodgingExpenses}
+                              onChange={(e) => setLodgingExpenses(e.target.value)}
+                              className="text-lg"
+                            />
+                            <p className="text-sm text-gray-500 mt-1">100% deductible (keep receipts)</p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                          <h5 className="font-semibold text-orange-800 mb-2">CRA Simplified Method Rates</h5>
+                          <ul className="text-sm text-orange-700 space-y-1">
+                            <li>• Meal rate: <strong>$23 per meal</strong> (no receipts needed)</li>
+                            <li>• Maximum: 3 meals per day</li>
+                            <li>• Long-haul truckers: <strong>80% deductible</strong></li>
+                            <li>• Other transport: 50% deductible</li>
+                            <li>• Lodging: 100% deductible (receipts required)</li>
+                          </ul>
+                          <p className="text-xs text-orange-600 mt-2">
+                            * Long-haul = GVW &gt; 11,788 kg, 160+ km from base, 24+ hours away
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
@@ -295,29 +517,81 @@ const TaxCalculator2026 = () => {
                 <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-xl card-3d">
                   <h3 className="text-xl font-bold text-gray-900 mb-6">Tax Calculation Results</h3>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <div className="flex justify-between py-2 border-b border-emerald-200">
                       <span className="text-gray-600">Gross Income:</span>
                       <span className="font-semibold">{formatCurrency(calculations.grossIncome)}</span>
                     </div>
 
+                    {/* CPP/EI Deductions */}
+                    <div className="bg-purple-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-800 mb-2">Payroll Deductions</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-purple-700">CPP (Base):</span>
+                          <span className="font-semibold text-purple-700">-{formatCurrency(calculations.cpp1Contribution)}</span>
+                        </div>
+                        {calculations.cpp2Contribution > 0 && (
+                          <div className="flex justify-between">
+                            <span className="text-purple-700">CPP2 (Enhanced):</span>
+                            <span className="font-semibold text-purple-700">-{formatCurrency(calculations.cpp2Contribution)}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between">
+                          <span className="text-purple-700">EI Premium:</span>
+                          <span className="font-semibold text-purple-700">-{formatCurrency(calculations.eiContribution)}</span>
+                        </div>
+                        <div className="flex justify-between pt-2 border-t border-purple-200">
+                          <span className="text-purple-800 font-medium">Total CPP + EI:</span>
+                          <span className="font-bold text-purple-800">-{formatCurrency(calculations.totalCppContribution + calculations.eiContribution)}</span>
+                        </div>
+                      </div>
+                    </div>
+
                     {calculations.totalDeductions > 0 && (
-                      <>
-                        <div className="flex justify-between py-2 border-b border-emerald-200">
-                          <span className="text-gray-600 flex items-center">
-                            <TrendingDown className="w-4 h-4 text-blue-500 mr-2" />
-                            RRSP Deduction:
-                          </span>
-                          <span className="font-semibold text-blue-600">-{formatCurrency(calculations.rrspContribution)}</span>
+                      <div className="bg-blue-50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-blue-800 mb-2">Tax Deductions</h4>
+                        <div className="space-y-2 text-sm">
+                          {calculations.rrspContribution > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-blue-700 flex items-center">
+                                <TrendingDown className="w-4 h-4 mr-1" />
+                                RRSP:
+                              </span>
+                              <span className="font-semibold text-blue-700">-{formatCurrency(calculations.rrspContribution)}</span>
+                            </div>
+                          )}
+                          {calculations.fhsaContribution > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-green-700 flex items-center">
+                                <TrendingDown className="w-4 h-4 mr-1" />
+                                FHSA:
+                              </span>
+                              <span className="font-semibold text-green-700">-{formatCurrency(calculations.fhsaContribution)}</span>
+                            </div>
+                          )}
+                          {calculations.employmentExpenses > 0 && (
+                            <>
+                              <div className="flex justify-between">
+                                <span className="text-orange-700 flex items-center">
+                                  <TrendingDown className="w-4 h-4 mr-1" />
+                                  Meal Deduction:
+                                </span>
+                                <span className="font-semibold text-orange-700">-{formatCurrency(calculations.mealDeduction)}</span>
+                              </div>
+                              {calculations.lodgingDeduction > 0 && (
+                                <div className="flex justify-between">
+                                  <span className="text-orange-700 flex items-center">
+                                    <TrendingDown className="w-4 h-4 mr-1" />
+                                    Lodging Deduction:
+                                  </span>
+                                  <span className="font-semibold text-orange-700">-{formatCurrency(calculations.lodgingDeduction)}</span>
+                                </div>
+                              )}
+                            </>
+                          )}
                         </div>
-                        <div className="flex justify-between py-2 border-b border-emerald-200">
-                          <span className="text-gray-600 flex items-center">
-                            <TrendingDown className="w-4 h-4 text-green-500 mr-2" />
-                            FHSA Deduction:
-                          </span>
-                          <span className="font-semibold text-green-600">-{formatCurrency(calculations.fhsaContribution)}</span>
-                        </div>
-                      </>
+                      </div>
                     )}
 
                     <div className="flex justify-between py-2 border-b border-emerald-200 bg-white/50 px-2 rounded">
@@ -336,23 +610,23 @@ const TaxCalculator2026 = () => {
                     </div>
 
                     <div className="flex justify-between py-3 bg-red-100 px-3 rounded-lg">
-                      <span className="text-gray-900 font-bold">Total Tax:</span>
+                      <span className="text-gray-900 font-bold">Total Income Tax:</span>
                       <span className="font-bold text-red-700 text-xl">{formatCurrency(calculations.totalTax)}</span>
                     </div>
 
                     <div className="flex justify-between py-3 bg-emerald-100 px-3 rounded-lg">
-                      <span className="text-gray-900 font-bold">Net Income (After Tax):</span>
+                      <span className="text-gray-900 font-bold">Net Income (After Tax & Deductions):</span>
                       <span className="font-bold text-emerald-700 text-xl">{formatCurrency(calculations.netIncome)}</span>
                     </div>
 
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-600">Effective Tax Rate:</span>
-                      <span className="font-semibold">{calculations.effectiveRate.toFixed(2)}%</span>
+                    <div className="flex justify-between py-2 bg-gray-100 px-3 rounded-lg">
+                      <span className="text-gray-700 font-medium">Effective Tax Rate:</span>
+                      <span className="font-bold text-gray-900">{calculations.effectiveRate.toFixed(2)}%</span>
                     </div>
 
                     {(calculations.taxSavingsFromRRSP > 0 || calculations.taxSavingsFromFHSA > 0) && (
-                      <div className="mt-6 p-4 bg-green-100 rounded-lg border border-green-200">
-                        <h4 className="font-bold text-green-800 mb-3">Your Tax Savings</h4>
+                      <div className="mt-4 p-4 bg-green-100 rounded-lg border border-green-200">
+                        <h4 className="font-bold text-green-800 mb-3">💰 Your Tax Savings from Investments</h4>
                         {calculations.taxSavingsFromRRSP > 0 && (
                           <div className="flex justify-between mb-2">
                             <span className="text-green-700">RRSP Tax Savings:</span>
@@ -366,7 +640,7 @@ const TaxCalculator2026 = () => {
                           </div>
                         )}
                         <div className="flex justify-between pt-2 border-t border-green-300">
-                          <span className="text-green-800 font-bold">Total Tax Refund:</span>
+                          <span className="text-green-800 font-bold">Total Tax Refund from Investments:</span>
                           <span className="font-bold text-green-800 text-lg">
                             {formatCurrency(calculations.taxSavingsFromRRSP + calculations.taxSavingsFromFHSA)}
                           </span>
