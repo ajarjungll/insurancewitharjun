@@ -45,7 +45,10 @@ const professions = [
 ];
 
 // Long haul truck driver meal rates (CRA 2024 - applicable for 2025/2026 tax year)
-const truckDriverMealRate = 23; // $23 per meal (simplified method)
+// $23 USD per meal converted to CAD (avg USD/CAD rate ~1.36 for 2026)
+const truckDriverMealRateUSD = 23;
+const usdToCadRate = 1.36; // Average USD to CAD exchange rate for 2026
+const truckDriverMealRate = truckDriverMealRateUSD * usdToCadRate; // ~$31.28 CAD per meal
 const truckDriverMealDeductionRate = 0.80; // 80% deductible for long-haul truck drivers
 const maxMealsPerDay = 3;
 
