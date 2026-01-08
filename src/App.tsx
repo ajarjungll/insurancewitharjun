@@ -15,7 +15,7 @@ import RRSPDetails from "./pages/RRSPDetails";
 import FHSADetails from "./pages/FHSADetails";
 import TFSADetails from "./pages/TFSADetails";
 import RESPDetails from "./pages/RESPDetails";
-import TaxCalculator2026 from "./pages/TaxCalculator2026";
+import TaxCalculator from "./pages/TaxCalculator";
 import CriticalIllnessDetails from "./pages/CriticalIllnessDetails";
 import DentalInsuranceDetails from "./pages/DentalInsuranceDetails";
 import LifeInsuranceDetails from "./pages/LifeInsuranceDetails";
@@ -70,7 +70,7 @@ const App = () => (
           <Route path="/investment-types/fhsa" element={<FHSADetails />} />
           <Route path="/investment-types/tfsa" element={<TFSADetails />} />
           <Route path="/investment-types/resp" element={<RESPDetails />} />
-          <Route path="/investment-types/tax-calculator-2026" element={<TaxCalculator2026 />} />
+          <Route path="/tax-calculator" element={<TaxCalculator />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

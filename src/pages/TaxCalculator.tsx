@@ -1,40 +1,96 @@
 import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Calculator, ArrowLeft, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User } from 'lucide-react';
+import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 
-// 2026 Federal Tax Brackets (estimated based on indexation)
-const federalBrackets = [
-  { min: 0, max: 57375, rate: 0.15 },
-  { min: 57375, max: 114750, rate: 0.205 },
-  { min: 114750, max: 177882, rate: 0.26 },
-  { min: 177882, max: 253414, rate: 0.29 },
-  { min: 253414, max: Infinity, rate: 0.33 },
-];
+// Tax data for each year
+const taxData = {
+  2024: {
+    federalBrackets: [
+      { min: 0, max: 55867, rate: 0.15 },
+      { min: 55867, max: 111733, rate: 0.205 },
+      { min: 111733, max: 173205, rate: 0.26 },
+      { min: 173205, max: 246752, rate: 0.29 },
+      { min: 246752, max: Infinity, rate: 0.33 },
+    ],
+    manitobaBrackets: [
+      { min: 0, max: 36842, rate: 0.108 },
+      { min: 36842, max: 79625, rate: 0.1275 },
+      { min: 79625, max: Infinity, rate: 0.174 },
+    ],
+    federalBPA: 15705,
+    manitobaBPA: 15000,
+    cpp1MaxEarnings: 68500,
+    cpp2MaxEarnings: 73200,
+    cppExemption: 3500,
+    cpp1Rate: 0.0595,
+    cpp2Rate: 0.04,
+    eiMaxInsurableEarnings: 63200,
+    eiRate: 0.0166,
+    rrspLimit: 31560,
+    fhsaLimit: 8000,
+    usdToCadRate: 1.34,
+  },
+  2025: {
+    federalBrackets: [
+      { min: 0, max: 57375, rate: 0.15 },
+      { min: 57375, max: 114750, rate: 0.205 },
+      { min: 114750, max: 177882, rate: 0.26 },
+      { min: 177882, max: 253414, rate: 0.29 },
+      { min: 253414, max: Infinity, rate: 0.33 },
+    ],
+    manitobaBrackets: [
+      { min: 0, max: 47000, rate: 0.108 },
+      { min: 47000, max: 100000, rate: 0.1275 },
+      { min: 100000, max: Infinity, rate: 0.174 },
+    ],
+    federalBPA: 16129,
+    manitobaBPA: 15780,
+    cpp1MaxEarnings: 71300,
+    cpp2MaxEarnings: 81200,
+    cppExemption: 3500,
+    cpp1Rate: 0.0595,
+    cpp2Rate: 0.04,
+    eiMaxInsurableEarnings: 65700,
+    eiRate: 0.0164,
+    rrspLimit: 32490,
+    fhsaLimit: 8000,
+    usdToCadRate: 1.35,
+  },
+  2026: {
+    federalBrackets: [
+      { min: 0, max: 57375, rate: 0.15 },
+      { min: 57375, max: 114750, rate: 0.205 },
+      { min: 114750, max: 177882, rate: 0.26 },
+      { min: 177882, max: 253414, rate: 0.29 },
+      { min: 253414, max: Infinity, rate: 0.33 },
+    ],
+    manitobaBrackets: [
+      { min: 0, max: 47564, rate: 0.108 },
+      { min: 47564, max: 101200, rate: 0.1275 },
+      { min: 101200, max: Infinity, rate: 0.174 },
+    ],
+    federalBPA: 16129,
+    manitobaBPA: 15780,
+    cpp1MaxEarnings: 71300,
+    cpp2MaxEarnings: 81200,
+    cppExemption: 3500,
+    cpp1Rate: 0.0595,
+    cpp2Rate: 0.04,
+    eiMaxInsurableEarnings: 65700,
+    eiRate: 0.0164,
+    rrspLimit: 32490,
+    fhsaLimit: 8000,
+    usdToCadRate: 1.36,
+  },
+};
 
-// 2026 Manitoba Tax Brackets (estimated based on indexation)
-const manitobaBrackets = [
-  { min: 0, max: 47564, rate: 0.108 },
-  { min: 47564, max: 101200, rate: 0.1275 },
-  { min: 101200, max: Infinity, rate: 0.174 },
-];
-
-// Basic Personal Amounts for 2026 (estimated)
-const federalBPA = 16129;
-const manitobaBPA = 15780;
-
-// 2026 CPP/EI rates (estimated)
-const cpp1MaxEarnings = 71300; // YMPE - Year's Maximum Pensionable Earnings
-const cpp2MaxEarnings = 81200; // YAMPE - Year's Additional Maximum Pensionable Earnings
-const cppExemption = 3500;
-const cpp1Rate = 0.0595; // CPP base contribution rate
-const cpp2Rate = 0.04; // CPP2 enhanced contribution rate
-const eiMaxInsurableEarnings = 65700;
-const eiRate = 0.0164; // EI rate
+type TaxYear = 2024 | 2025 | 2026;
 
 // Profession-specific expense types
 const professions = [
@@ -44,15 +100,12 @@ const professions = [
   { id: 'sales-commission', name: 'Commission Sales Employee', hasExpenses: true },
 ];
 
-// Long haul truck driver meal rates (CRA 2024 - applicable for 2025/2026 tax year)
-// $23 USD per meal converted to CAD (avg USD/CAD rate ~1.36 for 2026)
+// CRA meal rate in USD
 const truckDriverMealRateUSD = 23;
-const usdToCadRate = 1.36; // Average USD to CAD exchange rate for 2026
-const truckDriverMealRate = truckDriverMealRateUSD * usdToCadRate; // ~$31.28 CAD per meal
-const truckDriverMealDeductionRate = 0.80; // 80% deductible for long-haul truck drivers
+const truckDriverMealDeductionRate = 0.80;
 const maxMealsPerDay = 3;
 
-const calculateTax = (income: number, brackets: typeof federalBrackets): number => {
+const calculateTax = (income: number, brackets: { min: number; max: number; rate: number }[]): number => {
   let tax = 0;
   let remainingIncome = income;
 
@@ -66,34 +119,38 @@ const calculateTax = (income: number, brackets: typeof federalBrackets): number 
   return tax;
 };
 
-const TaxCalculator2026 = () => {
+const TaxCalculator = () => {
+  const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
   const [profession, setProfession] = useState<string>('general');
   const [grossIncome, setGrossIncome] = useState<string>('');
   const [rrspContribution, setRrspContribution] = useState<string>('');
   const [fhsaContribution, setFhsaContribution] = useState<string>('');
-  const [daysAway, setDaysAway] = useState<string>(''); // For truckers - days away from home
-  const [lodgingExpenses, setLodgingExpenses] = useState<string>(''); // Actual lodging costs
+  const [daysAway, setDaysAway] = useState<string>('');
+  const [lodgingExpenses, setLodgingExpenses] = useState<string>('');
+
+  const yearData = taxData[selectedYear];
+  const truckDriverMealRate = truckDriverMealRateUSD * yearData.usdToCadRate;
 
   const calculations = useMemo(() => {
     const income = parseFloat(grossIncome) || 0;
-    const rrsp = Math.min(parseFloat(rrspContribution) || 0, 32490); // 2026 RRSP limit
-    const fhsa = Math.min(parseFloat(fhsaContribution) || 0, 8000); // FHSA annual limit
+    const rrsp = Math.min(parseFloat(rrspContribution) || 0, yearData.rrspLimit);
+    const fhsa = Math.min(parseFloat(fhsaContribution) || 0, yearData.fhsaLimit);
     const days = parseFloat(daysAway) || 0;
     const lodging = parseFloat(lodgingExpenses) || 0;
 
     // Calculate CPP contributions
-    const cpp1Pensionable = Math.max(0, Math.min(income, cpp1MaxEarnings) - cppExemption);
-    const cpp1Contribution = cpp1Pensionable * cpp1Rate;
+    const cpp1Pensionable = Math.max(0, Math.min(income, yearData.cpp1MaxEarnings) - yearData.cppExemption);
+    const cpp1Contribution = cpp1Pensionable * yearData.cpp1Rate;
     
     // CPP2 (enhanced) on earnings between YMPE and YAMPE
-    const cpp2Pensionable = Math.max(0, Math.min(income, cpp2MaxEarnings) - cpp1MaxEarnings);
-    const cpp2Contribution = cpp2Pensionable * cpp2Rate;
+    const cpp2Pensionable = Math.max(0, Math.min(income, yearData.cpp2MaxEarnings) - yearData.cpp1MaxEarnings);
+    const cpp2Contribution = cpp2Pensionable * yearData.cpp2Rate;
     
     const totalCppContribution = cpp1Contribution + cpp2Contribution;
 
     // Calculate EI
-    const eiInsurable = Math.min(income, eiMaxInsurableEarnings);
-    const eiContribution = eiInsurable * eiRate;
+    const eiInsurable = Math.min(income, yearData.eiMaxInsurableEarnings);
+    const eiContribution = eiInsurable * yearData.eiRate;
 
     // Calculate trucker-specific deductions
     let mealExpenses = 0;
@@ -101,12 +158,10 @@ const TaxCalculator2026 = () => {
     let lodgingDeduction = 0;
     
     if (profession === 'long-haul-trucker' && days > 0) {
-      // Using simplified method: $23 per meal, max 3 meals per day, 80% deductible
       mealExpenses = days * maxMealsPerDay * truckDriverMealRate;
       mealDeduction = mealExpenses * truckDriverMealDeductionRate;
-      lodgingDeduction = lodging; // Lodging is 100% deductible
+      lodgingDeduction = lodging;
     } else if (profession === 'transport-employee' && days > 0) {
-      // Regular transport employees get 50% deduction
       mealExpenses = days * maxMealsPerDay * truckDriverMealRate;
       mealDeduction = mealExpenses * 0.50;
       lodgingDeduction = lodging;
@@ -116,15 +171,14 @@ const TaxCalculator2026 = () => {
     const taxableIncome = Math.max(0, income - rrsp - fhsa - employmentExpenses);
     
     // Calculate federal tax
-    const federalTaxBeforeCredits = calculateTax(taxableIncome, federalBrackets);
-    const federalTaxCredit = federalBPA * 0.15;
-    // CPP and EI create non-refundable tax credits
+    const federalTaxBeforeCredits = calculateTax(taxableIncome, yearData.federalBrackets);
+    const federalTaxCredit = yearData.federalBPA * 0.15;
     const federalCppEiCredit = (totalCppContribution + eiContribution) * 0.15;
     const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit);
 
     // Calculate Manitoba tax
-    const manitobaTaxBeforeCredits = calculateTax(taxableIncome, manitobaBrackets);
-    const manitobaTaxCredit = manitobaBPA * 0.108;
+    const manitobaTaxBeforeCredits = calculateTax(taxableIncome, yearData.manitobaBrackets);
+    const manitobaTaxCredit = yearData.manitobaBPA * 0.108;
     const manitobaCppEiCredit = (totalCppContribution + eiContribution) * 0.108;
     const manitobaTax = Math.max(0, manitobaTaxBeforeCredits - manitobaTaxCredit - manitobaCppEiCredit);
 
@@ -134,10 +188,10 @@ const TaxCalculator2026 = () => {
     const incomeAfterRrsp = income - rrsp;
     const incomeAfterFhsa = incomeAfterRrsp - fhsa;
     
-    const taxSavingsFromRRSP = rrsp > 0 ? calculateTax(income, federalBrackets) + calculateTax(income, manitobaBrackets) - 
-      (calculateTax(incomeAfterRrsp, federalBrackets) + calculateTax(incomeAfterRrsp, manitobaBrackets)) : 0;
-    const taxSavingsFromFHSA = fhsa > 0 ? calculateTax(incomeAfterRrsp, federalBrackets) + calculateTax(incomeAfterRrsp, manitobaBrackets) - 
-      (calculateTax(incomeAfterFhsa, federalBrackets) + calculateTax(incomeAfterFhsa, manitobaBrackets)) : 0;
+    const taxSavingsFromRRSP = rrsp > 0 ? calculateTax(income, yearData.federalBrackets) + calculateTax(income, yearData.manitobaBrackets) - 
+      (calculateTax(incomeAfterRrsp, yearData.federalBrackets) + calculateTax(incomeAfterRrsp, yearData.manitobaBrackets)) : 0;
+    const taxSavingsFromFHSA = fhsa > 0 ? calculateTax(incomeAfterRrsp, yearData.federalBrackets) + calculateTax(incomeAfterRrsp, yearData.manitobaBrackets) - 
+      (calculateTax(incomeAfterFhsa, yearData.federalBrackets) + calculateTax(incomeAfterFhsa, yearData.manitobaBrackets)) : 0;
 
     const effectiveRate = income > 0 ? (totalTax / income) * 100 : 0;
     const netIncome = income - totalTax - totalCppContribution - eiContribution;
@@ -164,7 +218,7 @@ const TaxCalculator2026 = () => {
       effectiveRate,
       netIncome,
     };
-  }, [grossIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses]);
+  }, [grossIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses, selectedYear, yearData, truckDriverMealRate]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-CA', {
@@ -174,7 +228,10 @@ const TaxCalculator2026 = () => {
     }).format(value);
   };
 
-  const selectedProfession = professions.find(p => p.id === profession);
+  const formatBracket = (min: number, max: number) => {
+    if (max === Infinity) return `Over $${min.toLocaleString()}`;
+    return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -194,37 +251,54 @@ const TaxCalculator2026 = () => {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-emerald-900 to-teal-700 text-white py-20">
           <div className="container mx-auto px-4">
-            <Link to="/investment-types" className="inline-flex items-center text-emerald-200 hover:text-white mb-6">
-              <ArrowLeft size={20} className="mr-2" />
-              Back to Investment Types
-            </Link>
             <div className="flex items-center mb-6">
               <div className="card-3d p-4 rounded-xl bg-emerald-50 mr-6">
                 <Calculator className="w-16 h-16 text-emerald-600" />
               </div>
               <div>
-                <h1 className="text-5xl font-bold mb-4">2026 Income Tax Calculator</h1>
+                <h1 className="text-5xl font-bold mb-4">Income Tax Calculator</h1>
                 <p className="text-xl text-emerald-100">Federal & Manitoba Tax Brackets</p>
               </div>
             </div>
             <p className="text-xl text-emerald-100 max-w-4xl">
-              Calculate your 2026 income tax with CPP, EI, RRSP, FHSA deductions and profession-specific expenses. 
+              Calculate your income tax with CPP, EI, RRSP, FHSA deductions and profession-specific expenses. 
               See how much you can save by contributing to registered accounts.
             </p>
+          </div>
+        </section>
+
+        {/* Year Selection Tabs */}
+        <section className="py-8 bg-gray-100">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center gap-4">
+              {([2024, 2025, 2026] as TaxYear[]).map((year) => (
+                <Button
+                  key={year}
+                  onClick={() => setSelectedYear(year)}
+                  className={`px-8 py-4 text-lg font-bold transition-all ${
+                    selectedYear === year
+                      ? 'bg-gradient-to-b from-emerald-500 to-emerald-600 text-white shadow-[0_4px_0_0_#065f46,0_6px_10px_rgba(6,95,70,0.3)] hover:shadow-[0_2px_0_0_#065f46,0_4px_6px_rgba(6,95,70,0.3)] hover:translate-y-[2px]'
+                      : 'bg-gradient-to-b from-gray-200 to-gray-300 text-gray-700 shadow-[0_4px_0_0_#6b7280,0_6px_10px_rgba(107,114,128,0.25)] hover:shadow-[0_2px_0_0_#6b7280,0_4px_6px_rgba(107,114,128,0.25)] hover:translate-y-[2px] hover:from-gray-300 hover:to-gray-400'
+                  }`}
+                >
+                  {year} Tax Year
+                </Button>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Tax Brackets Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">2026 Tax Brackets</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Tax Brackets</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-16">
               {/* Federal Tax Brackets */}
               <div className="bg-blue-50 p-8 rounded-xl card-3d">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <DollarSign className="w-8 h-8 text-blue-600 mr-3" />
-                  Federal Tax Brackets 2026
+                  Federal Tax Brackets {selectedYear}
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
@@ -235,32 +309,18 @@ const TaxCalculator2026 = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b border-blue-100">
-                        <td className="py-3 px-2">$0 - $57,375</td>
-                        <td className="text-right py-3 px-2 font-semibold text-blue-600">15%</td>
-                      </tr>
-                      <tr className="border-b border-blue-100">
-                        <td className="py-3 px-2">$57,375 - $114,750</td>
-                        <td className="text-right py-3 px-2 font-semibold text-blue-600">20.5%</td>
-                      </tr>
-                      <tr className="border-b border-blue-100">
-                        <td className="py-3 px-2">$114,750 - $177,882</td>
-                        <td className="text-right py-3 px-2 font-semibold text-blue-600">26%</td>
-                      </tr>
-                      <tr className="border-b border-blue-100">
-                        <td className="py-3 px-2">$177,882 - $253,414</td>
-                        <td className="text-right py-3 px-2 font-semibold text-blue-600">29%</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3 px-2">Over $253,414</td>
-                        <td className="text-right py-3 px-2 font-semibold text-blue-600">33%</td>
-                      </tr>
+                      {yearData.federalBrackets.map((bracket, index) => (
+                        <tr key={index} className={index < yearData.federalBrackets.length - 1 ? "border-b border-blue-100" : ""}>
+                          <td className="py-3 px-2">{formatBracket(bracket.min, bracket.max)}</td>
+                          <td className="text-right py-3 px-2 font-semibold text-blue-600">{(bracket.rate * 100).toFixed(1)}%</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
                 <div className="mt-4 p-3 bg-blue-100 rounded-lg">
                   <p className="text-sm text-gray-700">
-                    <strong>Basic Personal Amount:</strong> $16,129 (estimated)
+                    <strong>Basic Personal Amount:</strong> ${yearData.federalBPA.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -269,7 +329,7 @@ const TaxCalculator2026 = () => {
               <div className="bg-green-50 p-8 rounded-xl card-3d">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <DollarSign className="w-8 h-8 text-green-600 mr-3" />
-                  Manitoba Tax Brackets 2026
+                  Manitoba Tax Brackets {selectedYear}
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
@@ -280,24 +340,18 @@ const TaxCalculator2026 = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b border-green-100">
-                        <td className="py-3 px-2">$0 - $47,564</td>
-                        <td className="text-right py-3 px-2 font-semibold text-green-600">10.8%</td>
-                      </tr>
-                      <tr className="border-b border-green-100">
-                        <td className="py-3 px-2">$47,564 - $101,200</td>
-                        <td className="text-right py-3 px-2 font-semibold text-green-600">12.75%</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3 px-2">Over $101,200</td>
-                        <td className="text-right py-3 px-2 font-semibold text-green-600">17.4%</td>
-                      </tr>
+                      {yearData.manitobaBrackets.map((bracket, index) => (
+                        <tr key={index} className={index < yearData.manitobaBrackets.length - 1 ? "border-b border-green-100" : ""}>
+                          <td className="py-3 px-2">{formatBracket(bracket.min, bracket.max)}</td>
+                          <td className="text-right py-3 px-2 font-semibold text-green-600">{(bracket.rate * 100).toFixed(2)}%</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
                 <div className="mt-4 p-3 bg-green-100 rounded-lg">
                   <p className="text-sm text-gray-700">
-                    <strong>Basic Personal Amount:</strong> $15,780 (estimated)
+                    <strong>Basic Personal Amount:</strong> ${yearData.manitobaBPA.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -308,20 +362,20 @@ const TaxCalculator2026 = () => {
               <div className="bg-purple-50 p-6 rounded-xl card-3d">
                 <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
                   <User className="w-6 h-6 text-purple-600 mr-2" />
-                  CPP (Base) 2026
+                  CPP (Base) {selectedYear}
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Max Earnings (YMPE):</span>
-                    <span className="font-semibold">$71,300</span>
+                    <span className="font-semibold">${yearData.cpp1MaxEarnings.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Exemption:</span>
-                    <span className="font-semibold">$3,500</span>
+                    <span className="font-semibold">${yearData.cppExemption.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Rate:</span>
-                    <span className="font-semibold">5.95%</span>
+                    <span className="font-semibold">{(yearData.cpp1Rate * 100).toFixed(2)}%</span>
                   </div>
                 </div>
               </div>
@@ -329,20 +383,20 @@ const TaxCalculator2026 = () => {
               <div className="bg-indigo-50 p-6 rounded-xl card-3d">
                 <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
                   <User className="w-6 h-6 text-indigo-600 mr-2" />
-                  CPP2 (Enhanced) 2026
+                  CPP2 (Enhanced) {selectedYear}
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Max Earnings (YAMPE):</span>
-                    <span className="font-semibold">$81,200</span>
+                    <span className="font-semibold">${yearData.cpp2MaxEarnings.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Range:</span>
-                    <span className="font-semibold">$71,300 - $81,200</span>
+                    <span className="font-semibold">${yearData.cpp1MaxEarnings.toLocaleString()} - ${yearData.cpp2MaxEarnings.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Rate:</span>
-                    <span className="font-semibold">4.00%</span>
+                    <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
                   </div>
                 </div>
               </div>
@@ -350,20 +404,20 @@ const TaxCalculator2026 = () => {
               <div className="bg-orange-50 p-6 rounded-xl card-3d">
                 <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
                   <Briefcase className="w-6 h-6 text-orange-600 mr-2" />
-                  EI 2026
+                  EI {selectedYear}
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Max Insurable:</span>
-                    <span className="font-semibold">$65,700</span>
+                    <span className="font-semibold">${yearData.eiMaxInsurableEarnings.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Rate:</span>
-                    <span className="font-semibold">1.64%</span>
+                    <span className="font-semibold">{(yearData.eiRate * 100).toFixed(2)}%</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Max Premium:</span>
-                    <span className="font-semibold">$1,077.48</span>
+                    <span className="font-semibold">{formatCurrency(yearData.eiMaxInsurableEarnings * yearData.eiRate)}</span>
                   </div>
                 </div>
               </div>
@@ -371,7 +425,7 @@ const TaxCalculator2026 = () => {
 
             {/* Tax Calculator */}
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Income Tax Calculator</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Income Tax Calculator</h2>
               
               <div className="grid lg:grid-cols-2 gap-8">
                 {/* Input Section */}
@@ -427,7 +481,7 @@ const TaxCalculator2026 = () => {
                         onChange={(e) => setRrspContribution(e.target.value)}
                         className="text-lg"
                       />
-                      <p className="text-sm text-gray-500 mt-1">2026 Limit: $32,490 or 18% of income</p>
+                      <p className="text-sm text-gray-500 mt-1">{selectedYear} Limit: ${yearData.rrspLimit.toLocaleString()} or 18% of income</p>
                     </div>
 
                     <div>
@@ -443,7 +497,7 @@ const TaxCalculator2026 = () => {
                         onChange={(e) => setFhsaContribution(e.target.value)}
                         className="text-lg"
                       />
-                      <p className="text-sm text-gray-500 mt-1">Annual Limit: $8,000</p>
+                      <p className="text-sm text-gray-500 mt-1">Annual Limit: ${yearData.fhsaLimit.toLocaleString()}</p>
                     </div>
 
                     {/* Trucker-specific fields */}
@@ -468,7 +522,7 @@ const TaxCalculator2026 = () => {
                               className="text-lg"
                             />
                             <p className="text-sm text-gray-500 mt-1">
-                              Meals: ${truckDriverMealRate}/meal × 3 meals/day × {profession === 'long-haul-trucker' ? '80%' : '50%'} deductible
+                              Meals: ${truckDriverMealRate.toFixed(2)}/meal × 3 meals/day × {profession === 'long-haul-trucker' ? '80%' : '50%'} deductible
                             </p>
                           </div>
 
@@ -491,7 +545,7 @@ const TaxCalculator2026 = () => {
                         <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
                           <h5 className="font-semibold text-orange-800 mb-2">CRA Simplified Method Rates</h5>
                           <ul className="text-sm text-orange-700 space-y-1">
-                            <li>• Meal rate: <strong>$23 per meal</strong> (no receipts needed)</li>
+                            <li>• Meal rate: <strong>$23 USD per meal</strong> (~${truckDriverMealRate.toFixed(2)} CAD)</li>
                             <li>• Maximum: 3 meals per day</li>
                             <li>• Long-haul truckers: <strong>80% deductible</strong></li>
                             <li>• Other transport: 50% deductible</li>
@@ -509,7 +563,7 @@ const TaxCalculator2026 = () => {
                     <div className="flex items-start">
                       <Info className="w-5 h-5 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
                       <p className="text-sm text-yellow-800">
-                        This calculator provides estimates based on projected 2026 tax brackets. 
+                        This calculator provides estimates based on {selectedYear} tax brackets. 
                         Actual rates may vary. Consult a tax professional for personalized advice.
                       </p>
                     </div>
@@ -518,7 +572,7 @@ const TaxCalculator2026 = () => {
 
                 {/* Results Section */}
                 <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-xl card-3d">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Tax Calculation Results</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">{selectedYear} Tax Calculation Results</h3>
                   
                   <div className="space-y-3">
                     <div className="flex justify-between py-2 border-b border-emerald-200">
@@ -682,4 +736,4 @@ const TaxCalculator2026 = () => {
   );
 };
 
-export default TaxCalculator2026;
+export default TaxCalculator;
