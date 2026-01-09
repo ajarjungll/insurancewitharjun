@@ -10,32 +10,6 @@ import { Button } from '@/components/ui/button';
 
 // Tax data for each year
 const taxData = {
-  2024: {
-    federalBrackets: [
-      { min: 0, max: 55867, rate: 0.15 },
-      { min: 55867, max: 111733, rate: 0.205 },
-      { min: 111733, max: 173205, rate: 0.26 },
-      { min: 173205, max: 246752, rate: 0.29 },
-      { min: 246752, max: Infinity, rate: 0.33 },
-    ],
-    manitobaBrackets: [
-      { min: 0, max: 47000, rate: 0.108 },
-      { min: 47000, max: 100000, rate: 0.1275 },
-      { min: 100000, max: Infinity, rate: 0.174 },
-    ],
-    federalBPA: 15705,
-    manitobaBPA: 15000,
-    cpp1MaxEarnings: 68500,
-    cpp2MaxEarnings: 73200,
-    cppExemption: 3500,
-    cpp1Rate: 0.0595,
-    cpp2Rate: 0.04,
-    eiMaxInsurableEarnings: 63200,
-    eiRate: 0.0166,
-    rrspLimit: 31560,
-    fhsaLimit: 8000,
-    usdToCadRate: 1.34,
-  },
   2025: {
     federalBrackets: [
       { min: 0, max: 57375, rate: 0.15 },
@@ -45,9 +19,9 @@ const taxData = {
       { min: 253414, max: Infinity, rate: 0.33 },
     ],
     manitobaBrackets: [
-      { min: 0, max: 47564, rate: 0.108 },
-      { min: 47564, max: 101200, rate: 0.1275 },
-      { min: 101200, max: Infinity, rate: 0.174 },
+      { min: 0, max: 47000, rate: 0.108 },
+      { min: 47000, max: 100000, rate: 0.1275 },
+      { min: 100000, max: Infinity, rate: 0.174 },
     ],
     federalBPA: 16129,
     manitobaBPA: 15780,
@@ -71,12 +45,12 @@ const taxData = {
       { min: 258482, max: Infinity, rate: 0.33 },
     ],
     manitobaBrackets: [
-      { min: 0, max: 48515, rate: 0.108 },
-      { min: 48515, max: 103224, rate: 0.1275 },
-      { min: 103224, max: Infinity, rate: 0.174 },
+      { min: 0, max: 47000, rate: 0.108 },
+      { min: 47000, max: 100000, rate: 0.1275 },
+      { min: 100000, max: Infinity, rate: 0.174 },
     ],
     federalBPA: 16452,
-    manitobaBPA: 16096,
+    manitobaBPA: 15780,
     cpp1MaxEarnings: 74600,
     cpp2MaxEarnings: 85000,
     cppExemption: 3500,
@@ -90,7 +64,7 @@ const taxData = {
   },
 };
 
-type TaxYear = 2024 | 2025 | 2026;
+type TaxYear = 2025 | 2026;
 
 // Profession-specific expense types
 const professions = [
@@ -271,7 +245,7 @@ const TaxCalculator = () => {
         <section className="py-8 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="flex justify-center gap-4">
-              {([2024, 2025, 2026] as TaxYear[]).map((year) => (
+              {([2025, 2026] as TaxYear[]).map((year) => (
                 <Button
                   key={year}
                   onClick={() => setSelectedYear(year)}
