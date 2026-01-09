@@ -197,7 +197,7 @@ const FHSADetails = () => {
                     <img 
                       src="/lovable-uploads/arjun-profile.jpg" 
                       alt="Arjun Singh Gill - Insurance & Investment Advisor"
-                      className="w-24 h-24 rounded-full object-cover border-4 border-green-300 shadow-lg mb-4"
+                      className="w-28 h-36 rounded-lg object-cover border-4 border-green-300 shadow-lg mb-4"
                     />
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
                     <p className="text-sm text-green-600 font-medium">Insurance & Investment Advisor</p>
