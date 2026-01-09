@@ -226,7 +226,7 @@ const RRSPDetails = () => {
                 <div className="bg-blue-50 p-8 rounded-xl card-3d sticky top-8">
                   <div className="flex flex-col items-center mb-6">
                     <img 
-                      src="/lovable-uploads/arjun-profile.jpg" 
+                      src="/lovable-uploads/arjun-professional.jpg" 
                       alt="Arjun Singh Gill - Insurance & Investment Advisor"
                       className="w-28 h-36 rounded-lg object-cover border-4 border-blue-300 shadow-lg mb-4"
                     />
