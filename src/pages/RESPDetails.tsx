@@ -232,8 +232,8 @@ const RESPDetails = () => {
                 <div className="bg-indigo-50 p-8 rounded-xl card-3d sticky top-8">
                   <div className="flex flex-col items-center mb-6">
                     <img 
-                      src="/lovable-uploads/arjun-profile.jpg" 
-                      alt="Arjun - Insurance & Investment Advisor"
+                      src="/lovable-uploads/arjun-professional.jpg" 
+                      alt="Arjun Singh Gill - Insurance & Investment Advisor"
                       className="w-28 h-36 rounded-lg object-cover border-4 border-indigo-300 shadow-lg mb-4"
                     />
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
