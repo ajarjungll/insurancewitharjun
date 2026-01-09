@@ -228,7 +228,7 @@ const RRSPDetails = () => {
                     <img 
                       src="/lovable-uploads/arjun-professional.jpg" 
                       alt="Arjun Singh Gill - Insurance & Investment Advisor"
-                      className="w-28 h-36 rounded-lg object-cover border-4 border-blue-300 shadow-lg mb-4"
+                      className="w-28 h-36 rounded-lg object-cover object-top border-4 border-blue-300 shadow-lg mb-4 scale-110"
                     />
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
                     <p className="text-sm text-blue-600 font-medium">Insurance & Investment Advisor</p>
