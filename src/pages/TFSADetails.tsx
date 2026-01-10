@@ -212,7 +212,7 @@ const TFSADetails = () => {
               <div className="lg:col-span-1">
                 <div className="bg-purple-50 p-8 rounded-xl card-3d sticky top-8">
                   <div className="flex flex-col items-center mb-6">
-                    <div className="w-24 h-28 rounded-lg overflow-hidden border-4 border-purple-300 shadow-lg mb-4">
+                    <div className="w-[106px] h-[123px] rounded-lg overflow-hidden border-4 border-purple-300 shadow-lg mb-4">
                       <img 
                         src="/lovable-uploads/arjun-professional.jpg" 
                         alt="Arjun Singh Gill - Insurance & Investment Advisor"
