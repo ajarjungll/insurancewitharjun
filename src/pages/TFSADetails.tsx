@@ -212,11 +212,13 @@ const TFSADetails = () => {
               <div className="lg:col-span-1">
                 <div className="bg-purple-50 p-8 rounded-xl card-3d sticky top-8">
                   <div className="flex flex-col items-center mb-6">
-                    <img 
-                      src="/lovable-uploads/arjun-professional.jpg" 
-                      alt="Arjun Singh Gill - Insurance & Investment Advisor"
-                      className="w-28 h-36 rounded-lg object-cover object-top border-4 border-purple-300 shadow-lg mb-4 scale-[1.5]"
-                    />
+                    <div className="w-24 h-28 rounded-lg overflow-hidden border-4 border-purple-300 shadow-lg mb-4">
+                      <img 
+                        src="/lovable-uploads/arjun-professional.jpg" 
+                        alt="Arjun Singh Gill - Insurance & Investment Advisor"
+                        className="w-full h-full object-cover object-top scale-[1.5]"
+                      />
+                    </div>
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
                     <p className="text-sm text-purple-600 font-medium">Insurance & Investment Advisor</p>
                   </div>

@@ -18,17 +18,12 @@ const Logo3D = () => {
         </div>
       </div>
       
-      {/* Company name with enhanced 3D text effect */}
-      <div>
-        <h1 className="text-3xl font-bold text-blue-900 relative">
-          INSURANCE WITH ARJUN
-          {/* Multiple text shadow layers for enhanced 3D depth */}
-          <span className="absolute top-0 left-0 text-blue-800/20 -z-10 transform translate-x-1 translate-y-1">
-            INSURANCE WITH ARJUN
-          </span>
-          <span className="absolute top-0 left-0 text-blue-700/15 -z-20 transform translate-x-2 translate-y-2">
-            INSURANCE WITH ARJUN
-          </span>
+      {/* Company name with elegant styling */}
+      <div className="flex flex-col">
+        <h1 className="text-2xl md:text-3xl font-bold whitespace-nowrap">
+          <span className="text-blue-900">Insurance</span>
+          <span className="text-orange-500 mx-1">with</span>
+          <span className="bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent">Arjun</span>
         </h1>
         <p className="text-sm text-gray-600 font-medium tracking-wide">Your Trusted Insurance Partner</p>
       </div>
