@@ -59,7 +59,9 @@ const FHSADetails = () => {
                   </p>
                   <p className="text-lg text-gray-600">
                     This account is specifically designed for first-time homebuyers and provides the most tax-efficient 
-                    way to save for your first home. You can contribute up to $8,000 annually with a lifetime maximum of $40,000.
+                    way to save for your first home. You can contribute up to $8,000 annually with a lifetime maximum of $40,000. 
+                    Unused contribution room can be carried forward, with a maximum carry-forward of $8,000 per year, 
+                    allowing you to contribute up to $16,000 in a single year if you have unused room from the previous year.
                   </p>
                 </div>
 
