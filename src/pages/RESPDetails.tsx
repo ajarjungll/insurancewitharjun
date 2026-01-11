@@ -235,7 +235,7 @@ const RESPDetails = () => {
                       <img 
                         src="/lovable-uploads/arjun-professional.jpg" 
                         alt="Arjun Singh Gill - Insurance & Investment Advisor"
-                        className="w-full h-full object-cover object-[center_50%] scale-[1.275]"
+                        className="w-full h-full object-cover object-[center_15%] scale-[1.275]"
                       />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
