@@ -216,7 +216,7 @@ const TFSADetails = () => {
                       <img 
                         src="/lovable-uploads/arjun-professional.jpg" 
                         alt="Arjun Singh Gill - Insurance & Investment Advisor"
-                        className="w-full h-full object-cover object-[center_15%] scale-[1.275]"
+                        className="w-full h-full object-cover object-top scale-[1.1]"
                       />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
