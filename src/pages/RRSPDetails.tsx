@@ -55,7 +55,8 @@ const RRSPDetails = () => {
                   <p className="text-lg text-gray-600 mb-6">
                     A Registered Retirement Savings Plan (RRSP) is a retirement savings account registered with the Canadian government. 
                     It's designed to help Canadians save for retirement while providing immediate tax benefits. Contributions to your RRSP 
-                    are tax-deductible, meaning they reduce your taxable income for the year you contribute.
+                    are tax-deductible, meaning they reduce your taxable income for the year you contribute. Unused contribution room 
+                    carries forward indefinitely, allowing you to catch up in higher-income years when tax deductions are more valuable.
                   </p>
                   <p className="text-lg text-gray-600">
                     Your investments grow tax-free inside the RRSP until you withdraw them, typically in retirement when you may be 
@@ -229,7 +230,7 @@ const RRSPDetails = () => {
                       <img 
                         src="/lovable-uploads/arjun-professional.jpg" 
                         alt="Arjun Singh Gill - Insurance & Investment Advisor"
-                        className="w-full h-full object-cover object-[center_15%] scale-[1.275]"
+                        className="w-full h-full object-cover object-top scale-[1.1]"
                       />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Arjun Singh Gill</h3>
