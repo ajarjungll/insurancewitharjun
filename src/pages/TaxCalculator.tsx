@@ -522,6 +522,11 @@ const TaxCalculator = () => {
                           You may claim a spousal tax credit if your spouse has low or no income. 
                           The credit is reduced by your spouse's net income.
                         </p>
+                        <div className="mt-3 p-2 bg-pink-100 rounded text-xs text-pink-800">
+                          <p className="font-semibold mb-1">{selectedYear} Spousal Amount Limits:</p>
+                          <p>Federal: ${yearData.federalSpouseAmount.toLocaleString()} (max credit: ${(yearData.federalSpouseAmount * 0.15).toFixed(0)})</p>
+                          <p>Manitoba: ${yearData.manitobaSpouseAmount.toLocaleString()} (max credit: ${(yearData.manitobaSpouseAmount * 0.108).toFixed(0)})</p>
+                        </div>
                       </div>
                     )}
 
