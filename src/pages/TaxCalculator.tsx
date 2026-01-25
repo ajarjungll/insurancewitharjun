@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User } from 'lucide-react';
+import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User, Users, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -25,6 +25,8 @@ const taxData = {
     ],
     federalBPA: 16129,
     manitobaBPA: 15780,
+    federalSpouseAmount: 16129, // Spouse or Common-law Partner Amount (same as BPA)
+    manitobaSpouseAmount: 9838, // Manitoba spousal amount
     cpp1MaxEarnings: 71300,
     cpp2MaxEarnings: 81200,
     cppExemption: 3500,
@@ -51,6 +53,8 @@ const taxData = {
     ],
     federalBPA: 16452,
     manitobaBPA: 15780,
+    federalSpouseAmount: 16452, // Spouse or Common-law Partner Amount (same as BPA)
+    manitobaSpouseAmount: 10038, // Manitoba spousal amount (estimated)
     cpp1MaxEarnings: 74600,
     cpp2MaxEarnings: 85000,
     cppExemption: 3500,
@@ -93,10 +97,14 @@ const calculateTax = (income: number, brackets: { min: number; max: number; rate
   return tax;
 };
 
+type FilingStatus = 'single' | 'couple';
+
 const TaxCalculator = () => {
   const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
+  const [filingStatus, setFilingStatus] = useState<FilingStatus>('single');
   const [profession, setProfession] = useState<string>('general');
   const [grossIncome, setGrossIncome] = useState<string>('');
+  const [spouseIncome, setSpouseIncome] = useState<string>('');
   const [rrspContribution, setRrspContribution] = useState<string>('');
   const [fhsaContribution, setFhsaContribution] = useState<string>('');
   const [daysAway, setDaysAway] = useState<string>('');
@@ -107,6 +115,7 @@ const TaxCalculator = () => {
 
   const calculations = useMemo(() => {
     const income = parseFloat(grossIncome) || 0;
+    const spouseInc = filingStatus === 'couple' ? (parseFloat(spouseIncome) || 0) : 0;
     const rrsp = Math.min(parseFloat(rrspContribution) || 0, yearData.rrspLimit);
     const fhsa = Math.min(parseFloat(fhsaContribution) || 0, yearData.fhsaLimit);
     const days = parseFloat(daysAway) || 0;
@@ -144,19 +153,35 @@ const TaxCalculator = () => {
     const employmentExpenses = mealDeduction + lodgingDeduction;
     const taxableIncome = Math.max(0, income - rrsp - fhsa - employmentExpenses);
     
+    // Calculate spousal tax credit (for low/no income spouse)
+    // Federal: Spouse amount is reduced by spouse's net income, minimum 0
+    let federalSpouseCredit = 0;
+    let manitobaSpouseCredit = 0;
+    
+    if (filingStatus === 'couple') {
+      // Federal spouse amount: base amount minus spouse's income
+      const federalSpouseClaimable = Math.max(0, yearData.federalSpouseAmount - spouseInc);
+      federalSpouseCredit = federalSpouseClaimable * 0.15; // 15% federal rate
+      
+      // Manitoba spouse amount
+      const manitobaSpouseClaimable = Math.max(0, yearData.manitobaSpouseAmount - spouseInc);
+      manitobaSpouseCredit = manitobaSpouseClaimable * 0.108; // 10.8% Manitoba rate
+    }
+    
     // Calculate federal tax
     const federalTaxBeforeCredits = calculateTax(taxableIncome, yearData.federalBrackets);
     const federalTaxCredit = yearData.federalBPA * 0.15;
     const federalCppEiCredit = (totalCppContribution + eiContribution) * 0.15;
-    const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit);
+    const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit - federalSpouseCredit);
 
     // Calculate Manitoba tax
     const manitobaTaxBeforeCredits = calculateTax(taxableIncome, yearData.manitobaBrackets);
     const manitobaTaxCredit = yearData.manitobaBPA * 0.108;
     const manitobaCppEiCredit = (totalCppContribution + eiContribution) * 0.108;
-    const manitobaTax = Math.max(0, manitobaTaxBeforeCredits - manitobaTaxCredit - manitobaCppEiCredit);
+    const manitobaTax = Math.max(0, manitobaTaxBeforeCredits - manitobaTaxCredit - manitobaCppEiCredit - manitobaSpouseCredit);
 
     const totalTax = federalTax + manitobaTax;
+    const totalSpouseCredit = federalSpouseCredit + manitobaSpouseCredit;
     
     // Calculate tax savings from contributions
     const incomeAfterRrsp = income - rrsp;
@@ -172,6 +197,7 @@ const TaxCalculator = () => {
 
     return {
       grossIncome: income,
+      spouseIncome: spouseInc,
       rrspContribution: rrsp,
       fhsaContribution: fhsa,
       cpp1Contribution,
@@ -185,6 +211,9 @@ const TaxCalculator = () => {
       taxableIncome,
       federalTax,
       manitobaTax,
+      federalSpouseCredit,
+      manitobaSpouseCredit,
+      totalSpouseCredit,
       totalTax,
       taxSavingsFromRRSP,
       taxSavingsFromFHSA,
@@ -192,7 +221,7 @@ const TaxCalculator = () => {
       effectiveRate,
       netIncome,
     };
-  }, [grossIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses, selectedYear, yearData, truckDriverMealRate]);
+  }, [grossIncome, spouseIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses, selectedYear, yearData, truckDriverMealRate, filingStatus]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-CA', {
@@ -407,6 +436,38 @@ const TaxCalculator = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-6">Enter Your Information</h3>
                   
                   <div className="space-y-6">
+                    {/* Filing Status */}
+                    <div>
+                      <Label className="text-gray-700 font-medium flex items-center mb-2">
+                        <Users className="w-5 h-5 text-gray-500 mr-2" />
+                        Filing Status
+                      </Label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          onClick={() => setFilingStatus('single')}
+                          className={`p-4 rounded-lg border-2 transition-all flex items-center justify-center gap-2 ${
+                            filingStatus === 'single'
+                              ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+                              : 'border-gray-200 hover:border-emerald-300'
+                          }`}
+                        >
+                          <User className="w-5 h-5" />
+                          <span className="font-medium">Single</span>
+                        </button>
+                        <button
+                          onClick={() => setFilingStatus('couple')}
+                          className={`p-4 rounded-lg border-2 transition-all flex items-center justify-center gap-2 ${
+                            filingStatus === 'couple'
+                              ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+                              : 'border-gray-200 hover:border-emerald-300'
+                          }`}
+                        >
+                          <Heart className="w-5 h-5" />
+                          <span className="font-medium">Couple</span>
+                        </button>
+                      </div>
+                    </div>
+
                     {/* Profession Selector */}
                     <div>
                       <Label htmlFor="profession" className="text-gray-700 font-medium flex items-center mb-2">
@@ -430,7 +491,7 @@ const TaxCalculator = () => {
                     <div>
                       <Label htmlFor="grossIncome" className="text-gray-700 font-medium flex items-center mb-2">
                         <DollarSign className="w-5 h-5 text-gray-500 mr-2" />
-                        Gross Annual Income
+                        Your Gross Annual Income
                       </Label>
                       <Input
                         id="grossIncome"
@@ -441,6 +502,28 @@ const TaxCalculator = () => {
                         className="text-lg"
                       />
                     </div>
+
+                    {/* Spouse Income - only shown for couples */}
+                    {filingStatus === 'couple' && (
+                      <div className="p-4 bg-pink-50 rounded-lg border border-pink-200">
+                        <Label htmlFor="spouseIncome" className="text-gray-700 font-medium flex items-center mb-2">
+                          <Heart className="w-5 h-5 text-pink-500 mr-2" />
+                          Spouse's Net Income
+                        </Label>
+                        <Input
+                          id="spouseIncome"
+                          type="number"
+                          placeholder="Enter 0 for non-working spouse"
+                          value={spouseIncome}
+                          onChange={(e) => setSpouseIncome(e.target.value)}
+                          className="text-lg"
+                        />
+                        <p className="text-sm text-pink-700 mt-2">
+                          You may claim a spousal tax credit if your spouse has low or no income. 
+                          The credit is reduced by your spouse's net income.
+                        </p>
+                      </div>
+                    )}
 
                     <div>
                       <Label htmlFor="rrspContribution" className="text-gray-700 font-medium flex items-center mb-2">
@@ -622,6 +705,33 @@ const TaxCalculator = () => {
                             </>
                           )}
                         </div>
+                      </div>
+                    )}
+
+                    {/* Spousal Tax Credit - shown when couple with credit */}
+                    {calculations.totalSpouseCredit > 0 && (
+                      <div className="bg-pink-50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-pink-800 mb-2 flex items-center">
+                          <Heart className="w-4 h-4 mr-2" />
+                          Spousal Tax Credit
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-pink-700">Federal Spouse Credit:</span>
+                            <span className="font-semibold text-pink-700">{formatCurrency(calculations.federalSpouseCredit)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-pink-700">Manitoba Spouse Credit:</span>
+                            <span className="font-semibold text-pink-700">{formatCurrency(calculations.manitobaSpouseCredit)}</span>
+                          </div>
+                          <div className="flex justify-between pt-2 border-t border-pink-200">
+                            <span className="text-pink-800 font-medium">Total Tax Savings:</span>
+                            <span className="font-bold text-pink-800">{formatCurrency(calculations.totalSpouseCredit)}</span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-pink-600 mt-2">
+                          * Based on spouse's net income of {formatCurrency(calculations.spouseIncome)}
+                        </p>
                       </div>
                     )}
 
