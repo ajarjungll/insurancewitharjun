@@ -268,6 +268,45 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Affiliated Companies Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Affiliated Companies</h2>
+              <p className="text-xl text-gray-600">We are proud to work with Canada's leading insurance providers</p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {[
+                { src: "/partner-logos/sun-life.jpg", alt: "Sun Life Financial" },
+                { src: "/partner-logos/desjardins.jpg", alt: "Desjardins Insurance" },
+                { src: "/partner-logos/rbc-insurance.jpg", alt: "RBC Insurance" },
+                { src: "/partner-logos/ia-financial.jpg", alt: "iA Financial Group" },
+                { src: "/partner-logos/equitable-life.jpg", alt: "Equitable Life of Canada" },
+                { src: "/partner-logos/beneva.png", alt: "Beneva" },
+                { src: "/partner-logos/ssq-insurance.jpg", alt: "SSQ Insurance" },
+                { src: "/partner-logos/foresters.jpg", alt: "Foresters Financial" },
+                { src: "/partner-logos/gms.jpg", alt: "GMS Insurance" },
+                { src: "/partner-logos/destination-canada.jpg", alt: "Destination Canada" },
+                { src: "/partner-logos/trustone-health.jpg", alt: "TruStone Health" },
+                { src: "/partner-logos/rimi.jpg", alt: "RIMI" },
+                { src: "/partner-logos/uv-insurance.jpg", alt: "UV Insurance" },
+              ].map((partner, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white rounded-xl p-4 flex items-center justify-center h-24 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+                >
+                  <img 
+                    src={partner.src} 
+                    alt={partner.alt}
+                    className="max-h-16 max-w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Partnership Section */}
         <section className="py-16 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
