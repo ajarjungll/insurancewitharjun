@@ -278,19 +278,16 @@ const Index = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {[
-                { src: "/partner-logos/sun-life.jpg", alt: "Sun Life Financial" },
-                { src: "/partner-logos/desjardins.jpg", alt: "Desjardins Insurance" },
-                { src: "/partner-logos/rbc-insurance.jpg", alt: "RBC Insurance" },
-                { src: "/partner-logos/ia-financial.jpg", alt: "iA Financial Group" },
-                { src: "/partner-logos/equitable-life.jpg", alt: "Equitable Life of Canada" },
-                { src: "/partner-logos/beneva.png", alt: "Beneva" },
-                { src: "/partner-logos/ssq-insurance.jpg", alt: "SSQ Insurance" },
-                { src: "/partner-logos/foresters.jpg", alt: "Foresters Financial" },
-                { src: "/partner-logos/gms.jpg", alt: "GMS Insurance" },
+                { src: "/partner-logos/sun-life.png", alt: "Sun Life Financial" },
+                { src: "/partner-logos/desjardins.png", alt: "Desjardins Insurance" },
+                { src: "/partner-logos/rbc-insurance.png", alt: "RBC Insurance" },
+                { src: "/partner-logos/ia-financial.png", alt: "iA Financial Group" },
+                { src: "/partner-logos/manulife.png", alt: "Manulife" },
+                { src: "/partner-logos/great-west-life.png", alt: "Great-West Lifeco" },
+                { src: "/partner-logos/intact-financial.png", alt: "Intact Financial" },
                 { src: "/partner-logos/destination-canada.jpg", alt: "Destination Canada" },
                 { src: "/partner-logos/trustone-health.jpg", alt: "TruStone Health" },
-                { src: "/partner-logos/rimi.jpg", alt: "RIMI" },
-                { src: "/partner-logos/uv-insurance.jpg", alt: "UV Insurance" },
+                { src: "/partner-logos/gms.jpg", alt: "GMS Insurance" },
               ].map((partner, index) => (
                 <div 
                   key={index} 
