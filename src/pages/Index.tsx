@@ -283,11 +283,10 @@ const Index = () => {
                 { src: "/partner-logos/rbc-insurance.png", alt: "RBC Insurance" },
                 { src: "/partner-logos/ia-financial.png", alt: "iA Financial Group" },
                 { src: "/partner-logos/manulife.png", alt: "Manulife" },
-                { src: "/partner-logos/great-west-life.png", alt: "Great-West Lifeco" },
-                { src: "/partner-logos/intact-financial.png", alt: "Intact Financial" },
-                { src: "/partner-logos/destination-canada.jpg", alt: "Destination Canada" },
-                { src: "/partner-logos/trustone-health.jpg", alt: "TruStone Health" },
+                { src: "/partner-logos/destination-canada.png", alt: "Destination Canada" },
+                { src: "/partner-logos/trustone-health.png", alt: "TruStone Health" },
                 { src: "/partner-logos/gms.jpg", alt: "GMS Insurance" },
+                { src: "/partner-logos/rimi.png", alt: "RIMI" },
               ].map((partner, index) => (
                 <div 
                   key={index} 
