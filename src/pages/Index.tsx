@@ -287,6 +287,7 @@ const Index = () => {
                 { src: "/partner-logos/trustone-health.png", alt: "TruStone Health" },
                 { src: "/partner-logos/gms.jpg", alt: "GMS Insurance" },
                 { src: "/partner-logos/rimi.png", alt: "RIMI" },
+                { src: "/partner-logos/insure-canada.png", alt: "Insure Canada" },
               ].map((partner, index) => (
                 <div 
                   key={index} 
