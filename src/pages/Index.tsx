@@ -291,12 +291,12 @@ const Index = () => {
               ].map((partner, index) => (
                 <div 
                   key={index} 
-                  className="bg-white rounded-xl p-4 flex items-center justify-center h-24 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+                  className="bg-white rounded-xl p-6 flex items-center justify-center h-32 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
                 >
                   <img 
                     src={partner.src} 
                     alt={partner.alt}
-                    className="max-h-16 max-w-full object-contain"
+                    className="max-h-24 max-w-full object-contain"
                   />
                 </div>
               ))}
