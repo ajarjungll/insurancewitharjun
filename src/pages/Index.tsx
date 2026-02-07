@@ -296,7 +296,7 @@ const Index = () => {
                   <img 
                     src={partner.src} 
                     alt={partner.alt}
-                    className="max-h-24 max-w-full object-contain"
+                    className="max-h-28 max-w-full object-contain"
                   />
                 </div>
               ))}
