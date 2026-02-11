@@ -84,6 +84,55 @@ const FHSADetails = () => {
                 </div>
 
                 <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Tax Refund Example (2026)</h3>
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl card-3d border-2 border-green-200">
+                    <div className="mb-6">
+                      <h4 className="text-xl font-semibold text-gray-900 mb-4">Manitoba Resident Scenario</h4>
+                      <div className="grid md:grid-cols-2 gap-6 mb-6">
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-1">Annual Income</p>
+                          <p className="text-2xl font-bold text-gray-900">$100,000</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-1">FHSA Contribution</p>
+                          <p className="text-2xl font-bold text-green-600">$8,000</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4 mb-6">
+                      <div className="bg-white p-4 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-semibold text-gray-900">Federal Tax Savings</span>
+                          <span className="text-lg font-bold text-green-600">$1,640</span>
+                        </div>
+                        <p className="text-sm text-gray-600">$8,000 × 20.50% (marginal rate)</p>
+                      </div>
+                      
+                      <div className="bg-white p-4 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-semibold text-gray-900">Manitoba Provincial Tax Savings</span>
+                          <span className="text-lg font-bold text-green-600">$1,020</span>
+                        </div>
+                        <p className="text-sm text-gray-600">$8,000 × 12.75% (marginal rate)</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-green-600 text-white p-6 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xl font-bold">Total Tax Refund</span>
+                        <span className="text-3xl font-bold">$2,660</span>
+                      </div>
+                      <p className="text-green-100 mt-2 text-sm">33.25% effective tax savings on your FHSA contribution</p>
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mt-4 italic">
+                      * Tax savings based on 2026 federal and Manitoba provincial tax brackets. Your actual savings may vary depending on your specific tax situation.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Increase Your Canada Child Benefit (CCB)</h3>
                   <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-xl card-3d border-2 border-purple-200">
                     <div className="mb-6">
