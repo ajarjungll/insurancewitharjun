@@ -22,22 +22,22 @@ const TFSADetails = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-20">
+        <section className="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-12 md:py-20">
           <div className="container mx-auto px-4">
             <Link to="/investment-types" className="inline-flex items-center text-purple-200 hover:text-white mb-6">
               <ArrowLeft size={20} className="mr-2" />
               Back to Investment Types
             </Link>
             <div className="flex items-center mb-6">
-              <div className="card-3d p-4 rounded-xl bg-purple-50 mr-6">
-                <TrendingUp className="w-16 h-16 text-purple-600" />
+              <div className="card-3d p-3 md:p-4 rounded-xl bg-purple-50 mr-4 md:mr-6">
+                <TrendingUp className="w-10 h-10 md:w-16 md:h-16 text-purple-600" />
               </div>
               <div>
-                <h1 className="text-5xl font-bold mb-4">TFSA</h1>
-                <p className="text-xl text-purple-100">Tax-Free Savings Account</p>
+                <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4">TFSA</h1>
+                <p className="text-base md:text-xl text-purple-100">Tax-Free Savings Account</p>
               </div>
             </div>
-            <p className="text-xl text-purple-100 max-w-4xl">
+            <p className="text-base md:text-xl text-purple-100 max-w-4xl">
               Canada's most flexible savings account. Grow your money completely tax-free with no restrictions 
               on withdrawals and unlimited financial potential.
             </p>
@@ -45,13 +45,13 @@ const TFSADetails = () => {
         </section>
 
         {/* Main Content */}
-        <section className="py-16 bg-white">
+        <section className="py-8 md:py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-12">
+            <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
               {/* Main Content */}
               <div className="lg:col-span-2">
                 <div className="mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6">What is a TFSA?</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">What is a TFSA?</h2>
                   <p className="text-lg text-gray-600 mb-6">
                     The Tax-Free Savings Account (TFSA) is one of the most powerful savings tools available to Canadians. 
                     Despite its name, it's much more than a savings account - it's a flexible investment account where 
@@ -66,8 +66,8 @@ const TFSADetails = () => {
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Why Choose a TFSA?</h3>
-                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-xl card-3d mb-8">
-                    <div className="grid md:grid-cols-3 gap-6 text-center">
+                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-4 md:p-8 rounded-xl card-3d mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                       <div>
                         <TrendingUp className="w-16 h-16 text-purple-600 mx-auto mb-4" />
                         <h4 className="text-xl font-semibold text-gray-900 mb-2">Tax-Free Growth</h4>
@@ -89,13 +89,13 @@ const TFSADetails = () => {
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Features & Benefits</h3>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-purple-50 p-6 rounded-xl card-3d">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div className="bg-purple-50 p-4 md:p-6 rounded-xl card-3d">
                       <div className="flex items-center mb-4">
-                        <Calculator className="w-8 h-8 text-purple-600 mr-3" />
-                        <h4 className="text-xl font-semibold">Annual Contribution Room</h4>
+                        <Calculator className="w-8 h-8 text-purple-600 mr-3 flex-shrink-0" />
+                        <h4 className="text-lg md:text-xl font-semibold">Annual Contribution Room</h4>
                       </div>
-                      <p className="text-gray-600">$7,000 for 2024, with room accumulating from age 18 even if you don't have an account.</p>
+                      <p className="text-gray-600">$7,000 for 2026, with room accumulating from age 18 even if you don't have an account.</p>
                     </div>
                     <div className="bg-green-50 p-6 rounded-xl card-3d">
                       <div className="flex items-center mb-4">
@@ -145,7 +145,7 @@ const TFSADetails = () => {
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Investment Options</h3>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {[
                       "High-Interest Savings",
                       "Guaranteed Investment Certificates",
@@ -171,36 +171,36 @@ const TFSADetails = () => {
                     <table className="w-full bg-white rounded-lg shadow-sm border">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TFSA</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RRSP</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Non-Registered</th>
+                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
+                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TFSA</th>
+                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RRSP</th>
+                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Non-Reg</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
                         <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tax on Contributions</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">After-tax (no deduction)</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Tax-deductible</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">After-tax (no deduction)</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Tax on Contributions</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">After-tax</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Deductible</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">After-tax</td>
                         </tr>
                         <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tax on Growth</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Tax-free</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Tax-deferred</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Taxable annually</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Tax on Growth</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Tax-free</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Deferred</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Taxable</td>
                         </tr>
                         <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tax on Withdrawals</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Tax-free</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Fully taxable</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Only on gains</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Tax on Withdrawals</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Tax-free</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Taxable</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">On gains</td>
                         </tr>
                         <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Withdrawal Flexibility</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Anytime, any reason</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Penalties apply</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Anytime, any reason</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Flexibility</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Anytime</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Penalties</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Anytime</td>
                         </tr>
                       </tbody>
                     </table>
@@ -210,7 +210,7 @@ const TFSADetails = () => {
 
               {/* Sidebar */}
               <div className="lg:col-span-1">
-                <div className="bg-purple-50 p-8 rounded-xl card-3d sticky top-8">
+                <div className="bg-purple-50 p-4 md:p-8 rounded-xl card-3d sticky top-8">
                   <div className="flex flex-col items-center mb-6">
                     <div className="w-[106px] h-[123px] rounded-lg overflow-hidden border-4 border-purple-300 shadow-lg mb-4">
                       <img 
@@ -245,7 +245,7 @@ const TFSADetails = () => {
                   </div>
                   
                   <div className="mt-8 pt-8 border-t border-purple-200">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">2024 Contribution Room</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4">2026 Contribution Room</h4>
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Annual Limit:</span>
@@ -253,7 +253,7 @@ const TFSADetails = () => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Total Room (18+):</span>
-                        <span className="font-semibold">$95,000</span>
+                        <span className="font-semibold">$102,000</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Withdrawal Rules:</span>
