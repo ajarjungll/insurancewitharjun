@@ -167,39 +167,39 @@ const TFSADetails = () => {
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">TFSA vs Other Accounts</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full bg-white rounded-lg shadow-sm border">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
-                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TFSA</th>
-                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RRSP</th>
-                          <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Non-Reg</th>
+                  <div className="overflow-x-auto rounded-2xl shadow-[0_10px_40px_-10px_rgba(147,51,234,0.3)] card-3d border-2 border-purple-100">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-purple-700 to-purple-500 text-white">
+                          <th className="px-3 md:px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">Feature</th>
+                          <th className="px-3 md:px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">TFSA ⭐</th>
+                          <th className="px-3 md:px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">RRSP</th>
+                          <th className="px-3 md:px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">Non-Reg</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        <tr>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Tax on Contributions</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">After-tax</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Deductible</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">After-tax</td>
+                      <tbody>
+                        <tr className="bg-purple-50 hover:bg-purple-100 transition-colors">
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-semibold text-purple-900">Tax on Contributions</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-700">After-tax</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-700">Deductible</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-700">After-tax</td>
                         </tr>
-                        <tr>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Tax on Growth</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Tax-free</td>
+                        <tr className="bg-white hover:bg-green-50 transition-colors">
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-semibold text-purple-900">Tax on Growth</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-bold">✅ Tax-free</td>
                           <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Deferred</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Taxable</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-red-500">Taxable</td>
                         </tr>
-                        <tr>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Tax on Withdrawals</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Tax-free</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Taxable</td>
+                        <tr className="bg-purple-50 hover:bg-green-50 transition-colors">
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-semibold text-purple-900">Tax on Withdrawals</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-bold">✅ Tax-free</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-red-500">Taxable</td>
                           <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">On gains</td>
                         </tr>
-                        <tr>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-900">Flexibility</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Anytime</td>
-                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-gray-600">Penalties</td>
+                        <tr className="bg-white hover:bg-green-50 transition-colors">
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm font-semibold text-purple-900">Flexibility</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-bold">✅ Anytime</td>
+                          <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-red-500">Penalties</td>
                           <td className="px-3 md:px-6 py-3 md:py-4 text-sm text-green-600 font-semibold">Anytime</td>
                         </tr>
                       </tbody>
