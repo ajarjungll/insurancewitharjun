@@ -1,14 +1,28 @@
 import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User, Users, Heart } from 'lucide-react';
+import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User, Users, Heart, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 
-// Tax data for each year
+type Province = 'manitoba' | 'alberta' | 'ontario';
+type TaxYear = 2025 | 2026;
+
+const provinceNames: Record<Province, string> = {
+  manitoba: 'Manitoba',
+  alberta: 'Alberta',
+  ontario: 'Ontario',
+};
+
+const provinceColors: Record<Province, { bg: string; text: string; border: string; light: string }> = {
+  manitoba: { bg: 'bg-green-50', text: 'text-green-600', border: 'border-green-200', light: 'bg-green-100' },
+  alberta: { bg: 'bg-sky-50', text: 'text-sky-600', border: 'border-sky-200', light: 'bg-sky-100' },
+  ontario: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200', light: 'bg-red-100' },
+};
+
 const taxData = {
   2025: {
     federalBrackets: [
@@ -18,15 +32,32 @@ const taxData = {
       { min: 177882, max: 253414, rate: 0.29 },
       { min: 253414, max: Infinity, rate: 0.33 },
     ],
-    manitobaBrackets: [
-      { min: 0, max: 47000, rate: 0.108 },
-      { min: 47000, max: 100000, rate: 0.1275 },
-      { min: 100000, max: Infinity, rate: 0.174 },
-    ],
+    provincialBrackets: {
+      manitoba: [
+        { min: 0, max: 47000, rate: 0.108 },
+        { min: 47000, max: 100000, rate: 0.1275 },
+        { min: 100000, max: Infinity, rate: 0.174 },
+      ],
+      alberta: [
+        { min: 0, max: 148269, rate: 0.10 },
+        { min: 148269, max: 177922, rate: 0.12 },
+        { min: 177922, max: 237230, rate: 0.13 },
+        { min: 237230, max: 355845, rate: 0.14 },
+        { min: 355845, max: Infinity, rate: 0.15 },
+      ],
+      ontario: [
+        { min: 0, max: 51446, rate: 0.0505 },
+        { min: 51446, max: 102894, rate: 0.0915 },
+        { min: 102894, max: 150000, rate: 0.1116 },
+        { min: 150000, max: 220000, rate: 0.1216 },
+        { min: 220000, max: Infinity, rate: 0.1316 },
+      ],
+    },
     federalBPA: 16129,
-    manitobaBPA: 15780,
-    federalSpouseAmount: 16129, // Spouse or Common-law Partner Amount (same as BPA)
-    manitobaSpouseAmount: 9838, // Manitoba spousal amount
+    provincialBPA: { manitoba: 15780, alberta: 21885, ontario: 11865 },
+    federalSpouseAmount: 16129,
+    provincialSpouseAmount: { manitoba: 9838, alberta: 21885, ontario: 10079 },
+    provincialLowestRate: { manitoba: 0.108, alberta: 0.10, ontario: 0.0505 },
     cpp1MaxEarnings: 71300,
     cpp2MaxEarnings: 81200,
     cppExemption: 3500,
@@ -46,15 +77,32 @@ const taxData = {
       { min: 181440, max: 258482, rate: 0.29 },
       { min: 258482, max: Infinity, rate: 0.33 },
     ],
-    manitobaBrackets: [
-      { min: 0, max: 47000, rate: 0.108 },
-      { min: 47000, max: 100000, rate: 0.1275 },
-      { min: 100000, max: Infinity, rate: 0.174 },
-    ],
+    provincialBrackets: {
+      manitoba: [
+        { min: 0, max: 47000, rate: 0.108 },
+        { min: 47000, max: 100000, rate: 0.1275 },
+        { min: 100000, max: Infinity, rate: 0.174 },
+      ],
+      alberta: [
+        { min: 0, max: 151234, rate: 0.10 },
+        { min: 151234, max: 181481, rate: 0.12 },
+        { min: 181481, max: 241974, rate: 0.13 },
+        { min: 241974, max: 362962, rate: 0.14 },
+        { min: 362962, max: Infinity, rate: 0.15 },
+      ],
+      ontario: [
+        { min: 0, max: 52886, rate: 0.0505 },
+        { min: 52886, max: 105775, rate: 0.0915 },
+        { min: 105775, max: 150000, rate: 0.1116 },
+        { min: 150000, max: 220000, rate: 0.1216 },
+        { min: 220000, max: Infinity, rate: 0.1316 },
+      ],
+    },
     federalBPA: 16452,
-    manitobaBPA: 15780,
-    federalSpouseAmount: 16452, // Spouse or Common-law Partner Amount (same as BPA)
-    manitobaSpouseAmount: 10038, // Manitoba spousal amount (estimated)
+    provincialBPA: { manitoba: 15780, alberta: 22323, ontario: 12199 },
+    federalSpouseAmount: 16452,
+    provincialSpouseAmount: { manitoba: 10038, alberta: 22323, ontario: 10365 },
+    provincialLowestRate: { manitoba: 0.108, alberta: 0.10, ontario: 0.0505 },
     cpp1MaxEarnings: 74600,
     cpp2MaxEarnings: 85000,
     cppExemption: 3500,
@@ -67,8 +115,6 @@ const taxData = {
     usdToCadRate: 1.36,
   },
 };
-
-type TaxYear = 2025 | 2026;
 
 // Profession-specific expense types
 const professions = [
@@ -101,6 +147,7 @@ type FilingStatus = 'single' | 'couple';
 
 const TaxCalculator = () => {
   const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
+  const [selectedProvince, setSelectedProvince] = useState<Province>('manitoba');
   const [filingStatus, setFilingStatus] = useState<FilingStatus>('single');
   const [profession, setProfession] = useState<string>('general');
   const [grossIncome, setGrossIncome] = useState<string>('');
@@ -111,6 +158,12 @@ const TaxCalculator = () => {
   const [lodgingExpenses, setLodgingExpenses] = useState<string>('');
 
   const yearData = taxData[selectedYear];
+  const provBrackets = yearData.provincialBrackets[selectedProvince];
+  const provBPA = yearData.provincialBPA[selectedProvince];
+  const provSpouseAmount = yearData.provincialSpouseAmount[selectedProvince];
+  const provLowestRate = yearData.provincialLowestRate[selectedProvince];
+  const provName = provinceNames[selectedProvince];
+  const provColors = provinceColors[selectedProvince];
   const truckDriverMealRate = truckDriverMealRateUSD * yearData.usdToCadRate;
 
   const calculations = useMemo(() => {
@@ -121,21 +174,15 @@ const TaxCalculator = () => {
     const days = parseFloat(daysAway) || 0;
     const lodging = parseFloat(lodgingExpenses) || 0;
 
-    // Calculate CPP contributions
     const cpp1Pensionable = Math.max(0, Math.min(income, yearData.cpp1MaxEarnings) - yearData.cppExemption);
     const cpp1Contribution = cpp1Pensionable * yearData.cpp1Rate;
-    
-    // CPP2 (enhanced) on earnings between YMPE and YAMPE
     const cpp2Pensionable = Math.max(0, Math.min(income, yearData.cpp2MaxEarnings) - yearData.cpp1MaxEarnings);
     const cpp2Contribution = cpp2Pensionable * yearData.cpp2Rate;
-    
     const totalCppContribution = cpp1Contribution + cpp2Contribution;
 
-    // Calculate EI
     const eiInsurable = Math.min(income, yearData.eiMaxInsurableEarnings);
     const eiContribution = eiInsurable * yearData.eiRate;
 
-    // Calculate trucker-specific deductions
     let mealExpenses = 0;
     let mealDeduction = 0;
     let lodgingDeduction = 0;
@@ -153,44 +200,36 @@ const TaxCalculator = () => {
     const employmentExpenses = mealDeduction + lodgingDeduction;
     const taxableIncome = Math.max(0, income - rrsp - fhsa - employmentExpenses);
     
-    // Calculate spousal tax credit (for low/no income spouse)
-    // Federal: Spouse amount is reduced by spouse's net income, minimum 0
     let federalSpouseCredit = 0;
-    let manitobaSpouseCredit = 0;
+    let provincialSpouseCredit = 0;
     
     if (filingStatus === 'couple') {
-      // Federal spouse amount: base amount minus spouse's income
       const federalSpouseClaimable = Math.max(0, yearData.federalSpouseAmount - spouseInc);
-      federalSpouseCredit = federalSpouseClaimable * 0.15; // 15% federal rate
-      
-      // Manitoba spouse amount
-      const manitobaSpouseClaimable = Math.max(0, yearData.manitobaSpouseAmount - spouseInc);
-      manitobaSpouseCredit = manitobaSpouseClaimable * 0.108; // 10.8% Manitoba rate
+      federalSpouseCredit = federalSpouseClaimable * 0.15;
+      const provincialSpouseClaimable = Math.max(0, provSpouseAmount - spouseInc);
+      provincialSpouseCredit = provincialSpouseClaimable * provLowestRate;
     }
     
-    // Calculate federal tax
     const federalTaxBeforeCredits = calculateTax(taxableIncome, yearData.federalBrackets);
     const federalTaxCredit = yearData.federalBPA * 0.15;
     const federalCppEiCredit = (totalCppContribution + eiContribution) * 0.15;
     const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit - federalSpouseCredit);
 
-    // Calculate Manitoba tax
-    const manitobaTaxBeforeCredits = calculateTax(taxableIncome, yearData.manitobaBrackets);
-    const manitobaTaxCredit = yearData.manitobaBPA * 0.108;
-    const manitobaCppEiCredit = (totalCppContribution + eiContribution) * 0.108;
-    const manitobaTax = Math.max(0, manitobaTaxBeforeCredits - manitobaTaxCredit - manitobaCppEiCredit - manitobaSpouseCredit);
+    const provincialTaxBeforeCredits = calculateTax(taxableIncome, provBrackets);
+    const provincialTaxCredit = provBPA * provLowestRate;
+    const provincialCppEiCredit = (totalCppContribution + eiContribution) * provLowestRate;
+    const provincialTax = Math.max(0, provincialTaxBeforeCredits - provincialTaxCredit - provincialCppEiCredit - provincialSpouseCredit);
 
-    const totalTax = federalTax + manitobaTax;
-    const totalSpouseCredit = federalSpouseCredit + manitobaSpouseCredit;
+    const totalTax = federalTax + provincialTax;
+    const totalSpouseCredit = federalSpouseCredit + provincialSpouseCredit;
     
-    // Calculate tax savings from contributions
     const incomeAfterRrsp = income - rrsp;
     const incomeAfterFhsa = incomeAfterRrsp - fhsa;
     
-    const taxSavingsFromRRSP = rrsp > 0 ? calculateTax(income, yearData.federalBrackets) + calculateTax(income, yearData.manitobaBrackets) - 
-      (calculateTax(incomeAfterRrsp, yearData.federalBrackets) + calculateTax(incomeAfterRrsp, yearData.manitobaBrackets)) : 0;
-    const taxSavingsFromFHSA = fhsa > 0 ? calculateTax(incomeAfterRrsp, yearData.federalBrackets) + calculateTax(incomeAfterRrsp, yearData.manitobaBrackets) - 
-      (calculateTax(incomeAfterFhsa, yearData.federalBrackets) + calculateTax(incomeAfterFhsa, yearData.manitobaBrackets)) : 0;
+    const taxSavingsFromRRSP = rrsp > 0 ? calculateTax(income, yearData.federalBrackets) + calculateTax(income, provBrackets) - 
+      (calculateTax(incomeAfterRrsp, yearData.federalBrackets) + calculateTax(incomeAfterRrsp, provBrackets)) : 0;
+    const taxSavingsFromFHSA = fhsa > 0 ? calculateTax(incomeAfterRrsp, yearData.federalBrackets) + calculateTax(incomeAfterRrsp, provBrackets) - 
+      (calculateTax(incomeAfterFhsa, yearData.federalBrackets) + calculateTax(incomeAfterFhsa, provBrackets)) : 0;
 
     const effectiveRate = income > 0 ? (totalTax / income) * 100 : 0;
     const netIncome = income - totalTax - totalCppContribution - eiContribution;
@@ -210,9 +249,9 @@ const TaxCalculator = () => {
       employmentExpenses,
       taxableIncome,
       federalTax,
-      manitobaTax,
+      provincialTax,
       federalSpouseCredit,
-      manitobaSpouseCredit,
+      provincialSpouseCredit,
       totalSpouseCredit,
       totalTax,
       taxSavingsFromRRSP,
@@ -221,7 +260,7 @@ const TaxCalculator = () => {
       effectiveRate,
       netIncome,
     };
-  }, [grossIncome, spouseIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses, selectedYear, yearData, truckDriverMealRate, filingStatus]);
+  }, [grossIncome, spouseIncome, rrspContribution, fhsaContribution, profession, daysAway, lodgingExpenses, selectedYear, yearData, truckDriverMealRate, filingStatus, provBrackets, provBPA, provSpouseAmount, provLowestRate]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-CA', {
@@ -259,34 +298,59 @@ const TaxCalculator = () => {
                 <Calculator className="w-16 h-16 text-emerald-600" />
               </div>
               <div>
-                <h1 className="text-5xl font-bold mb-4">Income Tax Calculator</h1>
-                <p className="text-xl text-emerald-100">Federal & Manitoba Tax Brackets</p>
+                <h1 className="text-3xl md:text-5xl font-bold mb-4">Income Tax Calculator</h1>
+                <p className="text-lg md:text-xl text-emerald-100">Federal & Provincial Tax Brackets</p>
               </div>
             </div>
-            <p className="text-xl text-emerald-100 max-w-4xl">
+            <p className="text-lg md:text-xl text-emerald-100 max-w-4xl">
               Calculate your income tax with CPP, EI, RRSP, FHSA deductions and profession-specific expenses. 
-              See how much you can save by contributing to registered accounts.
+              Choose your province: Manitoba, Alberta, or Ontario.
             </p>
           </div>
         </section>
 
-        {/* Year Selection Tabs */}
+        {/* Year & Province Selection */}
         <section className="py-8 bg-gray-100">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center gap-4">
-              {([2025, 2026] as TaxYear[]).map((year) => (
-                <Button
-                  key={year}
-                  onClick={() => setSelectedYear(year)}
-                  className={`px-8 py-4 text-lg font-bold transition-all ${
-                    selectedYear === year
-                      ? 'bg-gradient-to-b from-emerald-500 to-emerald-600 text-white shadow-[0_4px_0_0_#065f46,0_6px_10px_rgba(6,95,70,0.3)] hover:shadow-[0_2px_0_0_#065f46,0_4px_6px_rgba(6,95,70,0.3)] hover:translate-y-[2px]'
-                      : 'bg-gradient-to-b from-gray-200 to-gray-300 text-gray-700 shadow-[0_4px_0_0_#6b7280,0_6px_10px_rgba(107,114,128,0.25)] hover:shadow-[0_2px_0_0_#6b7280,0_4px_6px_rgba(107,114,128,0.25)] hover:translate-y-[2px] hover:from-gray-300 hover:to-gray-400'
-                  }`}
-                >
-                  {year} Tax Year
-                </Button>
-              ))}
+            <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+              {/* Year Tabs */}
+              <div className="flex gap-4">
+                {([2025, 2026] as TaxYear[]).map((year) => (
+                  <Button
+                    key={year}
+                    onClick={() => setSelectedYear(year)}
+                    className={`px-6 md:px-8 py-4 text-lg font-bold transition-all ${
+                      selectedYear === year
+                        ? 'bg-gradient-to-b from-emerald-500 to-emerald-600 text-white shadow-[0_4px_0_0_#065f46,0_6px_10px_rgba(6,95,70,0.3)] hover:shadow-[0_2px_0_0_#065f46,0_4px_6px_rgba(6,95,70,0.3)] hover:translate-y-[2px]'
+                        : 'bg-gradient-to-b from-gray-200 to-gray-300 text-gray-700 shadow-[0_4px_0_0_#6b7280,0_6px_10px_rgba(107,114,128,0.25)] hover:shadow-[0_2px_0_0_#6b7280,0_4px_6px_rgba(107,114,128,0.25)] hover:translate-y-[2px] hover:from-gray-300 hover:to-gray-400'
+                    }`}
+                  >
+                    {year} Tax Year
+                  </Button>
+                ))}
+              </div>
+
+              {/* Province Selector */}
+              <div className="flex gap-3">
+                {(['manitoba', 'alberta', 'ontario'] as Province[]).map((prov) => (
+                  <Button
+                    key={prov}
+                    onClick={() => setSelectedProvince(prov)}
+                    className={`px-5 py-4 text-base font-bold transition-all flex items-center gap-2 ${
+                      selectedProvince === prov
+                        ? prov === 'manitoba'
+                          ? 'bg-gradient-to-b from-green-500 to-green-600 text-white shadow-[0_4px_0_0_#166534,0_6px_10px_rgba(22,101,52,0.3)] hover:shadow-[0_2px_0_0_#166534,0_4px_6px_rgba(22,101,52,0.3)] hover:translate-y-[2px]'
+                          : prov === 'alberta'
+                          ? 'bg-gradient-to-b from-sky-500 to-sky-600 text-white shadow-[0_4px_0_0_#0369a1,0_6px_10px_rgba(3,105,161,0.3)] hover:shadow-[0_2px_0_0_#0369a1,0_4px_6px_rgba(3,105,161,0.3)] hover:translate-y-[2px]'
+                          : 'bg-gradient-to-b from-red-500 to-red-600 text-white shadow-[0_4px_0_0_#991b1b,0_6px_10px_rgba(153,27,27,0.3)] hover:shadow-[0_2px_0_0_#991b1b,0_4px_6px_rgba(153,27,27,0.3)] hover:translate-y-[2px]'
+                        : 'bg-gradient-to-b from-gray-200 to-gray-300 text-gray-700 shadow-[0_4px_0_0_#6b7280,0_6px_10px_rgba(107,114,128,0.25)] hover:shadow-[0_2px_0_0_#6b7280,0_4px_6px_rgba(107,114,128,0.25)] hover:translate-y-[2px] hover:from-gray-300 hover:to-gray-400'
+                    }`}
+                  >
+                    <MapPin className="w-4 h-4" />
+                    {provinceNames[prov]}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -294,7 +358,7 @@ const TaxCalculator = () => {
         {/* Tax Brackets Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Tax Brackets</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Tax Brackets — {provName}</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-16">
               {/* Federal Tax Brackets */}
@@ -328,33 +392,33 @@ const TaxCalculator = () => {
                 </div>
               </div>
 
-              {/* Manitoba Tax Brackets */}
-              <div className="bg-green-50 p-8 rounded-xl card-3d">
+              {/* Provincial Tax Brackets */}
+              <div className={`${provColors.bg} p-8 rounded-xl card-3d`}>
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <DollarSign className="w-8 h-8 text-green-600 mr-3" />
-                  Manitoba Tax Brackets {selectedYear}
+                  <DollarSign className={`w-8 h-8 ${provColors.text} mr-3`} />
+                  {provName} Tax Brackets {selectedYear}
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b-2 border-green-200">
+                      <tr className={`border-b-2 ${provColors.border}`}>
                         <th className="text-left py-3 px-2 text-gray-700">Income Range</th>
                         <th className="text-right py-3 px-2 text-gray-700">Tax Rate</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {yearData.manitobaBrackets.map((bracket, index) => (
-                        <tr key={index} className={index < yearData.manitobaBrackets.length - 1 ? "border-b border-green-100" : ""}>
+                      {provBrackets.map((bracket, index) => (
+                        <tr key={index} className={index < provBrackets.length - 1 ? `border-b ${provColors.border}` : ""}>
                           <td className="py-3 px-2">{formatBracket(bracket.min, bracket.max)}</td>
-                          <td className="text-right py-3 px-2 font-semibold text-green-600">{(bracket.rate * 100).toFixed(2)}%</td>
+                          <td className={`text-right py-3 px-2 font-semibold ${provColors.text}`}>{(bracket.rate * 100).toFixed(2)}%</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-                <div className="mt-4 p-3 bg-green-100 rounded-lg">
+                <div className={`mt-4 p-3 ${provColors.light} rounded-lg`}>
                   <p className="text-sm text-gray-700">
-                    <strong>Basic Personal Amount:</strong> ${yearData.manitobaBPA.toLocaleString()}
+                    <strong>Basic Personal Amount:</strong> ${provBPA.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -428,7 +492,7 @@ const TaxCalculator = () => {
 
             {/* Tax Calculator */}
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Income Tax Calculator</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Income Tax Calculator — {provName}</h2>
               
               <div className="grid lg:grid-cols-2 gap-8">
                 {/* Input Section */}
@@ -525,7 +589,7 @@ const TaxCalculator = () => {
                         <div className="mt-3 p-2 bg-pink-100 rounded text-xs text-pink-800">
                           <p className="font-semibold mb-1">{selectedYear} Spousal Amount Limits:</p>
                           <p>Federal: ${yearData.federalSpouseAmount.toLocaleString()} (max credit: ${(yearData.federalSpouseAmount * 0.15).toFixed(0)})</p>
-                          <p>Manitoba: ${yearData.manitobaSpouseAmount.toLocaleString()} (max credit: ${(yearData.manitobaSpouseAmount * 0.108).toFixed(0)})</p>
+                          <p>{provName}: ${provSpouseAmount.toLocaleString()} (max credit: ${(provSpouseAmount * provLowestRate).toFixed(0)})</p>
                         </div>
                       </div>
                     )}
@@ -625,7 +689,7 @@ const TaxCalculator = () => {
                     <div className="flex items-start">
                       <Info className="w-5 h-5 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
                       <p className="text-sm text-yellow-800">
-                        This calculator provides estimates based on {selectedYear} tax brackets. 
+                        This calculator provides estimates based on {selectedYear} tax brackets for {provName}. 
                         Actual rates may vary. Consult a tax professional for personalized advice.
                       </p>
                     </div>
@@ -634,7 +698,7 @@ const TaxCalculator = () => {
 
                 {/* Results Section */}
                 <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-xl card-3d">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">{selectedYear} Tax Calculation Results</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">{selectedYear} Tax Results — {provName}</h3>
                   
                   <div className="space-y-3">
                     <div className="flex justify-between py-2 border-b border-emerald-200">
@@ -713,7 +777,7 @@ const TaxCalculator = () => {
                       </div>
                     )}
 
-                    {/* Spousal Tax Credit - shown when couple with credit */}
+                    {/* Spousal Tax Credit */}
                     {calculations.totalSpouseCredit > 0 && (
                       <div className="bg-pink-50 p-4 rounded-lg">
                         <h4 className="font-semibold text-pink-800 mb-2 flex items-center">
@@ -726,8 +790,8 @@ const TaxCalculator = () => {
                             <span className="font-semibold text-pink-700">{formatCurrency(calculations.federalSpouseCredit)}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-pink-700">Manitoba Spouse Credit:</span>
-                            <span className="font-semibold text-pink-700">{formatCurrency(calculations.manitobaSpouseCredit)}</span>
+                            <span className="text-pink-700">{provName} Spouse Credit:</span>
+                            <span className="font-semibold text-pink-700">{formatCurrency(calculations.provincialSpouseCredit)}</span>
                           </div>
                           <div className="flex justify-between pt-2 border-t border-pink-200">
                             <span className="text-pink-800 font-medium">Total Tax Savings:</span>
@@ -751,8 +815,8 @@ const TaxCalculator = () => {
                     </div>
 
                     <div className="flex justify-between py-2 border-b border-emerald-200">
-                      <span className="text-gray-600">Manitoba Tax:</span>
-                      <span className="font-semibold text-red-600">{formatCurrency(calculations.manitobaTax)}</span>
+                      <span className="text-gray-600">{provName} Tax:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(calculations.provincialTax)}</span>
                     </div>
 
                     <div className="flex justify-between py-3 bg-red-100 px-3 rounded-lg">
