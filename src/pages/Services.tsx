@@ -2,7 +2,8 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Car, Home, Heart, Building, Umbrella, FileText, Phone, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Car, Home, Heart, Building, Umbrella, FileText, Phone, Clock, DollarSign } from 'lucide-react';
 
 const Services = () => {
   const services = [
