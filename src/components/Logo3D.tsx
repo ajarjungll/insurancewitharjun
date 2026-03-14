@@ -8,7 +8,7 @@ const Logo3D = () => {
         {/* Logo image with enhanced 3D effects - no container shape */}
         <div className="relative">
           <img 
-            src="/lovable-uploads/arjun-gill-logo.png" 
+            src="/lovable-uploads/1b840fd9-56c0-4b16-a862-874fe554da35.png" 
             alt="Arjun Gill Logo" 
             className="w-36 h-36 object-contain relative z-10"
             style={{
