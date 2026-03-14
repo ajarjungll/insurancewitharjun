@@ -26,6 +26,7 @@ import DisabilityInsuranceDetails from "./pages/DisabilityInsuranceDetails";
 import HealthInsuranceDetails from "./pages/HealthInsuranceDetails";
 import StudentInsuranceDetails from "./pages/StudentInsuranceDetails";
 import SuperVisaInsuranceDetails from "./pages/SuperVisaInsuranceDetails";
+import CppEiContributions from "./pages/CppEiContributions";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import NotFound from "./pages/NotFound";
