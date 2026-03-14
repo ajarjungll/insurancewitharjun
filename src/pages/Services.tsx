@@ -84,6 +84,20 @@ const Services = () => {
         "Sports Injury Coverage",
         "Trip Interruption Protection"
       ]
+    },
+    {
+      icon: <DollarSign className="w-8 h-8 text-white" />,
+      title: "CPP & EI Contributions",
+      description: "Understand your Canada Pension Plan and Employment Insurance deductions",
+      features: [
+        "CPP Contribution Rates",
+        "EI Deduction Details",
+        "Salary Deduction Calculator",
+        "Maximum Contribution Limits",
+        "CPP vs EI Comparison",
+        "2026 Updated Figures"
+      ],
+      link: "/services/cpp-ei"
     }
   ];
 
