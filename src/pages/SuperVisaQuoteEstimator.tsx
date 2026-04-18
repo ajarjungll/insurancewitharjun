@@ -354,7 +354,7 @@ const SuperVisaQuoteEstimator = () => {
           <div className="text-center py-20">
             <Loader2 className="w-16 h-16 text-blue-700 animate-spin mx-auto mb-6" />
             <h2 className="text-2xl font-semibold text-blue-900 mb-2">Getting best quotes for you…</h2>
-            <p className="text-gray-600">Comparing rates across deductible options</p>
+            <p className="text-gray-600">Comparing rates from RIMI, Ingle, GMS, Destination Canada & Travelance</p>
           </div>
         )}
 
@@ -368,42 +368,73 @@ const SuperVisaQuoteEstimator = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {quotes.map((q) => {
                 const isBest = q.premium === cheapest;
                 return (
                   <Card
-                    key={q.deductible}
-                    className={`relative transition-all hover:shadow-lg ${
-                      isBest ? 'border-2 border-orange-400 shadow-lg scale-105' : 'border-blue-100'
+                    key={q.id}
+                    className={`relative transition-all hover:shadow-2xl card-3d ${
+                      isBest ? 'border-2 border-orange-400 shadow-2xl ring-2 ring-orange-200' : 'border-blue-100'
                     }`}
                   >
                     {isBest && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg z-10">
                         <Star className="w-3 h-3 fill-white" /> BEST PRICE
                       </div>
                     )}
-                    <CardHeader className="pb-2 text-center">
-                      <p className="text-sm text-gray-500">Deductible</p>
-                      <CardTitle className="text-2xl text-blue-900">${q.deductible.toLocaleString()}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center space-y-3">
-                      <div>
-                        <p className="text-3xl font-bold text-blue-700">${q.premium.toLocaleString()}</p>
-                        <p className="text-xs text-gray-500">total / year</p>
+                    <CardHeader className="pb-3">
+                      {/* Logo slot */}
+                      <div className="h-16 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg mb-3 p-2 border border-gray-200">
+                        <img
+                          src={q.logo}
+                          alt={`${q.name} logo`}
+                          className="max-h-12 max-w-full object-contain"
+                          onError={(e) => {
+                            // Fallback to insurer name if logo file is missing
+                            (e.target as HTMLImageElement).style.display = 'none';
+                            (e.target as HTMLImageElement).parentElement!.innerHTML =
+                              `<span class="text-blue-900 font-bold text-lg">${q.name}</span>`;
+                          }}
+                        />
                       </div>
-                      <ul className="text-xs text-gray-600 space-y-1 text-left">
-                        <li className="flex gap-1"><CheckCircle2 className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" /> Emergency medical</li>
-                        <li className="flex gap-1"><CheckCircle2 className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" /> Hospitalization</li>
-                        <li className="flex gap-1"><CheckCircle2 className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" /> Repatriation</li>
+                      <CardTitle className="text-lg text-blue-900 leading-tight">{q.name}</CardTitle>
+                      <p className="text-sm text-gray-500">{q.plan}</p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="text-center py-2 bg-blue-50/60 rounded-lg">
+                        <p className="text-3xl font-extrabold text-blue-700">${q.premium.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">CAD total / year</p>
+                        <p className="text-sm text-gray-600 mt-1">≈ ${q.monthly.toLocaleString()}/month</p>
+                      </div>
+                      <div className="text-xs text-gray-600 flex justify-between border-y py-2">
+                        <span>Deductible</span>
+                        <strong>${q.deductible.toLocaleString()}</strong>
+                      </div>
+                      <ul className="text-xs text-gray-600 space-y-1.5">
+                        {q.highlights.map((h, i) => (
+                          <li key={i} className="flex gap-1.5">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-green-600 mt-0.5 flex-shrink-0" /> {h}
+                          </li>
+                        ))}
                       </ul>
-                      <Button
-                        size="sm"
-                        className="w-full bg-blue-700 hover:bg-blue-800"
-                        onClick={() => sendWhatsApp(q.deductible, q.premium)}
-                      >
-                        Apply Now
-                      </Button>
+                      <div className="flex gap-2 pt-2">
+                        <Button
+                          size="sm"
+                          className="flex-1 bg-green-600 hover:bg-green-700"
+                          onClick={() => sendWhatsApp({ insurer: q.name, premium: q.premium, deductible: q.deductible })}
+                        >
+                          <MessageCircle className="w-3.5 h-3.5 mr-1" /> WhatsApp
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 border-blue-700 text-blue-700 hover:bg-blue-50"
+                          onClick={() => sendEmail({ insurer: q.name, premium: q.premium, deductible: q.deductible })}
+                        >
+                          <Mail className="w-3.5 h-3.5 mr-1" /> Email
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 );
