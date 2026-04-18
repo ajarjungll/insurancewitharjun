@@ -1,8 +1,9 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Plane, Phone, Shield, CheckCircle, Users, MapPin } from 'lucide-react';
+import { Plane, Phone, Shield, CheckCircle, Users, MapPin, Calculator } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 const SuperVisaInsuranceDetails = () => {
@@ -36,9 +37,12 @@ const SuperVisaInsuranceDetails = () => {
                 Mandatory Insurance for Parents & Grandparents - Meet Government of Canada requirements for super visa applications
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg">
-                  Get Free Quote
-                </Button>
+                <Link to="/super-visa-quote">
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg">
+                    <Calculator className="w-5 h-5 mr-2" />
+                    Get Instant Quote Estimate
+                  </Button>
+                </Link>
                 <a href="tel:+14313382078">
                   <Button variant="outline" className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3 text-lg">
                     <Phone className="w-5 h-5 mr-2" />

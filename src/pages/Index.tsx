@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile } from 'lucide-react';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile, Calculator, ArrowRight } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [{
