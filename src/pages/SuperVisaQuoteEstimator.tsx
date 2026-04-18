@@ -9,10 +9,21 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Shield, Phone, Mail, MessageCircle, Loader2, CheckCircle2, Star, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import seniorCoupleBanner from '@/assets/senior-couple-banner.jpg';
 
 type ApplicantType = 'single' | 'couple';
 type Gender = 'male' | 'female';
 type YesNo = 'yes' | 'no';
+
+const calcAge = (dob: string): number => {
+  if (!dob) return 0;
+  const birth = new Date(dob);
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age;
+};
 
 interface InsurerQuote {
   id: string;
@@ -145,7 +156,7 @@ const SuperVisaQuoteEstimator = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [quotes, setQuotes] = useState<QuoteOption[]>([]);
+  const [quotes, setQuotes] = useState<InsurerQuote[]>([]);
 
   const cheapest = useMemo(
     () => (quotes.length ? Math.min(...quotes.map((q) => q.premium)) : 0),
@@ -170,12 +181,12 @@ const SuperVisaQuoteEstimator = () => {
     const ages = applicantType === 'couple' ? [age1, calcAge(dob2)] : [age1];
     setStep('loading');
     setTimeout(() => {
-      setQuotes(computeQuotes(ages, coverage, preExisting === 'yes', 365));
+      setQuotes(computeInsurerQuotes(ages, coverage, preExisting === 'yes', 365));
       setStep('results');
     }, 1800);
   };
 
-  const buildLeadMessage = (selectedDed?: number, premium?: number) => {
+  const buildLeadMessage = (selected?: { insurer: string; premium: number; deductible: number }) => {
     const ages = applicantType === 'couple'
       ? `${calcAge(dob1)} & ${calcAge(dob2)}`
       : `${calcAge(dob1)}`;
@@ -191,18 +202,18 @@ const SuperVisaQuoteEstimator = () => {
       `Pre-existing conditions: ${preExisting}`,
       `Arrival date: ${arrivalDate}`,
       `Coverage: $${coverage.toLocaleString()}`,
-      selectedDed !== undefined ? `Selected deductible: $${selectedDed} (~$${premium?.toLocaleString()})` : '',
+      selected ? `Selected plan: ${selected.insurer} (deductible $${selected.deductible}, ~$${selected.premium.toLocaleString()}/year)` : '',
     ].filter(Boolean).join('\n');
   };
 
-  const sendWhatsApp = (ded?: number, premium?: number) => {
-    const msg = encodeURIComponent(buildLeadMessage(ded, premium));
+  const sendWhatsApp = (selected?: { insurer: string; premium: number; deductible: number }) => {
+    const msg = encodeURIComponent(buildLeadMessage(selected));
     window.open(`https://wa.me/14313382078?text=${msg}`, '_blank');
   };
 
-  const sendEmail = (ded?: number, premium?: number) => {
+  const sendEmail = (selected?: { insurer: string; premium: number; deductible: number }) => {
     const subject = encodeURIComponent('Super Visa Insurance Quote Request');
-    const body = encodeURIComponent(buildLeadMessage(ded, premium));
+    const body = encodeURIComponent(buildLeadMessage(selected));
     window.location.href = `mailto:insurancewitharjun@gmail.com?subject=${subject}&body=${body}`;
   };
 
@@ -210,14 +221,20 @@ const SuperVisaQuoteEstimator = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
       <Header />
 
-      {/* Hero */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
+      {/* Hero with senior couple background */}
+      <section className="relative overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{ backgroundImage: `url(${seniorCoupleBanner})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-900/85 to-blue-800/70" aria-hidden="true" />
+        <div className="relative container mx-auto px-4 py-16 text-center text-white">
           <Shield className="w-14 h-14 mx-auto mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold mb-3">Super Visa Insurance Quote Estimator</h1>
           <p className="text-lg text-blue-100 max-w-2xl mx-auto">
-            Get instant estimated quotes for Super Visa Insurance. Compare deductible options and
-            connect with Arjun for the best final price.
+            Compare instant estimates from RIMI, Ingle, GMS, Destination Canada and Travelance.
+            Then connect with Arjun for the final approved price.
           </p>
         </div>
       </section>
