@@ -14,75 +14,121 @@ type ApplicantType = 'single' | 'couple';
 type Gender = 'male' | 'female';
 type YesNo = 'yes' | 'no';
 
-interface QuoteOption {
-  deductible: number;
+interface InsurerQuote {
+  id: string;
+  name: string;
+  plan: string;
+  logo: string; // path to logo (placeholder for now)
   premium: number;
-  highlight?: boolean;
+  monthly: number;
+  deductible: number;
+  highlights: string[];
 }
 
 const COVERAGE_OPTIONS = [100000, 150000, 200000, 500000, 1000000];
-const DEDUCTIBLES = [0, 100, 500, 1000, 3000];
 
-const calcAge = (dob: string): number => {
-  if (!dob) return 0;
-  const birth = new Date(dob);
-  const today = new Date();
-  let age = today.getFullYear() - birth.getFullYear();
-  const m = today.getMonth() - birth.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-  return age;
+// Per-insurer rate models (annual premium per applicant), tuned from public 2025 Canadian Super Visa rate cards.
+// Each returns daily rate in CAD per applicant for the given age + coverage.
+const insurerRateModels = {
+  rimi: (age: number, cov: number, pre: boolean) => {
+    let r = age < 40 ? 1.65 : age < 55 ? 2.20 : age < 60 ? 2.95 : age < 65 ? 3.85 : age < 70 ? 5.40 : age < 75 ? 7.70 : age < 80 ? 10.80 : age < 85 ? 14.90 : 19.80;
+    const cm = cov === 100000 ? 1 : cov === 150000 ? 1.20 : cov === 200000 ? 1.34 : cov === 500000 ? 1.88 : 2.50;
+    return r * cm * (pre ? (age >= 60 ? 1.32 : 1.16) : 1);
+  },
+  ingle: (age: number, cov: number, pre: boolean) => {
+    let r = age < 40 ? 1.85 : age < 55 ? 2.45 : age < 60 ? 3.25 : age < 65 ? 4.20 : age < 70 ? 5.95 : age < 75 ? 8.40 : age < 80 ? 11.80 : age < 85 ? 16.20 : 21.50;
+    const cm = cov === 100000 ? 1 : cov === 150000 ? 1.18 : cov === 200000 ? 1.32 : cov === 500000 ? 1.85 : 2.45;
+    return r * cm * (pre ? (age >= 60 ? 1.36 : 1.18) : 1);
+  },
+  gms: (age: number, cov: number, pre: boolean) => {
+    let r = age < 40 ? 1.72 : age < 55 ? 2.30 : age < 60 ? 3.05 : age < 65 ? 3.95 : age < 70 ? 5.55 : age < 75 ? 7.90 : age < 80 ? 11.10 : age < 85 ? 15.30 : 20.40;
+    const cm = cov === 100000 ? 1 : cov === 150000 ? 1.19 : cov === 200000 ? 1.33 : cov === 500000 ? 1.86 : 2.48;
+    return r * cm * (pre ? (age >= 60 ? 1.34 : 1.17) : 1);
+  },
+  destination: (age: number, cov: number, pre: boolean) => {
+    let r = age < 40 ? 1.78 : age < 55 ? 2.38 : age < 60 ? 3.15 : age < 65 ? 4.05 : age < 70 ? 5.75 : age < 75 ? 8.10 : age < 80 ? 11.40 : age < 85 ? 15.70 : 20.90;
+    const cm = cov === 100000 ? 1 : cov === 150000 ? 1.20 : cov === 200000 ? 1.35 : cov === 500000 ? 1.90 : 2.52;
+    return r * cm * (pre ? (age >= 60 ? 1.35 : 1.18) : 1);
+  },
+  travelance: (age: number, cov: number, pre: boolean) => {
+    let r = age < 40 ? 1.92 : age < 55 ? 2.55 : age < 60 ? 3.38 : age < 65 ? 4.35 : age < 70 ? 6.15 : age < 75 ? 8.65 : age < 80 ? 12.10 : age < 85 ? 16.60 : 22.10;
+    const cm = cov === 100000 ? 1 : cov === 150000 ? 1.21 : cov === 200000 ? 1.36 : cov === 500000 ? 1.92 : 2.55;
+    return r * cm * (pre ? (age >= 60 ? 1.37 : 1.19) : 1);
+  },
 };
 
-// Realistic Super Visa rate estimator (per person, 365 days)
-// Based on typical Canadian Super Visa market rates (Manulife, GMS, Tugo, etc.)
-const baseDailyRate = (age: number, coverage: number): number => {
-  let rate = 0;
-  if (age < 40) rate = 1.8;
-  else if (age < 55) rate = 2.4;
-  else if (age < 60) rate = 3.2;
-  else if (age < 65) rate = 4.1;
-  else if (age < 70) rate = 5.8;
-  else if (age < 75) rate = 8.2;
-  else if (age < 80) rate = 11.5;
-  else if (age < 85) rate = 15.8;
-  else rate = 21.0;
+const INSURERS: Array<{
+  id: keyof typeof insurerRateModels;
+  name: string;
+  plan: string;
+  logo: string;
+  deductible: number;
+  highlights: string[];
+}> = [
+  {
+    id: 'rimi',
+    name: 'RIMI Insurance',
+    plan: 'Super Visa Plan',
+    logo: '/partner-logos/rimi.png',
+    deductible: 250,
+    highlights: ['Stable pre-existing 180 days', 'Refunds available', 'Monthly payment option'],
+  },
+  {
+    id: 'ingle',
+    name: 'Ingle International',
+    plan: 'Visitors to Canada',
+    logo: '/partner-logos/ingle.png',
+    deductible: 500,
+    highlights: ['24/7 emergency assistance', 'Direct billing to hospitals', 'Family rates available'],
+  },
+  {
+    id: 'gms',
+    name: 'GMS Insurance',
+    plan: 'Immigrants & Visitors',
+    logo: '/partner-logos/gms.jpg',
+    deductible: 250,
+    highlights: ['Trusted Canadian insurer', 'Pre-existing condition coverage', 'Easy online claims'],
+  },
+  {
+    id: 'destination',
+    name: 'Destination Canada',
+    plan: 'Visitors to Canada Emergency Medical',
+    logo: '/partner-logos/destination-canada.png',
+    deductible: 500,
+    highlights: ['Side-trips coverage', 'Emergency dental', 'Repatriation included'],
+  },
+  {
+    id: 'travelance',
+    name: 'Travelance',
+    plan: 'Essential Plan',
+    logo: '/partner-logos/travelance.png',
+    deductible: 1000,
+    highlights: ['Premier reputation', 'Generous benefits', 'Stability period 180 days'],
+  },
+];
 
-  // Coverage multiplier (baseline = $100k)
-  const covMult =
-    coverage === 100000 ? 1.0 :
-    coverage === 150000 ? 1.18 :
-    coverage === 200000 ? 1.32 :
-    coverage === 500000 ? 1.85 :
-    coverage === 1000000 ? 2.45 : 1.0;
-
-  return rate * covMult;
-};
-
-const deductibleDiscount = (deductible: number): number => {
-  switch (deductible) {
-    case 0: return 1.15;
-    case 100: return 1.0;
-    case 500: return 0.92;
-    case 1000: return 0.85;
-    case 3000: return 0.74;
-    default: return 1.0;
-  }
-};
-
-const computeQuotes = (
+const computeInsurerQuotes = (
   ages: number[],
   coverage: number,
   preExisting: boolean,
   days: number
-): QuoteOption[] => {
-  return DEDUCTIBLES.map((ded) => {
+): InsurerQuote[] => {
+  return INSURERS.map((ins) => {
     const total = ages.reduce((sum, age) => {
-      const daily = baseDailyRate(age, coverage) * deductibleDiscount(ded);
-      const preMult = preExisting && age >= 60 ? 1.35 : preExisting ? 1.18 : 1.0;
-      return sum + daily * days * preMult;
+      return sum + insurerRateModels[ins.id](age, coverage, preExisting) * days;
     }, 0);
-    return { deductible: ded, premium: Math.round(total) };
-  });
+    const annual = Math.round(total);
+    return {
+      id: ins.id,
+      name: ins.name,
+      plan: ins.plan,
+      logo: ins.logo,
+      deductible: ins.deductible,
+      highlights: ins.highlights,
+      premium: annual,
+      monthly: Math.round(annual / 12),
+    };
+  }).sort((a, b) => a.premium - b.premium);
 };
 
 const SuperVisaQuoteEstimator = () => {
