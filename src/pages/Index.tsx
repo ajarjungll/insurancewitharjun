@@ -4,8 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile, Calculator, ArrowRight, Sparkles } from 'lucide-react';
-import seniorCoupleBanner from '@/assets/senior-couple-banner.jpg';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile, Handshake } from 'lucide-react';
 
 const Index = () => {
   const insuranceTypes = [{
@@ -114,88 +113,50 @@ const Index = () => {
         <Header />
         <HeroSection />
 
-        {/* Super Visa Insurance Estimator Banner */}
-        <section className="relative overflow-hidden">
-          {/* Background photo of senior parents */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url(${seniorCoupleBanner})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-            aria-hidden="true"
-          />
-          {/* Dark gradient overlay for text contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-900/80 to-blue-800/60" aria-hidden="true" />
-
-          <div className="relative container mx-auto px-4 py-16 md:py-20">
-            <div className="grid lg:grid-cols-5 gap-8 items-center">
-              <div className="lg:col-span-3 text-white">
-                <div className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-400/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-orange-200 text-sm font-semibold mb-4">
-                  <Sparkles className="w-4 h-4" />
-                  NEW · Free Tool
-                </div>
-                <h2 className="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">
-                  Super Visa Insurance<br />
-                  <span className="bg-gradient-to-r from-orange-300 to-yellow-200 bg-clip-text text-transparent">
-                    Quote Estimator
-                  </span>
-                </h2>
-                <p className="text-blue-100 text-lg md:text-xl mb-6 max-w-xl">
-                  Compare instant estimates from <strong className="text-white">RIMI, Ingle, GMS, Destination Canada & Travelance</strong> in under 60 seconds. No signup required.
-                </p>
-                <div className="flex flex-wrap gap-4 items-center mb-6">
-                  <div className="flex items-center gap-2 text-blue-100">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span>5 top insurers compared</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-blue-100">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span>Instant pricing</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-blue-100">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span>100% free</span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    to="/super-visa-quote"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold px-8 py-4 rounded-xl btn-3d shadow-2xl text-lg transition-all"
-                  >
-                    <Calculator className="w-5 h-5" />
-                    Get Instant Quotes
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
-                  <a
-                    href="https://wa.me/14313382078"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/30 font-semibold px-6 py-4 rounded-xl transition-all"
-                  >
-                    <Phone className="w-5 h-5" />
-                    Talk to Arjun
-                  </a>
-                </div>
+        {/* Super Visa Insurance — Trusted Partners Banner */}
+        <section className="relative overflow-hidden bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800">
+          <div className="relative container mx-auto px-4 py-14 md:py-16">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-400/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-orange-200 text-sm font-semibold mb-4">
+                <Handshake className="w-4 h-4" />
+                Super Visa Insurance Partners
               </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
+                Insurance Companies <span className="bg-gradient-to-r from-orange-300 to-yellow-200 bg-clip-text text-transparent">We Work With</span>
+              </h2>
+              <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto">
+                We partner with Canada's most trusted Super Visa insurance providers to bring you the best coverage and rates.
+              </p>
+            </div>
 
-              {/* Right side: stat card */}
-              <div className="lg:col-span-2 hidden lg:block">
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
-                  <p className="text-blue-100 text-sm uppercase tracking-wide mb-2">Estimated Yearly Premium</p>
-                  <p className="text-white text-5xl font-extrabold mb-1">$1,200<span className="text-2xl text-blue-200">+</span></p>
-                  <p className="text-blue-100 text-sm mb-4">for $100,000 coverage · age 60</p>
-                  <div className="space-y-2 text-sm">
-                    {['RIMI Insurance', 'Ingle International', 'GMS', 'Destination Canada', 'Travelance'].map((c) => (
-                      <div key={c} className="flex items-center gap-2 text-white">
-                        <CheckCircle className="w-4 h-4 text-green-400" />
-                        {c}
-                      </div>
-                    ))}
-                  </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 max-w-5xl mx-auto">
+              {[
+                { name: 'GMS', logo: '/partner-logos/gms.jpg' },
+                { name: 'Insure Canada', logo: '/partner-logos/insure-canada.png' },
+                { name: 'RIMI', logo: '/partner-logos/rimi.png' },
+                { name: 'Destination Canada', logo: '/partner-logos/destination-canada.png' },
+              ].map((partner) => (
+                <div
+                  key={partner.name}
+                  className="bg-white rounded-2xl p-5 h-32 flex items-center justify-center card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300"
+                >
+                  <img
+                    src={partner.logo}
+                    alt={`${partner.name} Super Visa Insurance`}
+                    className="max-h-20 max-w-full object-contain"
+                    loading="lazy"
+                  />
                 </div>
-              </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-10">
+              <Link
+                to="/insurance-types/super-visa"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold px-8 py-4 rounded-xl btn-3d shadow-2xl text-lg transition-all"
+              >
+                Learn About Super Visa Insurance
+              </Link>
             </div>
           </div>
         </section>
