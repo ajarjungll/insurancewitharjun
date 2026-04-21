@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
 import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile, Handshake } from 'lucide-react';
+import seniorCoupleBanner from '@/assets/senior-couple-banner.jpg';
 
 const Index = () => {
   const insuranceTypes = [{
@@ -115,6 +116,19 @@ const Index = () => {
 
         {/* Super Visa Insurance — Trusted Partners Banner */}
         <section className="relative overflow-hidden bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800">
+          {/* Background photo of senior parents */}
+          <div
+            className="absolute inset-0 opacity-25"
+            style={{
+              backgroundImage: `url(${seniorCoupleBanner})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+            aria-hidden="true"
+          />
+          {/* Dark gradient overlay for contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-950/85 via-blue-900/75 to-blue-800/70" aria-hidden="true" />
+
           <div className="relative container mx-auto px-4 py-14 md:py-16">
             <div className="text-center mb-10">
               <div className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-400/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-orange-200 text-sm font-semibold mb-4">
