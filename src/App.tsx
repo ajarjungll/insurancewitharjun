@@ -26,7 +26,6 @@ import DisabilityInsuranceDetails from "./pages/DisabilityInsuranceDetails";
 import HealthInsuranceDetails from "./pages/HealthInsuranceDetails";
 import StudentInsuranceDetails from "./pages/StudentInsuranceDetails";
 import SuperVisaInsuranceDetails from "./pages/SuperVisaInsuranceDetails";
-import SuperVisaQuoteEstimator from "./pages/SuperVisaQuoteEstimator";
 import CppEiContributions from "./pages/CppEiContributions";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
@@ -68,7 +67,6 @@ const App = () => (
           <Route path="/insurance-types/health" element={<HealthInsuranceDetails />} />
           <Route path="/insurance-types/student" element={<StudentInsuranceDetails />} />
           <Route path="/insurance-types/super-visa" element={<SuperVisaInsuranceDetails />} />
-          <Route path="/super-visa-quote" element={<SuperVisaQuoteEstimator />} />
           <Route path="/investment-types" element={<InvestmentTypes />} />
           <Route path="/investment-types/rrsp" element={<RRSPDetails />} />
           <Route path="/investment-types/fhsa" element={<FHSADetails />} />
