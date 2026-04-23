@@ -12,64 +12,76 @@ const Index = () => {
     icon: <Heart className="w-12 h-12 text-blue-600" />,
     title: "Life Insurance",
     description: "Secure your family's financial future with comprehensive life insurance coverage.",
-    features: ["Term Life Insurance", "Whole Life Coverage", "Accidental Death Benefits", "Family Protection"]
+    features: ["Term Life Insurance", "Whole Life Coverage", "Accidental Death Benefits", "Family Protection"],
+    path: "/insurance-types/life"
   }, {
     icon: <HeartPulse className="w-12 h-12 text-blue-600" />,
     title: "Critical Illness Insurance", 
     description: "Financial protection when you're diagnosed with a serious illness, providing peace of mind during challenging times.",
-    features: ["Cancer Coverage", "Heart Attack Protection", "Stroke Benefits", "Kidney Failure Coverage"]
+    features: ["Cancer Coverage", "Heart Attack Protection", "Stroke Benefits", "Kidney Failure Coverage"],
+    path: "/insurance-types/critical-illness"
   }, {
     icon: <Plane className="w-12 h-12 text-blue-600" />,
     title: "Super Visa Insurance",
     description: "Specialized insurance coverage for super visa applicants and their extended stays in Canada.",
-    features: ["Medical Coverage", "Emergency Care", "Hospitalization", "Prescription Drugs"]
+    features: ["Medical Coverage", "Emergency Care", "Hospitalization", "Prescription Drugs"],
+    path: "/insurance-types/super-visa"
   }, {
     icon: <Truck className="w-12 h-12 text-blue-600" />,
     title: "Travel Insurance for Truckers",
     description: "Specialized travel insurance designed for professional truck drivers and long-haul transportation.",
-    features: ["Cross-Border Coverage", "Commercial Vehicle Protection", "Emergency Medical", "Trip Interruption"]
+    features: ["Cross-Border Coverage", "Commercial Vehicle Protection", "Emergency Medical", "Trip Interruption"],
+    path: "/insurance-types/travel-truckers"
   }, {
     icon: <DollarSign className="w-12 h-12 text-blue-600" />,
     title: "Loss of Income Insurance",
     description: "Protect your earning capacity with coverage that replaces lost income during unexpected events.",
-    features: ["Income Replacement", "Business Interruption", "Partial Disability", "Return to Work Benefits"]
+    features: ["Income Replacement", "Business Interruption", "Partial Disability", "Return to Work Benefits"],
+    path: "/insurance-types/loss-of-income"
   }, {
     icon: <Users className="w-12 h-12 text-blue-600" />,
     title: "Disability Insurance",
     description: "Financial protection when illness or injury prevents you from working and earning income.",
-    features: ["Short-Term Disability", "Long-Term Disability", "Partial Benefits", "Rehabilitation Support"]
+    features: ["Short-Term Disability", "Long-Term Disability", "Partial Benefits", "Rehabilitation Support"],
+    path: "/insurance-types/disability"
   }, {
     icon: <Smile className="w-12 h-12 text-blue-600" />,
     title: "Dental Insurance",
     description: "Comprehensive dental coverage for routine care, major procedures, and emergency treatments.",
-    features: ["Routine Cleanings", "Major Procedures", "Emergency Care", "Orthodontic Coverage"]
+    features: ["Routine Cleanings", "Major Procedures", "Emergency Care", "Orthodontic Coverage"],
+    path: "/insurance-types/dental"
   }, {
     icon: <HeartPulse className="w-12 h-12 text-blue-600" />,
     title: "Health Insurance",
     description: "Complete health coverage for medical expenses, prescription drugs, and wellness programs.",
-    features: ["Medical Coverage", "Prescription Drugs", "Hospital Benefits", "Wellness Programs"]
+    features: ["Medical Coverage", "Prescription Drugs", "Hospital Benefits", "Wellness Programs"],
+    path: "/insurance-types/health"
   }];
 
   const investmentTypes = [{
     icon: <PiggyBank className="w-12 h-12 text-green-600" />,
     title: "RRSP",
     description: "Registered Retirement Savings Plan to help you save for retirement with tax advantages.",
-    features: ["Tax Deductible Contributions", "Tax-Deferred Growth", "Retirement Income", "Spousal RRSP Options"]
+    features: ["Tax Deductible Contributions", "Tax-Deferred Growth", "Retirement Income", "Spousal RRSP Options"],
+    path: "/investment-types/rrsp"
   }, {
     icon: <Home className="w-12 h-12 text-green-600" />,
     title: "FHSA",
     description: "First Home Savings Account combines the best features of RRSP and TFSA for first-time homebuyers.",
-    features: ["Tax Deductible Contributions", "Tax-Free Withdrawals", "Up to $40,000 Lifetime", "Qualifying Home Purchase"]
+    features: ["Tax Deductible Contributions", "Tax-Free Withdrawals", "Up to $40,000 Lifetime", "Qualifying Home Purchase"],
+    path: "/investment-types/fhsa"
   }, {
     icon: <GraduationCap className="w-12 h-12 text-green-600" />,
     title: "RESP",
     description: "Registered Education Savings Plan to help save for your child's post-secondary education.",
-    features: ["Government Grants", "Tax-Deferred Growth", "Education Assistance Payments", "Up to $50,000 Lifetime"]
+    features: ["Government Grants", "Tax-Deferred Growth", "Education Assistance Payments", "Up to $50,000 Lifetime"],
+    path: "/investment-types/resp"
   }, {
     icon: <TrendingUp className="w-12 h-12 text-green-600" />,
     title: "TFSA",
     description: "Tax-Free Savings Account for flexible savings with tax-free growth and withdrawals.",
-    features: ["Tax-Free Growth", "Flexible Withdrawals", "Annual Contribution Room", "Multiple Investment Options"]
+    features: ["Tax-Free Growth", "Flexible Withdrawals", "Annual Contribution Room", "Multiple Investment Options"],
+    path: "/investment-types/tfsa"
   }];
 
   const testimonials = [{
@@ -198,7 +210,7 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/insurance-types" className="block mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 btn-3d shadow-lg">
+                  <Link to={type.path} className="block mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 btn-3d shadow-lg">
                     Learn More
                   </Link>
                 </div>)}
@@ -229,7 +241,7 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/investment-types" className="block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 btn-3d shadow-lg">
+                  <Link to={type.path} className="block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 btn-3d shadow-lg">
                     Learn More
                   </Link>
                 </div>)}
