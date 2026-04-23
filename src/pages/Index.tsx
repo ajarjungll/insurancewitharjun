@@ -210,7 +210,7 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/insurance-types" className="block mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 btn-3d shadow-lg">
+                  <Link to={type.path} className="block mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 btn-3d shadow-lg">
                     Learn More
                   </Link>
                 </div>)}
@@ -241,7 +241,7 @@ const Index = () => {
                         {feature}
                       </li>)}
                   </ul>
-                  <Link to="/investment-types" className="block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 btn-3d shadow-lg">
+                  <Link to={type.path} className="block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 btn-3d shadow-lg">
                     Learn More
                   </Link>
                 </div>)}
