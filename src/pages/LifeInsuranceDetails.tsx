@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Heart, Phone, Shield, CheckCircle, Users, Home } from 'lucide-react';
+import { Heart, Phone, Shield, CheckCircle, Users, Home, TrendingUp, DollarSign, Sparkles, Calendar, PiggyBank, Gift } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 const LifeInsuranceDetails = () => {
