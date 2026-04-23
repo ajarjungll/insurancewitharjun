@@ -40,7 +40,7 @@ const LifeInsuranceDetails = () => {
                   Get Free Quote
                 </Button>
                 <a href="tel:+14313382078">
-                  <Button variant="outline" className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3 text-lg">
+                  <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3 text-lg">
                     <Phone className="w-5 h-5 mr-2" />
                     Call (431) 338-2078
                   </Button>
@@ -174,7 +174,7 @@ const LifeInsuranceDetails = () => {
                 Get Free Quote Now
               </Button>
               <a href="tel:+14313382078">
-                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg">
+                <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg">
                   <Phone className="w-5 h-5 mr-2" />
                   Call (431) 338-2078
                 </Button>
