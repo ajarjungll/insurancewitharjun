@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
 import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile, Handshake } from 'lucide-react';
-import seniorCoupleBanner from '@/assets/senior-couple-banner.jpg';
+
 
 const Index = () => {
   const insuranceTypes = [{
