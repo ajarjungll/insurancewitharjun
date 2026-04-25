@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { GraduationCap, Phone, ArrowLeft, CheckCircle, BookOpen, Shield, Plane } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
+import heroBg from '@/assets/hero-bg-student.jpg';
 
 const StudentInsuranceDetails = () => {
   return (
@@ -23,8 +24,14 @@ const StudentInsuranceDetails = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-indigo-900 to-indigo-700 text-white py-20">
-          <div className="container mx-auto px-4">
+        <section className="bg-gradient-to-r from-indigo-900 to-indigo-700 text-white py-20 relative overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-30 pointer-events-none"
+            style={{ backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/55 to-indigo-700/40 pointer-events-none" aria-hidden="true" />
+          <div className="relative container mx-auto px-4">
             <Link to="/insurance-types" className="inline-flex items-center text-indigo-200 hover:text-white mb-6">
               <ArrowLeft size={20} className="mr-2" />
               Back to Insurance Types
