@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Plane, Phone, Shield, CheckCircle, Users, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import manulifeLogo from '@/assets/manulife-logo.png';
+import tugoLogo from '@/assets/tugo-logo.svg';
 
 const SuperVisaInsuranceDetails = () => {
   return (
@@ -225,6 +227,36 @@ const SuperVisaInsuranceDetails = () => {
                     </div>
                   </div>
                 </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Insurance Partners */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto text-center">
+              <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">
+                Super Visa Insurance Partners
+              </h2>
+              <p className="text-2xl md:text-3xl text-gray-600 mb-12 font-semibold">
+                We work with Canada's most trusted insurers to deliver reliable Super Visa coverage
+              </p>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white p-10 rounded-2xl card-3d border flex items-center justify-center min-h-[200px]">
+                  <img
+                    src={manulifeLogo}
+                    alt="Manulife Insurance — Super Visa Insurance Partner"
+                    className="max-h-28 w-auto object-contain"
+                  />
+                </div>
+                <div className="bg-white p-10 rounded-2xl card-3d border flex items-center justify-center min-h-[200px]">
+                  <img
+                    src={tugoLogo}
+                    alt="TuGo Insurance — Super Visa Insurance Partner"
+                    className="max-h-28 w-auto object-contain"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
