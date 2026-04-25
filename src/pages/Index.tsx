@@ -4,8 +4,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile, Handshake } from 'lucide-react';
-import seniorCoupleBanner from '@/assets/senior-couple-banner.jpg';
+import { Heart, Shield, HeartPulse, Plane, Phone, Star, CheckCircle, PiggyBank, TrendingUp, Home, GraduationCap, Truck, DollarSign, Users, Smile } from 'lucide-react';
+
 
 const Index = () => {
   const insuranceTypes = [{
@@ -125,67 +125,6 @@ const Index = () => {
       <div className="relative z-10">
         <Header />
         <HeroSection />
-
-        {/* Super Visa Insurance — Trusted Partners Banner */}
-        <section className="relative overflow-hidden bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800">
-          {/* Background photo of senior parents */}
-          <div
-            className="absolute inset-0 opacity-25"
-            style={{
-              backgroundImage: `url(${seniorCoupleBanner})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-            aria-hidden="true"
-          />
-          {/* Dark gradient overlay for contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-950/85 via-blue-900/75 to-blue-800/70" aria-hidden="true" />
-
-          <div className="relative container mx-auto px-4 py-14 md:py-16">
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-400/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-orange-200 text-sm font-semibold mb-4">
-                <Handshake className="w-4 h-4" />
-                Super Visa Insurance Partners
-              </div>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
-                Insurance Companies <span className="bg-gradient-to-r from-orange-300 to-yellow-200 bg-clip-text text-transparent">We Work With</span>
-              </h2>
-              <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto">
-                We partner with Canada's most trusted Super Visa insurance providers to bring you the best coverage and rates.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 max-w-5xl mx-auto">
-              {[
-                { name: 'GMS', logo: '/partner-logos/gms.jpg' },
-                { name: 'Insure Canada', logo: '/partner-logos/insure-canada.png' },
-                { name: 'RIMI', logo: '/partner-logos/rimi.png' },
-                { name: 'Destination Canada', logo: '/partner-logos/destination-canada.png' },
-              ].map((partner) => (
-                <div
-                  key={partner.name}
-                  className="bg-white rounded-2xl p-5 h-32 flex items-center justify-center card-3d hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300"
-                >
-                  <img
-                    src={partner.logo}
-                    alt={`${partner.name} Super Visa Insurance`}
-                    className="max-h-20 max-w-full object-contain"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-10">
-              <Link
-                to="/insurance-types/super-visa"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold px-8 py-4 rounded-xl btn-3d shadow-2xl text-lg transition-all"
-              >
-                Learn About Super Visa Insurance
-              </Link>
-            </div>
-          </div>
-        </section>
 
         {/* Insurance Types Section */}
         <section className="py-16 bg-gray-50">
