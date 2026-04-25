@@ -2,10 +2,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Users, Award, TrendingUp, Phone } from 'lucide-react';
+import insuranceBg from '@/assets/insurance-protection-bg.jpg';
 
 const HeroSection = () => {
-  return <section className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-20">
-      <div className="container mx-auto px-4">
+  return <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+      {/* Low-opacity insurance-themed background */}
+      <div
+        className="absolute inset-0 opacity-15 pointer-events-none"
+        style={{
+          backgroundImage: `url(${insuranceBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+        aria-hidden="true"
+      />
+      {/* Subtle gradient overlay for text contrast */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-blue-800/50 to-blue-700/40 pointer-events-none" aria-hidden="true" />
+
+      <div className="relative container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-5xl font-bold mb-6 leading-tight">
