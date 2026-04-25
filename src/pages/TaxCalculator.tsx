@@ -626,7 +626,9 @@ const TaxCalculator = () => {
                         onChange={(e) => setFhsaContribution(e.target.value)}
                         className="text-lg"
                       />
-                      <p className="text-sm text-gray-500 mt-1">Annual Limit: ${yearData.fhsaLimit.toLocaleString()}</p>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Annual Limit: ${yearData.fhsaLimit.toLocaleString()} • Max ${(yearData.fhsaLimit * 2).toLocaleString()} if you didn't contribute last year (carry-forward)
+                      </p>
                     </div>
 
                     {/* Trucker-specific fields */}
