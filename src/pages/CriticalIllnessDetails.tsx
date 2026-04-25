@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Heart, Phone, Shield, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import heroBg from '@/assets/hero-bg-critical.jpg';
 
 const CriticalIllnessDetails = () => {
   return (
@@ -24,7 +25,13 @@ const CriticalIllnessDetails = () => {
         
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 relative overflow-hidden">
-          <div className="container mx-auto px-4">
+          <div
+            className="absolute inset-0 opacity-30 pointer-events-none"
+            style={{ backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/55 to-blue-700/40 pointer-events-none" aria-hidden="true" />
+          <div className="relative container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <div className="flex justify-center mb-6">
                 <div className="p-4 bg-blue-800 rounded-full">

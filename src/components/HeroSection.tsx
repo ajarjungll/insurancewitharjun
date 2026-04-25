@@ -8,7 +8,7 @@ const HeroSection = () => {
   return <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-20">
       {/* Low-opacity insurance-themed background */}
       <div
-        className="absolute inset-0 opacity-15 pointer-events-none"
+        className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
           backgroundImage: `url(${insuranceBg})`,
           backgroundSize: 'cover',
@@ -17,7 +17,7 @@ const HeroSection = () => {
         aria-hidden="true"
       />
       {/* Subtle gradient overlay for text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-blue-800/50 to-blue-700/40 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/55 via-blue-800/45 to-blue-700/35 pointer-events-none" aria-hidden="true" />
 
       <div className="relative container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
