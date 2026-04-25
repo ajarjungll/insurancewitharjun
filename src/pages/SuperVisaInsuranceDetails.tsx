@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { Plane, Phone, Shield, CheckCircle, Users, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import manulifeLogo from '@/assets/manulife-logo.png';
-import tugoLogo from '@/assets/tugo-logo.svg';
+import travelanceLogo from '@/assets/travelance-logo.svg';
 
 const SuperVisaInsuranceDetails = () => {
   return (
@@ -251,8 +251,8 @@ const SuperVisaInsuranceDetails = () => {
                 </div>
                 <div className="bg-white p-10 rounded-2xl card-3d border flex items-center justify-center min-h-[200px]">
                   <img
-                    src={tugoLogo}
-                    alt="TuGo Insurance — Super Visa Insurance Partner"
+                    src={travelanceLogo}
+                    alt="Travelance Insurance — Super Visa Insurance Partner"
                     className="max-h-28 w-auto object-contain"
                   />
                 </div>
