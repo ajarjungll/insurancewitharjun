@@ -172,7 +172,8 @@ const TaxCalculator = () => {
     const income = parseFloat(grossIncome) || 0;
     const spouseInc = filingStatus === 'couple' ? (parseFloat(spouseIncome) || 0) : 0;
     const rrsp = Math.min(parseFloat(rrspContribution) || 0, yearData.rrspLimit);
-    const fhsa = Math.min(parseFloat(fhsaContribution) || 0, yearData.fhsaLimit);
+    // FHSA allows up to 2x the annual limit ($16,000) if previous year's room was unused
+    const fhsa = Math.min(parseFloat(fhsaContribution) || 0, yearData.fhsaLimit * 2);
     const days = parseFloat(daysAway) || 0;
     const lodging = parseFloat(lodgingExpenses) || 0;
 
@@ -625,7 +626,9 @@ const TaxCalculator = () => {
                         onChange={(e) => setFhsaContribution(e.target.value)}
                         className="text-lg"
                       />
-                      <p className="text-sm text-gray-500 mt-1">Annual Limit: ${yearData.fhsaLimit.toLocaleString()}</p>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Annual Limit: ${yearData.fhsaLimit.toLocaleString()} • Max ${(yearData.fhsaLimit * 2).toLocaleString()} if you didn't contribute last year (carry-forward)
+                      </p>
                     </div>
 
                     {/* Trucker-specific fields */}
