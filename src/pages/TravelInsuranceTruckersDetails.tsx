@@ -202,6 +202,9 @@ const TravelInsuranceTruckersDetails = () => {
                       <Phone size={18} className="inline mr-2" />
                       Call (431) 338-2078
                     </a>
+                    <Link to="/insurance-types/travel-truckers/calculator" className="block bg-gradient-to-r from-orange-500 to-orange-700 text-white px-6 py-3 rounded-lg hover:from-orange-600 hover:to-orange-800 transition-colors font-semibold btn-3d text-center">
+                      Premium Calculator
+                    </Link>
                     <Link to="/quote" className="block bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold btn-3d text-center">
                       Get Free Quote
                     </Link>
