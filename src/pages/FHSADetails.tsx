@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Home, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import heroBg from '@/assets/hero-bg-fhsa.jpg';
 
 const FHSADetails = () => {
   return (
@@ -22,8 +23,14 @@ const FHSADetails = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-green-900 to-green-700 text-white py-20">
-          <div className="container mx-auto px-4">
+        <section className="bg-gradient-to-r from-green-900 to-green-700 text-white py-20 relative overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-30 pointer-events-none"
+            style={{ backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-green-900/55 to-green-700/40 pointer-events-none" aria-hidden="true" />
+          <div className="relative container mx-auto px-4">
             <Link to="/investment-types" className="inline-flex items-center text-green-200 hover:text-white mb-6">
               <ArrowLeft size={20} className="mr-2" />
               Back to Investment Types
