@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Shield, Heart, Smile, Building, Truck, DollarSign, Accessibility, Activity, GraduationCap, Plane } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import heroBg from '@/assets/hero-bg-insurance-types.jpg';
 
 const InsuranceTypes = () => {
   const navigate = useNavigate();
@@ -101,8 +102,14 @@ const InsuranceTypes = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
-          <div className="container mx-auto px-4 text-center">
+        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 relative overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-30 pointer-events-none"
+            style={{ backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/55 to-blue-700/40 pointer-events-none" aria-hidden="true" />
+          <div className="relative container mx-auto px-4 text-center">
             <div className="max-w-4xl mx-auto">
               <div className="flex justify-center mb-6">
                 <Shield className="w-20 h-20 text-blue-200" />
