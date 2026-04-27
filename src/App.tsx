@@ -21,6 +21,7 @@ import DentalInsuranceDetails from "./pages/DentalInsuranceDetails";
 import LifeInsuranceDetails from "./pages/LifeInsuranceDetails";
 import BusinessInsuranceDetails from "./pages/BusinessInsuranceDetails";
 import TravelInsuranceTruckersDetails from "./pages/TravelInsuranceTruckersDetails";
+import TruckerInsuranceCalculator from "./pages/TruckerInsuranceCalculator";
 import LossOfIncomeDetails from "./pages/LossOfIncomeDetails";
 import DisabilityInsuranceDetails from "./pages/DisabilityInsuranceDetails";
 import HealthInsuranceDetails from "./pages/HealthInsuranceDetails";
@@ -62,6 +63,7 @@ const App = () => (
           <Route path="/insurance-types/life" element={<LifeInsuranceDetails />} />
           <Route path="/insurance-types/business" element={<BusinessInsuranceDetails />} />
           <Route path="/insurance-types/travel-truckers" element={<TravelInsuranceTruckersDetails />} />
+          <Route path="/insurance-types/travel-truckers/calculator" element={<TruckerInsuranceCalculator />} />
           <Route path="/insurance-types/loss-of-income" element={<LossOfIncomeDetails />} />
           <Route path="/insurance-types/disability" element={<DisabilityInsuranceDetails />} />
           <Route path="/insurance-types/health" element={<HealthInsuranceDetails />} />
