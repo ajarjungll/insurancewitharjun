@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import Services from "./pages/Services";
 import InsuranceTypes from "./pages/InsuranceTypes";
 import InvestmentTypes from "./pages/InvestmentTypes";
 import RRSPDetails from "./pages/RRSPDetails";
@@ -55,7 +54,6 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
           <Route path="/services/cpp-ei" element={<CppEiContributions />} />
           <Route path="/insurance-types" element={<InsuranceTypes />} />
           <Route path="/insurance-types/critical-illness" element={<CriticalIllnessDetails />} />

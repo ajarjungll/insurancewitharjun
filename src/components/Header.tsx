@@ -12,7 +12,6 @@ const Header = () => {
 
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
     { name: 'Insurance Types', path: '/insurance-types' },
     { name: 'Investment Types', path: '/investment-types' },
     { name: 'Tax Calculator', path: '/tax-calculator' },
