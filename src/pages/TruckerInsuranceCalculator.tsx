@@ -276,8 +276,53 @@ const TruckerInsuranceCalculator = () => {
               </div>
 
               {/* Summary */}
-              <div className="lg:col-span-1">
-                <div className="bg-gradient-to-br from-orange-600 to-orange-800 text-white p-6 rounded-xl card-3d-super sticky top-8">
+              <div className="lg:col-span-1 space-y-6 sticky top-8 self-start">
+                {/* Selected Assumptions */}
+                <div className="bg-white p-6 rounded-xl card-3d border-l-4 border-orange-600">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <Calculator size={18} className="mr-2 text-orange-600" />
+                    Your Selections
+                  </h3>
+                  <dl className="space-y-3 text-sm">
+                    <div className="flex justify-between items-start pb-2 border-b border-gray-100">
+                      <dt className="text-gray-600">Coverage Type</dt>
+                      <dd className="font-semibold text-gray-900 capitalize">{coverage}</dd>
+                    </div>
+                    <div className="flex justify-between items-start pb-2 border-b border-gray-100">
+                      <dt className="text-gray-600">Monthly Benefit</dt>
+                      <dd className="font-semibold text-gray-900">{formatLumpSum(monthlyBenefit)}/mo</dd>
+                    </div>
+                    <div className="flex justify-between items-start pb-2 border-b border-gray-100">
+                      <dt className="text-gray-600">Elimination Period</dt>
+                      <dd className="font-semibold text-gray-900">
+                        {EP_BP_OPTIONS.find((o) => o.value === epBp)?.ep}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between items-start pb-2 border-b border-gray-100">
+                      <dt className="text-gray-600">Benefit Period</dt>
+                      <dd className="font-semibold text-gray-900">
+                        {EP_BP_OPTIONS.find((o) => o.value === epBp)?.bp}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between items-start pb-2 border-b border-gray-100">
+                      <dt className="text-gray-600">Travel Medical</dt>
+                      <dd className="font-semibold text-gray-900">
+                        {includeTravel ? `Included ($5M, ${coverage})` : 'Not included'}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between items-start">
+                      <dt className="text-gray-600">AD&amp;D Coverage</dt>
+                      <dd className="font-semibold text-gray-900">
+                        {adndAmount === 0 ? 'Not included' : formatLumpSum(adndAmount)}
+                      </dd>
+                    </div>
+                  </dl>
+                  <p className="text-xs text-gray-500 mt-4 pt-3 border-t border-gray-100">
+                    Review your assumptions above. Premium below is calculated from these selections.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-br from-orange-600 to-orange-800 text-white p-6 rounded-xl card-3d-super">
                   <h3 className="text-2xl font-bold mb-6">Your Estimate</h3>
 
                   <div className="space-y-4 mb-6">
