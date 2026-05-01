@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { GraduationCap, Phone, ArrowLeft, CheckCircle, Gift, TrendingUp, Users, Mail, Globe } from 'lucide-react';
+import { GraduationCap, Phone, ArrowLeft, CheckCircle, Gift, TrendingUp, Users, Mail, Globe, Globe2, AlertTriangle, Shield, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg-resp.jpg';
 
@@ -230,6 +230,92 @@ const RESPDetails = () => {
                         <span className="text-gray-600"><strong>Transfer growth to RRSP:</strong> Up to $50,000 of growth can be transferred to your RRSP (if you have room)</span>
                       </li>
                     </ul>
+                  </div>
+                </div>
+
+                <div className="mb-12">
+                  <div className="flex items-center mb-6">
+                    <Globe2 className="w-8 h-8 text-indigo-600 mr-3" />
+                    <h3 className="text-2xl font-bold text-gray-900">RESP & Studying Abroad — Don't Lose Free Money! 💰</h3>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl card-3d border-l-4 border-red-500 mb-6">
+                    <p className="text-lg text-gray-800 mb-2">
+                      <strong>❌ Myth:</strong> "Studying in India means losing my RESP grant."
+                    </p>
+                    <p className="text-lg text-gray-800">
+                      <strong className="text-green-700">✅ Truth:</strong> You CAN use your RESP abroad — India 🇮🇳, UK 🇬🇧, Australia 🇦🇺, almost anywhere — as long as the school is a designated educational institution.
+                    </p>
+                  </div>
+
+                  <div className="bg-yellow-50 p-6 rounded-xl card-3d border-l-4 border-yellow-500 mb-6">
+                    <div className="flex items-start">
+                      <AlertTriangle className="w-6 h-6 text-yellow-600 mr-3 mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="text-lg font-semibold text-gray-900 mb-2">The One Rule Most People Miss</h4>
+                        <p className="text-gray-700">
+                          It's <strong>NOT about where you study</strong> — it's about your <strong>residency status</strong> for tax purposes.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <div className="bg-green-50 p-6 rounded-xl card-3d border-t-4 border-green-600">
+                      <div className="flex items-center mb-3">
+                        <CheckCircle className="w-7 h-7 text-green-600 mr-2" />
+                        <h4 className="text-xl font-semibold text-gray-900">Stay a Canadian Resident</h4>
+                      </div>
+                      <ul className="space-y-2 text-gray-700">
+                        <li className="flex items-start"><span className="text-green-600 mr-2">✔</span> Keep your CESG grant</li>
+                        <li className="flex items-start"><span className="text-green-600 mr-2">✔</span> Keep all investment growth</li>
+                        <li className="flex items-start"><span className="text-green-600 mr-2">✔</span> Full RESP benefits intact</li>
+                      </ul>
+                    </div>
+                    <div className="bg-red-50 p-6 rounded-xl card-3d border-t-4 border-red-600">
+                      <div className="flex items-center mb-3">
+                        <AlertTriangle className="w-7 h-7 text-red-600 mr-2" />
+                        <h4 className="text-xl font-semibold text-gray-900">Become a Non-Resident</h4>
+                      </div>
+                      <ul className="space-y-2 text-gray-700">
+                        <li className="flex items-start"><span className="text-red-600 mr-2">✗</span> You LOSE the grant portion</li>
+                        <li className="flex items-start"><span className="text-red-600 mr-2">✗</span> Government takes the CESG back</li>
+                        <li className="flex items-start"><span className="text-red-600 mr-2">✗</span> Reduced RESP value</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-xl card-3d mb-6">
+                    <div className="flex items-center mb-4">
+                      <Shield className="w-7 h-7 text-indigo-600 mr-2" />
+                      <h4 className="text-xl font-semibold text-gray-900">How to Protect Your RESP Money</h4>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      <div className="flex items-start bg-white p-3 rounded-lg">
+                        <MapPin className="w-5 h-5 text-indigo-600 mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">Keep a Canadian address (e.g. parents' home)</span>
+                      </div>
+                      <div className="flex items-start bg-white p-3 rounded-lg">
+                        <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">File your taxes in Canada 🧾</span>
+                      </div>
+                      <div className="flex items-start bg-white p-3 rounded-lg">
+                        <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">Keep your Canadian bank account active</span>
+                      </div>
+                      <div className="flex items-start bg-white p-3 rounded-lg">
+                        <AlertTriangle className="w-5 h-5 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">Don't declare yourself a non-resident</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl card-3d text-white text-center">
+                    <p className="text-2xl font-bold mb-2">🔥 Simple Rule</p>
+                    <p className="text-xl italic">"Location doesn't matter. Tax residency does."</p>
+                    <p className="mt-4 text-orange-100">
+                      Planning your child's future abroad? Let's do it the RIGHT way.
+                    </p>
                   </div>
                 </div>
               </div>
