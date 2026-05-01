@@ -149,10 +149,16 @@ const RESPDetails = () => {
                 </div>
 
                 <div className="mb-12">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Qualifying Education Programs</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Qualifying Education Programs (CRA Rules)</h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-gray-50 p-6 rounded-xl">
-                      <h4 className="text-lg font-semibold text-gray-900 mb-4">Full-Time Programs (3+ weeks)</h4>
+                      <h4 className="text-lg font-semibold text-gray-900 mb-2">Full-Time — Qualifying Educational Program</h4>
+                      <p className="text-sm text-gray-700 mb-4">
+                        At least <strong>10 hours of instruction or work per week</strong>, with a minimum duration of:
+                        <br />• <strong>3 consecutive weeks</strong> at a Canadian post-secondary institution
+                        <br />• <strong>3 consecutive weeks</strong> at a university outside Canada
+                        <br />• <strong>13 consecutive weeks</strong> at any other post-secondary institution outside Canada
+                      </p>
                       <ul className="space-y-2">
                         {[
                           "Universities and colleges",
@@ -168,7 +174,12 @@ const RESPDetails = () => {
                       </ul>
                     </div>
                     <div className="bg-gray-50 p-6 rounded-xl">
-                      <h4 className="text-lg font-semibold text-gray-900 mb-4">Part-Time Programs (3+ weeks)</h4>
+                      <h4 className="text-lg font-semibold text-gray-900 mb-2">Part-Time — Specified Educational Program</h4>
+                      <p className="text-sm text-gray-700 mb-4">
+                        Beneficiary must be <strong>at least 16 years old</strong>, and the program must be:
+                        <br />• At least <strong>3 consecutive weeks</strong> long
+                        <br />• Require at least <strong>12 hours per month</strong> on courses
+                      </p>
                       <ul className="space-y-2">
                         {[
                           "University courses (part-time)",
@@ -184,6 +195,9 @@ const RESPDetails = () => {
                       </ul>
                     </div>
                   </div>
+                  <p className="text-xs text-gray-500 mt-3">
+                    Source: CRA / ESDC RESP Provider User Guide, Chapter 10 — Qualifying & Specified Educational Programs.
+                  </p>
                 </div>
 
                 <div className="mb-12">
