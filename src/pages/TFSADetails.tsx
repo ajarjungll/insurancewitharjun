@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { TrendingUp, Phone, ArrowLeft, CheckCircle, DollarSign, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg-tfsa.jpg';
+import SIPCalculator from '@/components/SIPCalculator';
 
 const TFSADetails = () => {
   return (
@@ -58,7 +59,10 @@ const TFSADetails = () => {
               {/* Main Content */}
               <div className="lg:col-span-2">
                 <div className="mb-12">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">What is a TFSA?</h2>
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-4 md:mb-6">
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900">What is a TFSA?</h2>
+                    <SIPCalculator accentColor="purple" buttonLabel="SIP Calculator" />
+                  </div>
                   <p className="text-lg text-gray-600 mb-6">
                     The Tax-Free Savings Account (TFSA) is one of the most powerful savings tools available to Canadians. 
                     Despite its name, it's much more than a savings account - it's a flexible investment account where 
