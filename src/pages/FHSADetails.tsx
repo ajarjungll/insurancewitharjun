@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { Home, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg-fhsa.jpg';
+import SIPCalculator from '@/components/SIPCalculator';
 
 const FHSADetails = () => {
   return (
@@ -58,7 +59,10 @@ const FHSADetails = () => {
               {/* Main Content */}
               <div className="lg:col-span-2">
                 <div className="mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6">What is an FHSA?</h2>
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <h2 className="text-3xl font-bold text-gray-900">What is an FHSA?</h2>
+                    <SIPCalculator accentColor="green" buttonLabel="SIP Calculator" />
+                  </div>
                   <p className="text-lg text-gray-600 mb-6">
                     The First Home Savings Account (FHSA) is Canada's newest registered account, launched in 2023. 
                     It combines the best features of both RRSPs and TFSAs, offering tax-deductible contributions 

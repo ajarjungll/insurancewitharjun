@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { PiggyBank, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg-rrsp.jpg';
+import SIPCalculator from '@/components/SIPCalculator';
 
 const RRSPDetails = () => {
   return (
@@ -58,7 +59,10 @@ const RRSPDetails = () => {
               {/* Main Content */}
               <div className="lg:col-span-2">
                 <div className="mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6">What is an RRSP?</h2>
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <h2 className="text-3xl font-bold text-gray-900">What is an RRSP?</h2>
+                    <SIPCalculator accentColor="blue" buttonLabel="SIP Calculator" />
+                  </div>
                   <p className="text-lg text-gray-600 mb-6">
                     A Registered Retirement Savings Plan (RRSP) is a retirement savings account registered with the Canadian government. 
                     It's designed to help Canadians save for retirement while providing immediate tax benefits. Contributions to your RRSP 
