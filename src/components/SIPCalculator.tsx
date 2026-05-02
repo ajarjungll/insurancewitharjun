@@ -132,23 +132,37 @@ const SIPCalculator: React.FC<SIPCalculatorProps> = ({ accentColor = 'blue', but
           </div>
 
           <div className={`mt-4 p-5 rounded-xl ${c.soft} border-2 ${c.border} card-3d`}>
-            <h4 className="font-bold text-gray-900 mb-3 text-lg">Results</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Total Contributions ({result.periods} payments):</span>
-                <span className="font-bold text-gray-900">{fmt(result.invested)}</span>
+            <h4 className="font-bold text-gray-900 mb-4 text-lg">Your SIP Summary</h4>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="bg-white rounded-xl p-4 border-2 border-gray-200 shadow-sm text-center">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Total Invested</p>
+                <p className="text-xl font-extrabold text-gray-900 mt-1">{fmt(result.invested)}</p>
+                <p className="text-[11px] text-gray-500 mt-1">{result.periods} {frequency === 'monthly' ? 'monthly' : frequency === 'weekly' ? 'weekly' : 'bi-weekly'} payments</p>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Interest Earned:</span>
-                <span className={`font-bold ${c.text}`}>{fmt(result.interest)}</span>
+
+              <div className="bg-white rounded-xl p-4 border-2 border-gray-200 shadow-sm text-center">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Interest Earned</p>
+                <p className={`text-xl font-extrabold mt-1 ${c.text}`}>{fmt(result.interest)}</p>
+                <p className="text-[11px] text-gray-500 mt-1">Total growth over period</p>
               </div>
-              <div className="flex justify-between pt-2 border-t border-gray-300">
-                <span className="text-gray-900 font-semibold">Future Value:</span>
-                <span className={`font-bold text-xl ${c.text}`}>{fmt(result.future)}</span>
+
+              <div className={`${c.bg} rounded-xl p-4 shadow-md text-center text-white`}>
+                <p className="text-xs uppercase tracking-wide font-semibold opacity-90">Maturity Value</p>
+                <p className="text-2xl font-extrabold mt-1">{fmt(result.future)}</p>
+                <p className="text-[11px] mt-1 opacity-90">What you'll receive</p>
               </div>
             </div>
+
+            <div className="mt-4 p-3 bg-white/70 rounded-lg border border-gray-200 text-sm text-gray-700">
+              After <span className="font-bold">{years} year{years !== 1 ? 's' : ''}{months > 0 ? ` ${months} month${months !== 1 ? 's' : ''}` : ''}</span>, your investment of{' '}
+              <span className="font-bold">{fmt(result.invested)}</span> grows to{' '}
+              <span className={`font-bold ${c.text}`}>{fmt(result.future)}</span>, earning{' '}
+              <span className={`font-bold ${c.text}`}>{fmt(result.interest)}</span> in interest.
+            </div>
+
             <p className="text-xs text-gray-500 mt-3">
-              * Estimates assume contributions at the start of each period and constant rate. Actual returns may vary.
+              * Estimates assume contributions at the start of each period and a constant rate of return. Actual returns may vary.
             </p>
           </div>
         </div>
