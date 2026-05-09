@@ -2,11 +2,12 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Heart, Phone, Shield, CheckCircle, AlertCircle, Users, FileText, Repeat, Baby, Activity } from 'lucide-react';
+import { Heart, Phone, Shield, CheckCircle, AlertCircle, Users, FileText, Repeat, Baby, Activity, DollarSign, Home, Car, GraduationCap, Stethoscope } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import heroBg from '@/assets/hero-bg-critical.jpg';
 
 const CriticalIllnessDetails = () => {
+  const card3D = "shadow-[0_20px_40px_-12px_rgba(0,0,0,0.25)] hover:shadow-[0_30px_60px_-15px_rgba(30,64,175,0.4)] hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 transform-gpu";
   return (
     <div className="min-h-screen relative">
       {/* Background */}
@@ -71,7 +72,7 @@ const CriticalIllnessDetails = () => {
                     When the insured is diagnosed with a covered critical illness and survives a minimum waiting period of 30 days, a tax-free lump sum benefit is paid out. The insured can use the benefit however they see fit — there are no restrictions.
                   </p>
                 </div>
-                <div className="bg-blue-50 p-8 rounded-xl">
+                <div className={`bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl ${card3D}`}>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">How the benefit can be used</h3>
                   <ul className="space-y-3">
                     {[
@@ -111,7 +112,7 @@ const CriticalIllnessDetails = () => {
                   { stat: "1 in 165", text: "children in Canada is diagnosed with autism" },
                   { stat: "1 in 3,600", text: "Canadian children is born with cystic fibrosis" },
                 ].map((s, i) => (
-                  <div key={i} className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl border border-blue-100 shadow-md">
+                  <div key={i} className={`bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl border border-blue-100 ${card3D}`}>
                     <div className="text-3xl font-bold text-blue-700 mb-2">{s.stat}</div>
                     <p className="text-gray-700">{s.text}</p>
                   </div>
@@ -135,7 +136,7 @@ const CriticalIllnessDetails = () => {
                   { title: "Enhanced Protection", count: "25", desc: "Comprehensive coverage for 25 critical illnesses, ideal for adults wanting full protection." },
                   { title: "Child Protection", count: "29", desc: "29 covered illnesses, including conditions specific to children such as autism and cystic fibrosis." },
                 ].map((t, i) => (
-                  <div key={i} className="bg-white p-8 rounded-xl shadow-lg text-center border-t-4 border-blue-600">
+                  <div key={i} className={`bg-white p-8 rounded-2xl text-center border-t-4 border-blue-600 ${card3D}`}>
                     <Shield className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                     <div className="text-5xl font-bold text-blue-700 mb-2">{t.count}</div>
                     <h3 className="text-xl font-bold text-gray-900 mb-3">{t.title}</h3>
@@ -153,7 +154,7 @@ const CriticalIllnessDetails = () => {
             <div className="max-w-6xl mx-auto">
               <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">Available Plans</h2>
               <p className="text-lg text-gray-600 text-center mb-10">Choose between term and permanent options to fit your needs and budget.</p>
-              <div className="overflow-x-auto rounded-xl shadow-lg">
+              <div className={`overflow-x-auto rounded-2xl ${card3D}`}>
                 <table className="min-w-full bg-white">
                   <thead className="bg-blue-700 text-white">
                     <tr>
@@ -209,7 +210,7 @@ const CriticalIllnessDetails = () => {
                   { title: "Aortic Surgery", description: "Surgical replacement of the thoracic or abdominal aorta" },
                   { title: "Children's Conditions", description: "Autism, cystic fibrosis, muscular dystrophy, congenital heart disease and more" },
                 ].map((condition, index) => (
-                  <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                  <div key={index} className={`bg-white p-6 rounded-2xl ${card3D}`}>
                     <h3 className="text-xl font-bold text-gray-900 mb-3">{condition.title}</h3>
                     <p className="text-gray-600">{condition.description}</p>
                   </div>
@@ -236,7 +237,7 @@ const CriticalIllnessDetails = () => {
                   { icon: FileText, title: "Return of Premiums at Expiry", desc: "Premiums are refunded if no claim has been made by the time the policy reaches its expiry date." },
                   { icon: CheckCircle, title: "Return of Premiums on Cancellation", desc: "Available after 15 or 20 years — recover premiums if you cancel the policy and have not received a benefit." },
                 ].map((b, i) => (
-                  <div key={i} className="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                  <div key={i} className={`bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-100 ${card3D}`}>
                     <b.icon className="w-10 h-10 text-blue-700 mb-3" />
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{b.title}</h3>
                     <p className="text-gray-700">{b.desc}</p>
@@ -247,17 +248,17 @@ const CriticalIllnessDetails = () => {
               <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">Additional Benefits</h2>
               <p className="text-lg text-gray-600 text-center mb-10 max-w-3xl mx-auto">Strengthen your policy with optional add-ons to cover the whole family.</p>
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-orange-500">
+                <div className={`bg-white p-6 rounded-2xl border-t-4 border-orange-500 ${card3D}`}>
                   <Baby className="w-10 h-10 text-orange-500 mb-3" />
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Children's Critical Illness Rider</h3>
                   <p className="text-gray-600">Add coverage for your children (30 days to 17 years old) on the policyowner's policy.</p>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+                <div className={`bg-white p-6 rounded-2xl border-t-4 border-blue-600 ${card3D}`}>
                   <Shield className="w-10 h-10 text-blue-600 mb-3" />
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Waiver of Premium</h3>
                   <p className="text-gray-600">Premiums are waived if the policyowner becomes totally disabled. Available up to the policy anniversary nearest to age 60.</p>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-600">
+                <div className={`bg-white p-6 rounded-2xl border-t-4 border-green-600 ${card3D}`}>
                   <Activity className="w-10 h-10 text-green-600 mb-3" />
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Benefit in Case of Fracture</h3>
                   <p className="text-gray-600">Pays a benefit in the event of an accidental fracture or severance, in addition to the main critical illness coverage.</p>
@@ -267,12 +268,99 @@ const CriticalIllnessDetails = () => {
           </div>
         </section>
 
+        {/* Real-Life Example */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">A Real-Life Example</h2>
+              <p className="text-lg text-gray-600 text-center mb-10 max-w-3xl mx-auto">
+                Meet Sarah — a 41-year-old clinical nurse and single mother of two young daughters, earning $120,000 a year. After a colleague was diagnosed with cancer, Sarah started wondering: <em>"What if it happened to me? How would my family manage?"</em>
+              </p>
+
+              {/* Expense breakdown */}
+              <div className={`bg-white rounded-2xl overflow-hidden mb-12 ${card3D}`}>
+                <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-6">
+                  <h3 className="text-2xl font-bold mb-1">Estimated costs over 9 months of recovery</h3>
+                  <p className="text-blue-100">If Sarah is diagnosed with a critical illness, here's what she could expect:</p>
+                </div>
+                <div className="divide-y divide-gray-200">
+                  {[
+                    { icon: DollarSign, label: "Loss of income", detail: "9 months off work — losing 20% of her net income", cost: "$16,000" },
+                    { icon: Stethoscope, label: "Medical & related expenses", detail: "Travel to hospital, meals, parking, uncovered medical costs", cost: "$10,400" },
+                    { icon: Home, label: "Help with home maintenance", detail: "Housekeeping, meal prep, lawn mowing, snow removal", cost: "$7,500" },
+                    { icon: Baby, label: "Child care", detail: "Babysitting at home or in a school setting", cost: "$9,400" },
+                    { icon: GraduationCap, label: "Tutoring & children's activities", detail: "Homework help, leisure activities, speech therapy", cost: "$6,700" },
+                  ].map((row, i) => (
+                    <div key={i} className="flex items-center p-5 hover:bg-blue-50 transition-colors">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mr-4 shadow-md">
+                        <row.icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-bold text-gray-900">{row.label}</div>
+                        <div className="text-sm text-gray-600">{row.detail}</div>
+                      </div>
+                      <div className="text-xl font-bold text-blue-700">{row.cost}</div>
+                    </div>
+                  ))}
+                  <div className="flex items-center p-6 bg-gradient-to-r from-blue-700 to-blue-900 text-white">
+                    <div className="flex-1 text-xl font-bold">Total estimated cost</div>
+                    <div className="text-3xl font-bold text-orange-300">$50,000</div>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 px-6 py-3 bg-gray-50">Estimated costs include inflation. For illustrative purposes only.</p>
+              </div>
+
+              {/* Coverage scenarios */}
+              <h3 className="text-3xl font-bold text-gray-900 mb-3 text-center">Coverage scenarios for $50,000</h3>
+              <p className="text-gray-600 text-center mb-10">All scenarios include access to a Return of Premiums (ROP) option.</p>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { plan: "T20 — 3 illnesses", price: "$31", withRop: "$32", desc: "Most affordable plan. Premiums increase every 20 years.", highlight: "Most Affordable", color: "from-green-500 to-emerald-600" },
+                  { plan: "T20 — 25 illnesses", price: "$38", withRop: "$40", desc: "More comprehensive coverage with 25 illnesses. Premiums increase every 20 years.", color: "from-blue-500 to-blue-700" },
+                  { plan: "T75 — 3 illnesses", price: "$46", withRop: "$82", desc: "Fixed premium up to age 75 for the 3 most common illnesses.", color: "from-purple-500 to-purple-700" },
+                  { plan: "T75 — 25 illnesses", price: "$57", withRop: "$103", desc: "Comprehensive 25-illness coverage with a fixed premium until age 75.", highlight: "Best Value", color: "from-orange-500 to-orange-600" },
+                ].map((s, i) => (
+                  <div key={i} className={`bg-white rounded-2xl overflow-hidden border border-gray-200 flex flex-col ${card3D}`}>
+                    <div className={`bg-gradient-to-r ${s.color} text-white p-5 relative`}>
+                      {s.highlight && (
+                        <span className="absolute top-3 right-3 bg-white/95 text-gray-900 text-xs font-bold px-2 py-1 rounded-full shadow-md">
+                          {s.highlight}
+                        </span>
+                      )}
+                      <h4 className="text-lg font-bold">{s.plan}</h4>
+                    </div>
+                    <div className="p-5 flex-1 flex flex-col">
+                      <div className="mb-3">
+                        <div className="text-3xl font-bold text-gray-900">{s.price}<span className="text-base font-normal text-gray-500">/month</span></div>
+                        <div className="text-sm text-gray-500">Base premium</div>
+                      </div>
+                      <div className="mb-4 pb-4 border-b border-gray-100">
+                        <div className="text-xl font-bold text-blue-700">{s.withRop}<span className="text-base font-normal text-gray-500">/month</span></div>
+                        <div className="text-sm text-gray-500">With ROP option</div>
+                      </div>
+                      <p className="text-sm text-gray-600">{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className={`mt-10 p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-orange-50 border border-blue-100 ${card3D}`}>
+                <p className="text-gray-700">
+                  <strong className="text-blue-700">With the ROP20 option,</strong> Sarah can receive a full refund of her premiums after 20 years if no covered critical illness has been diagnosed. <strong className="text-orange-600">With ROP on death,</strong> if she passes away before any diagnosis, her beneficiaries receive 100% of the premiums paid.
+                </p>
+              </div>
+              <p className="text-xs text-gray-500 text-center mt-6">
+                Sample illustration only. Actual premiums depend on age, gender, smoking status, health and policy options. Definitions of covered illnesses and limitations are outlined in the policy contract.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* How a Claim Works */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">How the Benefit Is Paid</h2>
-              <div className="bg-white p-8 rounded-xl shadow-lg">
+              <div className={`bg-white p-8 rounded-2xl ${card3D}`}>
                 <ol className="space-y-6">
                   {[
                     { step: "1", title: "Diagnosis", text: "The insured is diagnosed with a critical illness covered under the policy." },
@@ -307,7 +395,7 @@ const CriticalIllnessDetails = () => {
                 This product is tailored to a wide client base — families, children, young couples, business owners and self-employed workers.
               </p>
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-blue-50 p-8 rounded-xl">
+                <div className={`bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl ${card3D}`}>
                   <AlertCircle className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">You Should Consider It If:</h3>
                   <ul className="text-left space-y-2">
@@ -329,7 +417,7 @@ const CriticalIllnessDetails = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="bg-green-50 p-8 rounded-xl">
+                <div className={`bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl ${card3D}`}>
                   <Users className="w-12 h-12 text-green-600 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Peace of Mind For:</h3>
                   <ul className="text-left space-y-2">
