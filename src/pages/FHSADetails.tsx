@@ -243,8 +243,8 @@ const FHSADetails = () => {
                       "Individual Stocks",
                       "Bonds and Fixed Income"
                     ].map((option, index) => (
-                      <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                        <CheckCircle size={16} className="text-green-500 mr-3" />
+                      <div key={index} className="flex items-center p-3 bg-gradient-to-br from-white to-gray-50 rounded-lg card-3d border border-gray-200">
+                        <CheckCircle size={16} className="text-green-500 mr-3 flex-shrink-0" />
                         <span className="text-gray-700">{option}</span>
                       </div>
                     ))}
