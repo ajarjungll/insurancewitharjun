@@ -11,7 +11,7 @@ const TFSADetails = () => {
   return (
     <div className="min-h-screen relative">
       <div 
-        className="fixed inset-0 z-0 opacity-5"
+        className="fixed inset-0 z-0 opacity-10"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")',
           backgroundSize: 'cover',

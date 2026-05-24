@@ -281,7 +281,7 @@ const TaxCalculator = () => {
   return (
     <div className="min-h-screen relative">
       <div 
-        className="fixed inset-0 z-0 opacity-5"
+        className="fixed inset-0 z-0 opacity-10"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")',
           backgroundSize: 'cover',
