@@ -313,7 +313,7 @@ const TaxCalculator = () => {
         </section>
 
         {/* Year & Province Selection */}
-        <section className="py-8 bg-gray-100">
+        <section className="py-8 bg-gray-100/80">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-center items-center gap-6">
               {/* Year Tabs */}
@@ -359,7 +359,7 @@ const TaxCalculator = () => {
         </section>
 
         {/* Tax Brackets Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white/85">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{selectedYear} Tax Brackets — {provName}</h2>
             
