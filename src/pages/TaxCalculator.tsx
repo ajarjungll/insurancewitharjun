@@ -373,11 +373,11 @@ const TaxCalculator = () => {
             <div className="flex flex-col md:flex-row justify-center items-center gap-6">
               {/* Year Tabs */}
               <div className="flex gap-4">
-                {([2025, 2026] as TaxYear[]).map((year) => (
+                {([2020, 2025, 2026] as TaxYear[]).map((year) => (
                   <Button
                     key={year}
                     onClick={() => setSelectedYear(year)}
-                    className={`px-6 md:px-8 py-4 text-lg font-bold transition-all ${
+                    className={`px-4 md:px-6 py-4 text-base md:text-lg font-bold transition-all ${
                       selectedYear === year
                         ? 'bg-gradient-to-b from-emerald-500 to-emerald-600 text-white shadow-[0_4px_0_0_#065f46,0_6px_10px_rgba(6,95,70,0.3)] hover:shadow-[0_2px_0_0_#065f46,0_4px_6px_rgba(6,95,70,0.3)] hover:translate-y-[2px]'
                         : 'bg-gradient-to-b from-gray-200 to-gray-300 text-gray-700 shadow-[0_4px_0_0_#6b7280,0_6px_10px_rgba(107,114,128,0.25)] hover:shadow-[0_2px_0_0_#6b7280,0_4px_6px_rgba(107,114,128,0.25)] hover:translate-y-[2px] hover:from-gray-300 hover:to-gray-400'
