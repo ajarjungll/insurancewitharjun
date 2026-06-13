@@ -294,8 +294,18 @@ const TaxCalculator = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-emerald-900 to-teal-700 text-white py-20">
-          <div className="container mx-auto px-4">
+        <section className="bg-gradient-to-r from-emerald-900 to-teal-700 text-white py-20 relative overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-30 pointer-events-none"
+            style={{
+              backgroundImage: 'url("https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/55 to-teal-700/40 pointer-events-none" aria-hidden="true" />
+          <div className="relative container mx-auto px-4">
             <div className="flex items-center mb-6">
               <div className="card-3d p-4 rounded-xl bg-emerald-50 mr-6">
                 <Calculator className="w-16 h-16 text-emerald-600" />
