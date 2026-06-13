@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 
 type Province = 'manitoba' | 'alberta' | 'ontario';
-type TaxYear = 2025 | 2026;
+type TaxYear = 2020 | 2025 | 2026;
 
 const provinceNames: Record<Province, string> = {
   manitoba: 'Manitoba',
@@ -24,6 +24,51 @@ const provinceColors: Record<Province, { bg: string; text: string; border: strin
 };
 
 const taxData = {
+  2020: {
+    federalBrackets: [
+      { min: 0, max: 48535, rate: 0.15 },
+      { min: 48535, max: 97069, rate: 0.205 },
+      { min: 97069, max: 150473, rate: 0.26 },
+      { min: 150473, max: 214368, rate: 0.29 },
+      { min: 214368, max: Infinity, rate: 0.33 },
+    ],
+    provincialBrackets: {
+      manitoba: [
+        { min: 0, max: 33389, rate: 0.108 },
+        { min: 33389, max: 72164, rate: 0.1275 },
+        { min: 72164, max: Infinity, rate: 0.174 },
+      ],
+      alberta: [
+        { min: 0, max: 131220, rate: 0.10 },
+        { min: 131220, max: 157464, rate: 0.12 },
+        { min: 157464, max: 209952, rate: 0.13 },
+        { min: 209952, max: 314928, rate: 0.14 },
+        { min: 314928, max: Infinity, rate: 0.15 },
+      ],
+      ontario: [
+        { min: 0, max: 44740, rate: 0.0505 },
+        { min: 44740, max: 89482, rate: 0.0915 },
+        { min: 89482, max: 150000, rate: 0.1116 },
+        { min: 150000, max: 220000, rate: 0.1216 },
+        { min: 220000, max: Infinity, rate: 0.1316 },
+      ],
+    },
+    federalBPA: 13229,
+    provincialBPA: { manitoba: 9838, alberta: 19369, ontario: 10783 },
+    federalSpouseAmount: 13229,
+    provincialSpouseAmount: { manitoba: 9134, alberta: 19369, ontario: 9156 },
+    provincialLowestRate: { manitoba: 0.108, alberta: 0.10, ontario: 0.0505 },
+    cpp1MaxEarnings: 58700,
+    cpp2MaxEarnings: 58700,
+    cppExemption: 3500,
+    cpp1Rate: 0.0525,
+    cpp2Rate: 0,
+    eiMaxInsurableEarnings: 54200,
+    eiRate: 0.0158,
+    rrspLimit: 27230,
+    fhsaLimit: 0,
+    usdToCadRate: 1.34,
+  },
   2025: {
     federalBrackets: [
       { min: 0, max: 57375, rate: 0.15 },
