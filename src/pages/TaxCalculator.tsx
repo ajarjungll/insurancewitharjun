@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 
 type Province = 'manitoba' | 'alberta' | 'ontario';
-type TaxYear = 2025 | 2026;
+type TaxYear = 2020 | 2025 | 2026;
 
 const provinceNames: Record<Province, string> = {
   manitoba: 'Manitoba',
@@ -24,6 +24,51 @@ const provinceColors: Record<Province, { bg: string; text: string; border: strin
 };
 
 const taxData = {
+  2020: {
+    federalBrackets: [
+      { min: 0, max: 48535, rate: 0.15 },
+      { min: 48535, max: 97069, rate: 0.205 },
+      { min: 97069, max: 150473, rate: 0.26 },
+      { min: 150473, max: 214368, rate: 0.29 },
+      { min: 214368, max: Infinity, rate: 0.33 },
+    ],
+    provincialBrackets: {
+      manitoba: [
+        { min: 0, max: 33389, rate: 0.108 },
+        { min: 33389, max: 72164, rate: 0.1275 },
+        { min: 72164, max: Infinity, rate: 0.174 },
+      ],
+      alberta: [
+        { min: 0, max: 131220, rate: 0.10 },
+        { min: 131220, max: 157464, rate: 0.12 },
+        { min: 157464, max: 209952, rate: 0.13 },
+        { min: 209952, max: 314928, rate: 0.14 },
+        { min: 314928, max: Infinity, rate: 0.15 },
+      ],
+      ontario: [
+        { min: 0, max: 44740, rate: 0.0505 },
+        { min: 44740, max: 89482, rate: 0.0915 },
+        { min: 89482, max: 150000, rate: 0.1116 },
+        { min: 150000, max: 220000, rate: 0.1216 },
+        { min: 220000, max: Infinity, rate: 0.1316 },
+      ],
+    },
+    federalBPA: 13229,
+    provincialBPA: { manitoba: 9838, alberta: 19369, ontario: 10783 },
+    federalSpouseAmount: 13229,
+    provincialSpouseAmount: { manitoba: 9134, alberta: 19369, ontario: 9156 },
+    provincialLowestRate: { manitoba: 0.108, alberta: 0.10, ontario: 0.0505 },
+    cpp1MaxEarnings: 58700,
+    cpp2MaxEarnings: 58700,
+    cppExemption: 3500,
+    cpp1Rate: 0.0525,
+    cpp2Rate: 0,
+    eiMaxInsurableEarnings: 54200,
+    eiRate: 0.0158,
+    rrspLimit: 27230,
+    fhsaLimit: 0,
+    usdToCadRate: 1.34,
+  },
   2025: {
     federalBrackets: [
       { min: 0, max: 57375, rate: 0.15 },
@@ -328,11 +373,11 @@ const TaxCalculator = () => {
             <div className="flex flex-col md:flex-row justify-center items-center gap-6">
               {/* Year Tabs */}
               <div className="flex gap-4">
-                {([2025, 2026] as TaxYear[]).map((year) => (
+                {([2020, 2025, 2026] as TaxYear[]).map((year) => (
                   <Button
                     key={year}
                     onClick={() => setSelectedYear(year)}
-                    className={`px-6 md:px-8 py-4 text-lg font-bold transition-all ${
+                    className={`px-4 md:px-6 py-4 text-base md:text-lg font-bold transition-all ${
                       selectedYear === year
                         ? 'bg-gradient-to-b from-emerald-500 to-emerald-600 text-white shadow-[0_4px_0_0_#065f46,0_6px_10px_rgba(6,95,70,0.3)] hover:shadow-[0_2px_0_0_#065f46,0_4px_6px_rgba(6,95,70,0.3)] hover:translate-y-[2px]'
                         : 'bg-gradient-to-b from-gray-200 to-gray-300 text-gray-700 shadow-[0_4px_0_0_#6b7280,0_6px_10px_rgba(107,114,128,0.25)] hover:shadow-[0_2px_0_0_#6b7280,0_4px_6px_rgba(107,114,128,0.25)] hover:translate-y-[2px] hover:from-gray-300 hover:to-gray-400'
@@ -460,26 +505,38 @@ const TaxCalculator = () => {
                 </div>
               </div>
 
-              <div className="bg-indigo-50 p-6 rounded-xl card-3d">
-                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                  <User className="w-6 h-6 text-indigo-600 mr-2" />
-                  CPP2 (Enhanced) {selectedYear}
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Max Earnings (YAMPE):</span>
-                    <span className="font-semibold">${yearData.cpp2MaxEarnings.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Range:</span>
-                    <span className="font-semibold">${yearData.cpp1MaxEarnings.toLocaleString()} - ${yearData.cpp2MaxEarnings.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Rate:</span>
-                    <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
+              {yearData.cpp2Rate > 0 ? (
+                <div className="bg-indigo-50 p-6 rounded-xl card-3d">
+                  <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <User className="w-6 h-6 text-indigo-600 mr-2" />
+                    CPP2 (Enhanced) {selectedYear}
+                  </h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Max Earnings (YAMPE):</span>
+                      <span className="font-semibold">${yearData.cpp2MaxEarnings.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Range:</span>
+                      <span className="font-semibold">${yearData.cpp1MaxEarnings.toLocaleString()} - ${yearData.cpp2MaxEarnings.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Rate:</span>
+                      <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="bg-gray-50 p-6 rounded-xl card-3d">
+                  <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <User className="w-6 h-6 text-gray-500 mr-2" />
+                    CPP2 (Enhanced) {selectedYear}
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    CPP2 (second additional contribution) did not exist in {selectedYear}. It was introduced in 2024.
+                  </p>
+                </div>
+              )}
 
               <div className="bg-orange-50 p-6 rounded-xl card-3d">
                 <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
@@ -623,23 +680,31 @@ const TaxCalculator = () => {
                       <p className="text-sm text-gray-500 mt-1">{selectedYear} Limit: ${yearData.rrspLimit.toLocaleString()} or 18% of income</p>
                     </div>
 
-                    <div>
-                      <Label htmlFor="fhsaContribution" className="text-gray-700 font-medium flex items-center mb-2">
-                        <Home className="w-5 h-5 text-green-500 mr-2" />
-                        FHSA Contribution
-                      </Label>
-                      <Input
-                        id="fhsaContribution"
-                        type="number"
-                        placeholder="e.g., 8000"
-                        value={fhsaContribution}
-                        onChange={(e) => setFhsaContribution(e.target.value)}
-                        className="text-lg"
-                      />
-                      <p className="text-sm text-gray-500 mt-1">
-                        Annual Limit: ${yearData.fhsaLimit.toLocaleString()} • Max ${(yearData.fhsaLimit * 2).toLocaleString()} if you didn't contribute last year (carry-forward)
-                      </p>
-                    </div>
+                    {yearData.fhsaLimit > 0 ? (
+                      <div>
+                        <Label htmlFor="fhsaContribution" className="text-gray-700 font-medium flex items-center mb-2">
+                          <Home className="w-5 h-5 text-green-500 mr-2" />
+                          FHSA Contribution
+                        </Label>
+                        <Input
+                          id="fhsaContribution"
+                          type="number"
+                          placeholder="e.g., 8000"
+                          value={fhsaContribution}
+                          onChange={(e) => setFhsaContribution(e.target.value)}
+                          className="text-lg"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Annual Limit: ${yearData.fhsaLimit.toLocaleString()} • Max ${(yearData.fhsaLimit * 2).toLocaleString()} if you didn't contribute last year (carry-forward)
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <p className="text-sm text-amber-800">
+                          <strong>FHSA not available in {selectedYear}.</strong> The First Home Savings Account launched on April 1, 2023.
+                        </p>
+                      </div>
+                    )}
 
                     {/* Trucker-specific fields */}
                     {(profession === 'long-haul-trucker' || profession === 'transport-employee') && (
