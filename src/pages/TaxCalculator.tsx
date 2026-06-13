@@ -505,26 +505,38 @@ const TaxCalculator = () => {
                 </div>
               </div>
 
-              <div className="bg-indigo-50 p-6 rounded-xl card-3d">
-                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                  <User className="w-6 h-6 text-indigo-600 mr-2" />
-                  CPP2 (Enhanced) {selectedYear}
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Max Earnings (YAMPE):</span>
-                    <span className="font-semibold">${yearData.cpp2MaxEarnings.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Range:</span>
-                    <span className="font-semibold">${yearData.cpp1MaxEarnings.toLocaleString()} - ${yearData.cpp2MaxEarnings.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Rate:</span>
-                    <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
+              {yearData.cpp2Rate > 0 ? (
+                <div className="bg-indigo-50 p-6 rounded-xl card-3d">
+                  <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <User className="w-6 h-6 text-indigo-600 mr-2" />
+                    CPP2 (Enhanced) {selectedYear}
+                  </h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Max Earnings (YAMPE):</span>
+                      <span className="font-semibold">${yearData.cpp2MaxEarnings.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Range:</span>
+                      <span className="font-semibold">${yearData.cpp1MaxEarnings.toLocaleString()} - ${yearData.cpp2MaxEarnings.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Rate:</span>
+                      <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="bg-gray-50 p-6 rounded-xl card-3d">
+                  <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <User className="w-6 h-6 text-gray-500 mr-2" />
+                    CPP2 (Enhanced) {selectedYear}
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    CPP2 (second additional contribution) did not exist in {selectedYear}. It was introduced in 2024.
+                  </p>
+                </div>
+              )}
 
               <div className="bg-orange-50 p-6 rounded-xl card-3d">
                 <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
