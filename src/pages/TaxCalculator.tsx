@@ -668,23 +668,31 @@ const TaxCalculator = () => {
                       <p className="text-sm text-gray-500 mt-1">{selectedYear} Limit: ${yearData.rrspLimit.toLocaleString()} or 18% of income</p>
                     </div>
 
-                    <div>
-                      <Label htmlFor="fhsaContribution" className="text-gray-700 font-medium flex items-center mb-2">
-                        <Home className="w-5 h-5 text-green-500 mr-2" />
-                        FHSA Contribution
-                      </Label>
-                      <Input
-                        id="fhsaContribution"
-                        type="number"
-                        placeholder="e.g., 8000"
-                        value={fhsaContribution}
-                        onChange={(e) => setFhsaContribution(e.target.value)}
-                        className="text-lg"
-                      />
-                      <p className="text-sm text-gray-500 mt-1">
-                        Annual Limit: ${yearData.fhsaLimit.toLocaleString()} • Max ${(yearData.fhsaLimit * 2).toLocaleString()} if you didn't contribute last year (carry-forward)
-                      </p>
-                    </div>
+                    {yearData.fhsaLimit > 0 ? (
+                      <div>
+                        <Label htmlFor="fhsaContribution" className="text-gray-700 font-medium flex items-center mb-2">
+                          <Home className="w-5 h-5 text-green-500 mr-2" />
+                          FHSA Contribution
+                        </Label>
+                        <Input
+                          id="fhsaContribution"
+                          type="number"
+                          placeholder="e.g., 8000"
+                          value={fhsaContribution}
+                          onChange={(e) => setFhsaContribution(e.target.value)}
+                          className="text-lg"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Annual Limit: ${yearData.fhsaLimit.toLocaleString()} • Max ${(yearData.fhsaLimit * 2).toLocaleString()} if you didn't contribute last year (carry-forward)
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <p className="text-sm text-amber-800">
+                          <strong>FHSA not available in {selectedYear}.</strong> The First Home Savings Account launched on April 1, 2023.
+                        </p>
+                      </div>
+                    )}
 
                     {/* Trucker-specific fields */}
                     {(profession === 'long-haul-trucker' || profession === 'transport-employee') && (
