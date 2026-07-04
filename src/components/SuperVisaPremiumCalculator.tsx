@@ -97,6 +97,12 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                 className="h-10 w-auto object-contain"
               />
             </div>
+            {band && (
+              <div className="mt-6 inline-flex items-center gap-3 bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg">
+                <span className="text-sm uppercase tracking-wide text-blue-100">Age Group</span>
+                <span className="text-2xl font-extrabold">{band}</span>
+              </div>
+            )}
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -112,7 +118,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                   onChange={(e) => setAge(Number(e.target.value))}
                   className="w-full h-11 rounded-md border border-input px-3 text-base"
                 />
-                {band && <p className="text-xs text-gray-500 mt-1">Age band: {band}</p>}
+                {band && <p className="text-xs text-gray-500 mt-1">Falls in age group: <strong>{band}</strong></p>}
                 {!band && <p className="text-xs text-red-600 mt-1">Age must be between 0 and 84.</p>}
               </div>
 
@@ -210,24 +216,27 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                       <div className="text-2xl font-bold">{fmt(MONTHLY_FEE)}</div>
                     </div>
                   )}
-                  <div className="bg-white/20 rounded-xl p-4 border border-white/30">
-                    <div className="text-sm text-blue-100">Total Payable (12 months)</div>
-                    <div className="text-3xl font-bold">{fmt(totalPayable)}</div>
-                  </div>
                   {payMode === 'monthly' ? (
                     <>
                       <div className="bg-white/10 rounded-xl p-4">
                         <div className="text-sm text-blue-100">Monthly Instalment</div>
                         <div className="text-2xl font-bold">{fmt(monthly)} / month</div>
                       </div>
+                      <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+                        <div className="text-sm text-blue-100">Total Payable (Annual + $120 Fee)</div>
+                        <div className="text-3xl font-bold">{fmt(totalPayable)}</div>
+                      </div>
                       <div className="bg-orange-500/90 rounded-xl p-4">
-                        <div className="text-sm text-white/90">Charged Upfront (First 2 Months)</div>
+                        <div className="text-sm text-white/90">Charged Upfront (Last 2 Months + $120 Fee)</div>
                         <div className="text-2xl font-bold">{fmt(upfront)}</div>
+                        <div className="text-xs text-white/80 mt-1">
+                          {fmt(monthly)} × 2 + {fmt(MONTHLY_FEE)} policy fee
+                        </div>
                       </div>
                     </>
                   ) : (
                     <div className="bg-orange-500/90 rounded-xl p-4">
-                      <div className="text-sm text-white/90">Charged Upfront (Full Annual)</div>
+                      <div className="text-sm text-white/90">Charged Upfront (Full Annual — No Fee)</div>
                       <div className="text-2xl font-bold">{fmt(upfront)}</div>
                     </div>
                   )}
