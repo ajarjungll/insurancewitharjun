@@ -75,9 +75,10 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   }, [band, tier, plan, deductible]);
 
   const fee = payMode === 'monthly' ? MONTHLY_FEE : 0;
+  const monthly = annualPremium / 12;
   const totalPayable = annualPremium + fee;
-  const monthly = totalPayable / 12;
-  const upfront = payMode === 'monthly' ? monthly * 2 : totalPayable;
+  // Monthly: upfront = last 2 monthly instalments + $120 policy fee
+  const upfront = payMode === 'monthly' ? monthly * 2 + MONTHLY_FEE : annualPremium;
 
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50 to-white">
