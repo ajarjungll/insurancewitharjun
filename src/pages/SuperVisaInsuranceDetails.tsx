@@ -240,6 +240,8 @@ const SuperVisaInsuranceDetails = () => {
         </section>
 
         {/* Insurance Partners */}
+        <SuperVisaPremiumCalculator />
+
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto text-center">
