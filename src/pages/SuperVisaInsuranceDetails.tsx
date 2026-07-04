@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SuperVisaPremiumCalculator from '../components/SuperVisaPremiumCalculator';
 import { Plane, Phone, Shield, CheckCircle, Users, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import manulifeLogo from '@/assets/manulife-logo.png';
@@ -239,6 +240,8 @@ const SuperVisaInsuranceDetails = () => {
         </section>
 
         {/* Insurance Partners */}
+        <SuperVisaPremiumCalculator />
+
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto text-center">
