@@ -203,6 +203,8 @@ const TaxCalculator = () => {
   const [fhsaContribution, setFhsaContribution] = useState<string>('');
   const [daysAway, setDaysAway] = useState<string>('');
   const [lodgingExpenses, setLodgingExpenses] = useState<string>('');
+  const [hourlyWage, setHourlyWage] = useState<string>('');
+  const [hoursPerWeek, setHoursPerWeek] = useState<string>('40');
 
   const yearData = taxData[selectedYear];
   const provBrackets = yearData.provincialBrackets[selectedProvince];
@@ -570,6 +572,50 @@ const TaxCalculator = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-6">Enter Your Information</h3>
                   
                   <div className="space-y-6">
+                    {/* Hourly Wage Quick Fill */}
+                    <div className="p-4 bg-emerald-50 rounded-lg border-2 border-emerald-200">
+                      <Label className="text-gray-800 font-semibold flex items-center mb-3">
+                        <DollarSign className="w-5 h-5 text-emerald-600 mr-2" />
+                        Paid Hourly? Calculate Per-Hour Take-Home
+                      </Label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <Label htmlFor="hourlyWage" className="text-xs text-gray-600 mb-1 block">Hourly Wage (CAD)</Label>
+                          <Input
+                            id="hourlyWage"
+                            type="number"
+                            placeholder="e.g., 40"
+                            value={hourlyWage}
+                            onChange={(e) => setHourlyWage(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="hoursPerWeek" className="text-xs text-gray-600 mb-1 block">Hours / Week</Label>
+                          <Input
+                            id="hoursPerWeek"
+                            type="number"
+                            placeholder="e.g., 40"
+                            value={hoursPerWeek}
+                            onChange={(e) => setHoursPerWeek(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          const w = parseFloat(hourlyWage) || 0;
+                          const h = parseFloat(hoursPerWeek) || 0;
+                          if (w > 0 && h > 0) setGrossIncome(String(Math.round(w * h * 52)));
+                        }}
+                        className="mt-3 w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+                      >
+                        Apply as Annual Income (× 52 weeks)
+                      </Button>
+                      <p className="text-xs text-gray-600 mt-2">
+                        Fills gross income below. Per-hour take-home breakdown appears in results.
+                      </p>
+                    </div>
+
                     {/* Filing Status */}
                     <div>
                       <Label className="text-gray-700 font-medium flex items-center mb-2">
