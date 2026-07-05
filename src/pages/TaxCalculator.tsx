@@ -983,6 +983,42 @@ const TaxCalculator = () => {
                         </div>
                       </div>
                     )}
+
+                    {/* Per-Hour Breakdown */}
+                    {(() => {
+                      const wage = parseFloat(hourlyWage) || 0;
+                      const hrs = parseFloat(hoursPerWeek) || 0;
+                      const totalHours = hrs * 52;
+                      if (wage <= 0 || totalHours <= 0) return null;
+                      const totalDeductionsPerYear = calculations.totalTax + calculations.totalCppContribution + calculations.eiContribution;
+                      const perHourDeductions = totalDeductionsPerYear / totalHours;
+                      const perHourTakeHome = wage - perHourDeductions;
+                      return (
+                        <div className="mt-4 p-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg border-2 border-emerald-300">
+                          <h4 className="font-bold text-emerald-900 mb-3 flex items-center">
+                            <DollarSign className="w-5 h-5 mr-2" />
+                            Per-Hour Breakdown ({formatCurrency(wage)}/hr × {hrs} hrs/week)
+                          </h4>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-700">Gross Per Hour:</span>
+                              <span className="font-semibold">{formatCurrency(wage)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-red-700">Tax + CPP + EI per Hour:</span>
+                              <span className="font-semibold text-red-700">-{formatCurrency(perHourDeductions)}</span>
+                            </div>
+                            <div className="flex justify-between pt-2 border-t border-emerald-300 bg-white/60 px-2 py-2 rounded">
+                              <span className="text-emerald-900 font-bold">Take-Home Per Hour:</span>
+                              <span className="font-bold text-emerald-700 text-lg">{formatCurrency(perHourTakeHome)}</span>
+                            </div>
+                            <p className="text-xs text-gray-600 mt-2">
+                              Based on {totalHours.toLocaleString()} working hours/year. Deductions include federal + provincial tax, CPP, and EI.
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
