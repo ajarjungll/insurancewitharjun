@@ -203,6 +203,8 @@ const TaxCalculator = () => {
   const [fhsaContribution, setFhsaContribution] = useState<string>('');
   const [daysAway, setDaysAway] = useState<string>('');
   const [lodgingExpenses, setLodgingExpenses] = useState<string>('');
+  const [hourlyWage, setHourlyWage] = useState<string>('');
+  const [hoursPerWeek, setHoursPerWeek] = useState<string>('40');
 
   const yearData = taxData[selectedYear];
   const provBrackets = yearData.provincialBrackets[selectedProvince];
@@ -570,6 +572,50 @@ const TaxCalculator = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-6">Enter Your Information</h3>
                   
                   <div className="space-y-6">
+                    {/* Hourly Wage Quick Fill */}
+                    <div className="p-4 bg-emerald-50 rounded-lg border-2 border-emerald-200">
+                      <Label className="text-gray-800 font-semibold flex items-center mb-3">
+                        <DollarSign className="w-5 h-5 text-emerald-600 mr-2" />
+                        Paid Hourly? Calculate Per-Hour Take-Home
+                      </Label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <Label htmlFor="hourlyWage" className="text-xs text-gray-600 mb-1 block">Hourly Wage (CAD)</Label>
+                          <Input
+                            id="hourlyWage"
+                            type="number"
+                            placeholder="e.g., 40"
+                            value={hourlyWage}
+                            onChange={(e) => setHourlyWage(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="hoursPerWeek" className="text-xs text-gray-600 mb-1 block">Hours / Week</Label>
+                          <Input
+                            id="hoursPerWeek"
+                            type="number"
+                            placeholder="e.g., 40"
+                            value={hoursPerWeek}
+                            onChange={(e) => setHoursPerWeek(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          const w = parseFloat(hourlyWage) || 0;
+                          const h = parseFloat(hoursPerWeek) || 0;
+                          if (w > 0 && h > 0) setGrossIncome(String(Math.round(w * h * 52)));
+                        }}
+                        className="mt-3 w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+                      >
+                        Apply as Annual Income (× 52 weeks)
+                      </Button>
+                      <p className="text-xs text-gray-600 mt-2">
+                        Fills gross income below. Per-hour take-home breakdown appears in results.
+                      </p>
+                    </div>
+
                     {/* Filing Status */}
                     <div>
                       <Label className="text-gray-700 font-medium flex items-center mb-2">
@@ -937,6 +983,42 @@ const TaxCalculator = () => {
                         </div>
                       </div>
                     )}
+
+                    {/* Per-Hour Breakdown */}
+                    {(() => {
+                      const wage = parseFloat(hourlyWage) || 0;
+                      const hrs = parseFloat(hoursPerWeek) || 0;
+                      const totalHours = hrs * 52;
+                      if (wage <= 0 || totalHours <= 0) return null;
+                      const totalDeductionsPerYear = calculations.totalTax + calculations.totalCppContribution + calculations.eiContribution;
+                      const perHourDeductions = totalDeductionsPerYear / totalHours;
+                      const perHourTakeHome = wage - perHourDeductions;
+                      return (
+                        <div className="mt-4 p-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg border-2 border-emerald-300">
+                          <h4 className="font-bold text-emerald-900 mb-3 flex items-center">
+                            <DollarSign className="w-5 h-5 mr-2" />
+                            Per-Hour Breakdown ({formatCurrency(wage)}/hr × {hrs} hrs/week)
+                          </h4>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-700">Gross Per Hour:</span>
+                              <span className="font-semibold">{formatCurrency(wage)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-red-700">Tax + CPP + EI per Hour:</span>
+                              <span className="font-semibold text-red-700">-{formatCurrency(perHourDeductions)}</span>
+                            </div>
+                            <div className="flex justify-between pt-2 border-t border-emerald-300 bg-white/60 px-2 py-2 rounded">
+                              <span className="text-emerald-900 font-bold">Take-Home Per Hour:</span>
+                              <span className="font-bold text-emerald-700 text-lg">{formatCurrency(perHourTakeHome)}</span>
+                            </div>
+                            <p className="text-xs text-gray-600 mt-2">
+                              Based on {totalHours.toLocaleString()} working hours/year. Deductions include federal + provincial tax, CPP, and EI.
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
