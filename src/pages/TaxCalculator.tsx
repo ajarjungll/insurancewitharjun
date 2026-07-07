@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User, Users, Heart, MapPin } from 'lucide-react';
+import { Calculator, DollarSign, PiggyBank, Home, TrendingDown, Info, Truck, Briefcase, User, Users, Heart, MapPin, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 type Province = 'manitoba' | 'alberta' | 'ontario';
 type TaxYear = 2020 | 2025 | 2026;
