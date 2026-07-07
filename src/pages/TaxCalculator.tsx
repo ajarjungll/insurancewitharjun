@@ -331,138 +331,369 @@ const TaxCalculator = () => {
     const doc = new jsPDF({ unit: 'pt', format: 'letter' });
     const pageW = doc.internal.pageSize.getWidth();
     const pageH = doc.internal.pageSize.getHeight();
+    const margin = 36;
+    const contentTop = 96;
+    const contentBottom = pageH - 70;
 
+    // ---------- 3D card primitive ----------
+    type RGB = [number, number, number];
+    const shadowRect = (x: number, y: number, w: number, h: number, r = 8) => {
+      doc.setFillColor(15, 23, 42);
+      doc.setGState(new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({ opacity: 0.18 }));
+      doc.roundedRect(x + 3, y + 4, w, h, r, r, 'F');
+      doc.setGState(new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({ opacity: 1 }));
+    };
+    const card = (
+      x: number, y: number, w: number, h: number,
+      fill: RGB, border?: RGB, r = 8,
+    ) => {
+      shadowRect(x, y, w, h, r);
+      doc.setFillColor(...fill);
+      if (border) {
+        doc.setDrawColor(...border);
+        doc.setLineWidth(1.2);
+        doc.roundedRect(x, y, w, h, r, r, 'FD');
+      } else {
+        doc.roundedRect(x, y, w, h, r, r, 'F');
+      }
+      // subtle top highlight for 3D feel
+      doc.setGState(new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({ opacity: 0.35 }));
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(x + 1, y + 1, w - 2, 6, r, r, 'F');
+      doc.setGState(new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({ opacity: 1 }));
+    };
+
+    // ---------- Header / Footer on every page ----------
     const drawHeaderFooter = () => {
       const pageCount = doc.getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
-        // Header band
-        doc.setFillColor(30, 64, 175);
-        doc.rect(0, 0, pageW, 70, 'F');
-        doc.setFillColor(249, 115, 22);
-        doc.rect(0, 70, pageW, 4, 'F');
+        // Header gradient stripes (blue → deep blue)
+        doc.setFillColor(29, 78, 216); doc.rect(0, 0, pageW, 44, 'F');
+        doc.setFillColor(30, 64, 175); doc.rect(0, 44, pageW, 26, 'F');
+        doc.setFillColor(249, 115, 22); doc.rect(0, 70, pageW, 4, 'F');
+
+        // Logo mark
+        doc.setFillColor(255, 255, 255);
+        doc.roundedRect(margin, 14, 44, 44, 8, 8, 'F');
+        doc.setTextColor(29, 78, 216);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.text('IA', margin + 22, 43, { align: 'center' });
+
         doc.setTextColor(255, 255, 255);
         doc.setFont('helvetica', 'bold');
-        doc.setFontSize(18);
-        doc.text('Insurance with Arjun', 40, 32);
+        doc.setFontSize(17);
+        doc.text('Insurance with Arjun', margin + 56, 34);
         doc.setFont('helvetica', 'normal');
-        doc.setFontSize(10);
-        doc.text('Licensed Insurance & Financial Advisor', 40, 50);
-        doc.setFontSize(9);
-        doc.text('Phone: (431) 338-2078   |   Email: insurancewitharjun@gmail.com', pageW - 40, 32, { align: 'right' });
-        doc.text('www.insurancewitharjun.com', pageW - 40, 50, { align: 'right' });
+        doc.setFontSize(9.5);
+        doc.setTextColor(219, 234, 254);
+        doc.text('Licensed Insurance & Financial Advisor  •  Canada', margin + 56, 50);
 
-        // Footer band
-        doc.setFillColor(30, 64, 175);
-        doc.rect(0, pageH - 50, pageW, 50, 'F');
-        doc.setFillColor(249, 115, 22);
-        doc.rect(0, pageH - 54, pageW, 4, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(9.5);
+        doc.text('(431) 338-2078', pageW - margin, 30, { align: 'right' });
+        doc.text('insurancewitharjun@gmail.com', pageW - margin, 44, { align: 'right' });
+        doc.setTextColor(253, 186, 116);
+        doc.text('www.insurancewitharjun.com', pageW - margin, 58, { align: 'right' });
+
+        // Footer
+        doc.setFillColor(249, 115, 22); doc.rect(0, pageH - 54, pageW, 4, 'F');
+        doc.setFillColor(30, 64, 175); doc.rect(0, pageH - 50, pageW, 50, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.text('Arjun  —  Insurance with Arjun', margin, pageH - 30);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(219, 234, 254);
+        doc.text('(431) 338-2078   |   insurancewitharjun@gmail.com   |   www.insurancewitharjun.com', margin, pageH - 16);
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(9);
-        doc.text('Arjun — Insurance with Arjun   |   (431) 338-2078   |   insurancewitharjun@gmail.com', 40, pageH - 30);
-        doc.text(`Page ${i} of ${pageCount}`, pageW - 40, pageH - 30, { align: 'right' });
-        doc.setFontSize(8);
-        doc.setTextColor(219, 234, 254);
-        doc.text('This report is for informational purposes only. Consult a tax professional for advice.', 40, pageH - 14);
+        doc.text(`Page ${i} of ${pageCount}`, pageW - margin, pageH - 22, { align: 'right' });
       }
     };
 
-    // Title block
-    doc.setTextColor(17, 24, 39);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(20);
-    doc.text(`${selectedYear} Canadian Income Tax Report`, 40, 110);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(11);
-    doc.setTextColor(75, 85, 99);
-    doc.text(`Province: ${provName}   |   Filing Status: ${filingStatus === 'couple' ? 'Married / Common-law' : 'Single'}   |   Generated: ${new Date().toLocaleDateString('en-CA')}`, 40, 128);
+    let cursorY = contentTop;
+    const ensureSpace = (needed: number) => {
+      if (cursorY + needed > contentBottom) {
+        doc.addPage();
+        cursorY = contentTop;
+      }
+    };
 
-    // Summary table
+    // ---------- Title block ----------
+    card(margin, cursorY, pageW - margin * 2, 62, [239, 246, 255], [191, 219, 254], 10);
+    doc.setTextColor(30, 58, 138);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(19);
+    doc.text(`${selectedYear} Canadian Income Tax Report`, margin + 18, cursorY + 26);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10.5);
+    doc.setTextColor(51, 65, 85);
+    doc.text(
+      `Province: ${provName}   •   Filing Status: ${filingStatus === 'couple' ? 'Married / Common-law' : 'Single'}   •   Generated: ${new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}`,
+      margin + 18, cursorY + 46,
+    );
+    cursorY += 78;
+
+    // ---------- KPI cards row (Gross / Tax / Net) ----------
+    const kpiH = 78;
+    const kpiGap = 12;
+    const kpiW = (pageW - margin * 2 - kpiGap * 2) / 3;
+
+    const drawKpi = (
+      x: number, label: string, value: string, fill: RGB, accent: RGB,
+    ) => {
+      card(x, cursorY, kpiW, kpiH, fill, accent, 10);
+      // Accent stripe on left
+      doc.setFillColor(...accent);
+      doc.roundedRect(x, cursorY, 6, kpiH, 3, 3, 'F');
+      doc.setTextColor(...accent);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9.5);
+      doc.text(label.toUpperCase(), x + 16, cursorY + 22);
+      doc.setTextColor(17, 24, 39);
+      doc.setFontSize(18);
+      doc.text(value, x + 16, cursorY + 52);
+    };
+
+    drawKpi(margin, 'Gross Income', formatCurrency(calculations.grossIncome), [239, 246, 255], [37, 99, 235]);
+    drawKpi(margin + kpiW + kpiGap, 'Total Tax & Deductions', formatCurrency(calculations.totalTax + calculations.totalCppContribution + calculations.eiContribution), [254, 242, 242], [220, 38, 38]);
+    drawKpi(margin + (kpiW + kpiGap) * 2, 'Net Take-Home', formatCurrency(calculations.netIncome), [236, 253, 245], [22, 163, 74]);
+    cursorY += kpiH + 18;
+
+    // ---------- Section: Income Breakdown ----------
+    const sectionHeader = (title: string, fill: RGB) => {
+      ensureSpace(30);
+      card(margin, cursorY, pageW - margin * 2, 26, fill, undefined, 6);
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text(title, margin + 14, cursorY + 17);
+      cursorY += 34;
+    };
+
+    sectionHeader('Income Breakdown', [30, 64, 175]);
+
     autoTable(doc, {
-      startY: 150,
-      head: [['Summary', 'Amount (CAD)']],
+      startY: cursorY,
+      head: [['Item', 'Amount (CAD)']],
       body: [
         ['Gross Income', formatCurrency(calculations.grossIncome)],
-        ['Taxable Income', formatCurrency(calculations.taxableIncome)],
-        ['Federal Tax', formatCurrency(calculations.federalTax)],
-        [`${provName} Tax`, formatCurrency(calculations.provincialTax)],
+        ['Taxable Income (after deductions)', formatCurrency(calculations.taxableIncome)],
+        [`Federal Tax`, formatCurrency(calculations.federalTax)],
+        [`${provName} Provincial Tax`, formatCurrency(calculations.provincialTax)],
         ['Total Income Tax', formatCurrency(calculations.totalTax)],
         ['CPP Contribution', formatCurrency(calculations.totalCppContribution)],
         ['EI Premium', formatCurrency(calculations.eiContribution)],
-        ['Net Income (After Tax & Deductions)', formatCurrency(calculations.netIncome)],
         ['Effective Tax Rate', `${calculations.effectiveRate.toFixed(2)}%`],
       ],
       theme: 'grid',
-      headStyles: { fillColor: [16, 185, 129], textColor: 255, fontStyle: 'bold' },
-      alternateRowStyles: { fillColor: [240, 253, 250] },
-      styles: { fontSize: 11, cellPadding: 8 },
-      columnStyles: { 1: { halign: 'right', fontStyle: 'bold' } },
-      margin: { left: 40, right: 40 },
+      headStyles: { fillColor: [30, 64, 175], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [248, 250, 252] },
+      styles: { fontSize: 10.5, cellPadding: 7, lineColor: [226, 232, 240] },
+      columnStyles: {
+        1: {
+          halign: 'right', fontStyle: 'bold', textColor: [185, 28, 28],
+        },
+      },
+      didParseCell: (data) => {
+        // Highlight positive rows (income) in blue instead of red
+        if (data.section === 'body' && data.column.index === 1) {
+          const label = String(data.row.raw[0]);
+          if (label.includes('Gross') || label.includes('Taxable')) {
+            data.cell.styles.textColor = [29, 78, 216];
+          } else if (label.includes('Effective')) {
+            data.cell.styles.textColor = [17, 24, 39];
+          }
+        }
+      },
+      margin: { left: margin, right: margin },
     });
+    cursorY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 18;
 
-    // Deductions & Credits
+    // ---------- Section: Deductions & Credits (savings in green) ----------
     const deductionRows: (string | number)[][] = [];
     if (calculations.rrspContribution > 0) deductionRows.push(['RRSP Contribution', formatCurrency(calculations.rrspContribution)]);
     if (calculations.fhsaContribution > 0) deductionRows.push(['FHSA Contribution', formatCurrency(calculations.fhsaContribution)]);
-    if (calculations.mealDeduction > 0) deductionRows.push(['Meal Deduction', formatCurrency(calculations.mealDeduction)]);
+    if (calculations.mealDeduction > 0) deductionRows.push(['Meal Deduction (Trucker)', formatCurrency(calculations.mealDeduction)]);
     if (calculations.lodgingDeduction > 0) deductionRows.push(['Lodging Deduction', formatCurrency(calculations.lodgingDeduction)]);
     if (calculations.totalSpouseCredit > 0) deductionRows.push(['Spousal Tax Credit', formatCurrency(calculations.totalSpouseCredit)]);
-    if (calculations.taxSavingsFromRRSP > 0) deductionRows.push(['Tax Savings from RRSP', formatCurrency(calculations.taxSavingsFromRRSP)]);
-    if (calculations.taxSavingsFromFHSA > 0) deductionRows.push(['Tax Savings from FHSA', formatCurrency(calculations.taxSavingsFromFHSA)]);
+    if (calculations.taxSavingsFromRRSP > 0) deductionRows.push(['Tax Refund from RRSP', formatCurrency(calculations.taxSavingsFromRRSP)]);
+    if (calculations.taxSavingsFromFHSA > 0) deductionRows.push(['Tax Refund from FHSA', formatCurrency(calculations.taxSavingsFromFHSA)]);
 
     if (deductionRows.length > 0) {
+      sectionHeader('Deductions, Credits & Tax Savings', [22, 163, 74]);
       autoTable(doc, {
-        head: [['Deductions & Credits', 'Amount (CAD)']],
+        startY: cursorY,
+        head: [['Item', 'Amount (CAD)']],
         body: deductionRows,
         theme: 'grid',
-        headStyles: { fillColor: [59, 130, 246], textColor: 255, fontStyle: 'bold' },
-        alternateRowStyles: { fillColor: [239, 246, 255] },
-        styles: { fontSize: 11, cellPadding: 8 },
-        columnStyles: { 1: { halign: 'right', fontStyle: 'bold' } },
-        margin: { left: 40, right: 40 },
+        headStyles: { fillColor: [22, 163, 74], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [240, 253, 244] },
+        styles: { fontSize: 10.5, cellPadding: 7, lineColor: [187, 247, 208] },
+        columnStyles: { 1: { halign: 'right', fontStyle: 'bold', textColor: [21, 128, 61] } },
+        margin: { left: margin, right: margin },
       });
+      cursorY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 18;
     }
 
-    // Per-hour breakdown
+    // ---------- Per-hour breakdown ----------
     const wage = parseFloat(hourlyWage) || 0;
     const hrs = parseFloat(hoursPerWeek) || 0;
     const totalHours = hrs * 52;
     if (wage > 0 && totalHours > 0) {
       const perHourDeductions = (calculations.totalTax + calculations.totalCppContribution + calculations.eiContribution) / totalHours;
       const perHourTakeHome = wage - perHourDeductions;
-      autoTable(doc, {
-        head: [[`Per-Hour Breakdown (${formatCurrency(wage)}/hr × ${hrs} hrs/week)`, 'Amount (CAD)']],
-        body: [
-          ['Gross Per Hour', formatCurrency(wage)],
-          ['Tax + CPP + EI per Hour', `-${formatCurrency(perHourDeductions)}`],
-          ['Take-Home Per Hour', formatCurrency(perHourTakeHome)],
-        ],
-        theme: 'grid',
-        headStyles: { fillColor: [139, 92, 246], textColor: 255, fontStyle: 'bold' },
-        alternateRowStyles: { fillColor: [245, 243, 255] },
-        styles: { fontSize: 11, cellPadding: 8 },
-        columnStyles: { 1: { halign: 'right', fontStyle: 'bold' } },
-        margin: { left: 40, right: 40 },
-      });
+      sectionHeader(`Per-Hour Breakdown  (${formatCurrency(wage)}/hr × ${hrs} hrs/wk)`, [139, 92, 246]);
+
+      const cardH = 74;
+      const cardW = (pageW - margin * 2 - kpiGap * 2) / 3;
+      const drawMini = (x: number, label: string, value: string, fill: RGB, accent: RGB) => {
+        card(x, cursorY, cardW, cardH, fill, accent, 8);
+        doc.setFillColor(...accent);
+        doc.roundedRect(x, cursorY, 5, cardH, 2, 2, 'F');
+        doc.setTextColor(...accent);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.text(label.toUpperCase(), x + 14, cursorY + 20);
+        doc.setTextColor(17, 24, 39);
+        doc.setFontSize(17);
+        doc.text(value, x + 14, cursorY + 48);
+        doc.setTextColor(100, 116, 139);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.text('per hour', x + 14, cursorY + 62);
+      };
+      drawMini(margin, 'Gross', formatCurrency(wage), [239, 246, 255], [37, 99, 235]);
+      drawMini(margin + cardW + kpiGap, 'Deductions', `-${formatCurrency(perHourDeductions)}`, [254, 242, 242], [220, 38, 38]);
+      drawMini(margin + (cardW + kpiGap) * 2, 'Take-Home', formatCurrency(perHourTakeHome), [236, 253, 245], [22, 163, 74]);
+      cursorY += cardH + 10;
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(9);
+      doc.setTextColor(100, 116, 139);
+      doc.text(`Based on ${totalHours.toLocaleString()} working hours per year. Includes federal + provincial tax, CPP and EI.`, margin, cursorY);
+      cursorY += 18;
     }
 
-    // Contact CTA box
-    const finalY = (doc as unknown as { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ?? 400;
-    const boxY = Math.min(finalY + 20, pageH - 130);
-    doc.setFillColor(255, 247, 237);
-    doc.setDrawColor(249, 115, 22);
-    doc.setLineWidth(1);
-    doc.roundedRect(40, boxY, pageW - 80, 60, 6, 6, 'FD');
-    doc.setTextColor(154, 52, 18);
+    // ---------- Educational cards (page 2) ----------
+    doc.addPage();
+    cursorY = contentTop;
+
+    sectionHeader('Understanding Your Numbers', [30, 64, 175]);
+
+    type Info = { title: string; body: string; fill: RGB; accent: RGB };
+    const infos: Info[] = [
+      {
+        title: 'Federal & Provincial Tax',
+        body: 'Canada uses a progressive tax system — you only pay the higher rate on the income within each bracket. Your provincial tax stacks on top of federal tax, so your total marginal rate is the sum of both brackets you fall into.',
+        fill: [254, 242, 242], accent: [220, 38, 38],
+      },
+      {
+        title: 'CPP & EI (Payroll Deductions)',
+        body: 'Canada Pension Plan (CPP) funds your retirement pension, disability and survivor benefits. Employment Insurance (EI) protects your income if you lose your job or take parental/medical leave. Both are mandatory up to yearly limits.',
+        fill: [245, 243, 255], accent: [139, 92, 246],
+      },
+      {
+        title: 'RRSP — Registered Retirement Savings Plan',
+        body: 'Contributions are deducted from your taxable income, giving an immediate refund at your marginal rate. Growth is tax-sheltered until withdrawal. Ideal if your income today is higher than it will be in retirement.',
+        fill: [236, 253, 245], accent: [22, 163, 74],
+      },
+      {
+        title: 'FHSA — First Home Savings Account',
+        body: 'Combines the best of RRSP and TFSA: contributions are tax-deductible AND withdrawals for a first home are completely tax-free. Annual limit $8,000 (max $16,000 with carry-forward), lifetime limit $40,000.',
+        fill: [239, 246, 255], accent: [37, 99, 235],
+      },
+      {
+        title: 'TFSA — Tax-Free Savings Account',
+        body: 'No deduction going in, but every dollar of growth and every withdrawal is 100% tax-free. Perfect for emergency funds, short-to-medium term goals, or retirement income you want to keep off your tax return.',
+        fill: [255, 247, 237], accent: [249, 115, 22],
+      },
+      {
+        title: 'Spousal Tax Credit',
+        body: 'If your spouse or common-law partner earned less than the basic personal amount, you can claim the difference as a non-refundable credit — reducing both your federal and provincial tax.',
+        fill: [253, 242, 248], accent: [219, 39, 119],
+      },
+    ];
+
+    // Two-column grid of info cards
+    const colGap = 12;
+    const colW = (pageW - margin * 2 - colGap) / 2;
+    const cardHt = 96;
+    for (let i = 0; i < infos.length; i++) {
+      const col = i % 2;
+      const x = margin + col * (colW + colGap);
+      if (col === 0 && i > 0) cursorY += cardHt + colGap;
+      ensureSpace(cardHt + 10);
+      const info = infos[i];
+      card(x, cursorY, colW, cardHt, info.fill, info.accent, 8);
+      doc.setFillColor(...info.accent);
+      doc.roundedRect(x, cursorY, 5, cardHt, 2, 2, 'F');
+      doc.setTextColor(...info.accent);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text(info.title, x + 14, cursorY + 20);
+      doc.setTextColor(51, 65, 85);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      const wrapped = doc.splitTextToSize(info.body, colW - 22);
+      doc.text(wrapped, x + 14, cursorY + 36);
+    }
+    cursorY += cardHt + 20;
+
+    // ---------- Personalized advice card ----------
+    ensureSpace(120);
+    const adviceH = 108;
+    card(margin, cursorY, pageW - margin * 2, adviceH, [255, 251, 235], [245, 158, 11], 10);
+    doc.setFillColor(245, 158, 11);
+    doc.roundedRect(margin, cursorY, 6, adviceH, 3, 3, 'F');
+    doc.setTextColor(146, 64, 14);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(12);
-    doc.text('Need help maximizing your tax savings?', 55, boxY + 22);
+    doc.setFontSize(13);
+    doc.text('Personalized Recommendation', margin + 18, cursorY + 24);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.setTextColor(120, 53, 15);
-    doc.text('Contact Arjun for personalized RRSP, FHSA, TFSA & insurance advice.', 55, boxY + 40);
+    const marginalGuess = calculations.taxableIncome > 150000 ? 43 : calculations.taxableIncome > 100000 ? 37 : calculations.taxableIncome > 55000 ? 30 : 25;
+    const suggestedRRSP = Math.min(Math.round(calculations.grossIncome * 0.18 / 500) * 500, yearData.rrspLimit);
+    const advice = `Based on your ${formatCurrency(calculations.grossIncome)} income in ${provName}, your marginal rate is roughly ${marginalGuess}%. Contributing about ${formatCurrency(suggestedRRSP)} to your RRSP could refund up to ${formatCurrency(suggestedRRSP * marginalGuess / 100)}. If you don't own a home yet, opening an FHSA and contributing $8,000 gives an additional tax-free savings vehicle. Ask Arjun to build a plan that layers RRSP, FHSA, TFSA and insurance to protect the family alongside the tax savings.`;
+    const wrapped = doc.splitTextToSize(advice, pageW - margin * 2 - 30);
+    doc.text(wrapped, margin + 18, cursorY + 44);
+    cursorY += adviceH + 18;
+
+    // ---------- Contact CTA card ----------
+    ensureSpace(110);
+    const ctaH = 96;
+    card(margin, cursorY, pageW - margin * 2, ctaH, [30, 64, 175], [30, 58, 138], 10);
+    // Orange stripe on right for accent
+    doc.setFillColor(249, 115, 22);
+    doc.roundedRect(pageW - margin - 8, cursorY, 8, ctaH, 3, 3, 'F');
+    doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.text('(431) 338-2078   |   insurancewitharjun@gmail.com', 55, boxY + 54);
+    doc.setFontSize(15);
+    doc.text('Ready to save more tax next year?', margin + 20, cursorY + 28);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10.5);
+    doc.setTextColor(219, 234, 254);
+    doc.text('Book a free consultation with Arjun — insurance, investments and tax-smart planning across Canada.', margin + 20, cursorY + 48);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(253, 186, 116);
+    doc.text('Call (431) 338-2078   •   insurancewitharjun@gmail.com', margin + 20, cursorY + 74);
+
+    // ---------- Disclaimer ----------
+    cursorY += ctaH + 14;
+    if (cursorY < contentBottom - 30) {
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(120, 120, 120);
+      const disc = doc.splitTextToSize(
+        'Disclaimer: This report is generated for illustrative purposes only using publicly available tax brackets and does not constitute tax, legal or financial advice. Actual amounts may vary based on additional credits, deductions and personal circumstances. Please consult a qualified tax professional before making financial decisions.',
+        pageW - margin * 2,
+      );
+      doc.text(disc, margin, cursorY);
+    }
 
     drawHeaderFooter();
     doc.save(`Tax-Report-${selectedYear}-${provName}.pdf`);
