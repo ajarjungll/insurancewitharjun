@@ -1190,6 +1190,17 @@ const TaxCalculator = () => {
 
         <Footer />
       </div>
+
+      {calculations.grossIncome > 0 && (
+        <button
+          onClick={downloadPDF}
+          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-4 py-4 rounded-2xl shadow-2xl border-2 border-white flex flex-col items-center gap-1 transition-all hover:scale-105 active:translate-y-1"
+          title="Download PDF Report"
+        >
+          <Download className="w-6 h-6" />
+          <span className="text-xs font-bold leading-tight">Download<br/>PDF</span>
+        </button>
+      )}
     </div>
   );
 };
