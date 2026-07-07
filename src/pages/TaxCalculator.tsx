@@ -327,6 +327,147 @@ const TaxCalculator = () => {
     return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
   };
 
+  const downloadPDF = () => {
+    const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+
+    const drawHeaderFooter = () => {
+      const pageCount = doc.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        // Header band
+        doc.setFillColor(30, 64, 175);
+        doc.rect(0, 0, pageW, 70, 'F');
+        doc.setFillColor(249, 115, 22);
+        doc.rect(0, 70, pageW, 4, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.text('Insurance with Arjun', 40, 32);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.text('Licensed Insurance & Financial Advisor', 40, 50);
+        doc.setFontSize(9);
+        doc.text('Phone: (431) 338-2078   |   Email: insurancewitharjun@gmail.com', pageW - 40, 32, { align: 'right' });
+        doc.text('www.insurancewitharjun.com', pageW - 40, 50, { align: 'right' });
+
+        // Footer band
+        doc.setFillColor(30, 64, 175);
+        doc.rect(0, pageH - 50, pageW, 50, 'F');
+        doc.setFillColor(249, 115, 22);
+        doc.rect(0, pageH - 54, pageW, 4, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(9);
+        doc.text('Arjun — Insurance with Arjun   |   (431) 338-2078   |   insurancewitharjun@gmail.com', 40, pageH - 30);
+        doc.text(`Page ${i} of ${pageCount}`, pageW - 40, pageH - 30, { align: 'right' });
+        doc.setFontSize(8);
+        doc.setTextColor(219, 234, 254);
+        doc.text('This report is for informational purposes only. Consult a tax professional for advice.', 40, pageH - 14);
+      }
+    };
+
+    // Title block
+    doc.setTextColor(17, 24, 39);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(20);
+    doc.text(`${selectedYear} Canadian Income Tax Report`, 40, 110);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(75, 85, 99);
+    doc.text(`Province: ${provName}   |   Filing Status: ${filingStatus === 'couple' ? 'Married / Common-law' : 'Single'}   |   Generated: ${new Date().toLocaleDateString('en-CA')}`, 40, 128);
+
+    // Summary table
+    autoTable(doc, {
+      startY: 150,
+      head: [['Summary', 'Amount (CAD)']],
+      body: [
+        ['Gross Income', formatCurrency(calculations.grossIncome)],
+        ['Taxable Income', formatCurrency(calculations.taxableIncome)],
+        ['Federal Tax', formatCurrency(calculations.federalTax)],
+        [`${provName} Tax`, formatCurrency(calculations.provincialTax)],
+        ['Total Income Tax', formatCurrency(calculations.totalTax)],
+        ['CPP Contribution', formatCurrency(calculations.totalCppContribution)],
+        ['EI Premium', formatCurrency(calculations.eiContribution)],
+        ['Net Income (After Tax & Deductions)', formatCurrency(calculations.netIncome)],
+        ['Effective Tax Rate', `${calculations.effectiveRate.toFixed(2)}%`],
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [16, 185, 129], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [240, 253, 250] },
+      styles: { fontSize: 11, cellPadding: 8 },
+      columnStyles: { 1: { halign: 'right', fontStyle: 'bold' } },
+      margin: { left: 40, right: 40 },
+    });
+
+    // Deductions & Credits
+    const deductionRows: (string | number)[][] = [];
+    if (calculations.rrspContribution > 0) deductionRows.push(['RRSP Contribution', formatCurrency(calculations.rrspContribution)]);
+    if (calculations.fhsaContribution > 0) deductionRows.push(['FHSA Contribution', formatCurrency(calculations.fhsaContribution)]);
+    if (calculations.mealDeduction > 0) deductionRows.push(['Meal Deduction', formatCurrency(calculations.mealDeduction)]);
+    if (calculations.lodgingDeduction > 0) deductionRows.push(['Lodging Deduction', formatCurrency(calculations.lodgingDeduction)]);
+    if (calculations.totalSpouseCredit > 0) deductionRows.push(['Spousal Tax Credit', formatCurrency(calculations.totalSpouseCredit)]);
+    if (calculations.taxSavingsFromRRSP > 0) deductionRows.push(['Tax Savings from RRSP', formatCurrency(calculations.taxSavingsFromRRSP)]);
+    if (calculations.taxSavingsFromFHSA > 0) deductionRows.push(['Tax Savings from FHSA', formatCurrency(calculations.taxSavingsFromFHSA)]);
+
+    if (deductionRows.length > 0) {
+      autoTable(doc, {
+        head: [['Deductions & Credits', 'Amount (CAD)']],
+        body: deductionRows,
+        theme: 'grid',
+        headStyles: { fillColor: [59, 130, 246], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [239, 246, 255] },
+        styles: { fontSize: 11, cellPadding: 8 },
+        columnStyles: { 1: { halign: 'right', fontStyle: 'bold' } },
+        margin: { left: 40, right: 40 },
+      });
+    }
+
+    // Per-hour breakdown
+    const wage = parseFloat(hourlyWage) || 0;
+    const hrs = parseFloat(hoursPerWeek) || 0;
+    const totalHours = hrs * 52;
+    if (wage > 0 && totalHours > 0) {
+      const perHourDeductions = (calculations.totalTax + calculations.totalCppContribution + calculations.eiContribution) / totalHours;
+      const perHourTakeHome = wage - perHourDeductions;
+      autoTable(doc, {
+        head: [[`Per-Hour Breakdown (${formatCurrency(wage)}/hr × ${hrs} hrs/week)`, 'Amount (CAD)']],
+        body: [
+          ['Gross Per Hour', formatCurrency(wage)],
+          ['Tax + CPP + EI per Hour', `-${formatCurrency(perHourDeductions)}`],
+          ['Take-Home Per Hour', formatCurrency(perHourTakeHome)],
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [139, 92, 246], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [245, 243, 255] },
+        styles: { fontSize: 11, cellPadding: 8 },
+        columnStyles: { 1: { halign: 'right', fontStyle: 'bold' } },
+        margin: { left: 40, right: 40 },
+      });
+    }
+
+    // Contact CTA box
+    const finalY = (doc as unknown as { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ?? 400;
+    const boxY = Math.min(finalY + 20, pageH - 130);
+    doc.setFillColor(255, 247, 237);
+    doc.setDrawColor(249, 115, 22);
+    doc.setLineWidth(1);
+    doc.roundedRect(40, boxY, pageW - 80, 60, 6, 6, 'FD');
+    doc.setTextColor(154, 52, 18);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text('Need help maximizing your tax savings?', 55, boxY + 22);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(120, 53, 15);
+    doc.text('Contact Arjun for personalized RRSP, FHSA, TFSA & insurance advice.', 55, boxY + 40);
+    doc.setFont('helvetica', 'bold');
+    doc.text('(431) 338-2078   |   insurancewitharjun@gmail.com', 55, boxY + 54);
+
+    drawHeaderFooter();
+    doc.save(`Tax-Report-${selectedYear}-${provName}.pdf`);
+  };
+
   return (
     <div className="min-h-screen relative">
       <div 
