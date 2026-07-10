@@ -126,6 +126,38 @@ const Index = () => {
         <Header />
         <HeroSection />
 
+        {/* Super Visa Insurance Banner */}
+        <section className="py-10 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: 'radial-gradient(circle at 20% 30%, white 2px, transparent 2px), radial-gradient(circle at 80% 70%, white 2px, transparent 2px)',
+            backgroundSize: '60px 60px',
+          }} aria-hidden="true" />
+          <div className="container mx-auto px-4 relative">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="bg-white/20 p-4 rounded-2xl card-3d">
+                  <Plane className="w-10 h-10 text-white" />
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-widest text-white/80 font-semibold">New — Compare 3 Insurers</div>
+                  <h2 className="text-2xl md:text-3xl font-extrabold leading-tight">
+                    Super Visa Insurance Quote — Insure Canada, RIMI &amp; GMS
+                  </h2>
+                  <p className="text-white/90 text-sm md:text-base mt-1">
+                    Instantly compare annual premiums by age, coverage, deductible &amp; pre-existing conditions.
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/insurance-types/super-visa#calculator"
+                className="bg-white text-orange-600 px-8 py-4 rounded-lg text-lg font-bold hover:bg-blue-50 transition-colors btn-3d shadow-xl whitespace-nowrap"
+              >
+                Get Instant Quote →
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Insurance Types Section */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
