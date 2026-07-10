@@ -222,7 +222,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const minAnnual = availableAnnuals.length ? Math.min(...availableAnnuals) : null;
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-white">
+    <section id="calculator" className="py-16 bg-gradient-to-br from-blue-50 to-white scroll-mt-24">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
