@@ -307,6 +307,16 @@ const TaxCalculator = () => {
       cpp1Contribution,
       cpp2Contribution,
       totalCppContribution,
+      cppBaseContribution,
+      cppEnhancedDeduction,
+      cppEnhancedRate1,
+      cpp1Pensionable,
+      cpp2Pensionable,
+      federalCppEiCredit,
+      provincialCppEiCredit,
+      federalCreditRate: yearData.federalCreditRate,
+      provincialLowestRate: provLowestRate,
+      eiInsurable,
       eiContribution,
       mealExpenses,
       mealDeduction,
@@ -1224,12 +1234,12 @@ const TaxCalculator = () => {
                       <h4 className="font-semibold text-purple-800 mb-2">Payroll Deductions</h4>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-purple-700">CPP (Base):</span>
+                          <span className="text-purple-700">CPP1 ({(yearData.cpp1Rate * 100).toFixed(2)}%):</span>
                           <span className="font-semibold text-purple-700">-{formatCurrency(calculations.cpp1Contribution)}</span>
                         </div>
                         {calculations.cpp2Contribution > 0 && (
                           <div className="flex justify-between">
-                            <span className="text-purple-700">CPP2 (Enhanced):</span>
+                            <span className="text-purple-700">CPP2 ({(yearData.cpp2Rate * 100).toFixed(2)}%):</span>
                             <span className="font-semibold text-purple-700">-{formatCurrency(calculations.cpp2Contribution)}</span>
                           </div>
                         )}
@@ -1243,6 +1253,80 @@ const TaxCalculator = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* CPP & EI Breakdown: Deduction vs Credit */}
+                    {calculations.grossIncome > 0 && (
+                      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-4 rounded-lg border border-indigo-200">
+                        <h4 className="font-semibold text-indigo-900 mb-1 flex items-center">
+                          <Info className="w-4 h-4 mr-2" />
+                          CPP & EI Tax Treatment ({selectedYear})
+                        </h4>
+                        <p className="text-xs text-indigo-700 mb-3">
+                          CRA treats CPP in two parts. Base CPP + EI reduce your <em>tax</em> (credit). Enhanced CPP reduces your <em>income</em> (deduction).
+                        </p>
+
+                        {/* Deduction side */}
+                        <div className="bg-white/70 p-3 rounded-md mb-2">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-bold text-orange-700 uppercase tracking-wide">Deduction from income (line 22215)</span>
+                            <TrendingDown className="w-4 h-4 text-orange-600" />
+                          </div>
+                          <div className="space-y-1 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-700">Enhanced CPP1 ({(calculations.cppEnhancedRate1 * 100).toFixed(2)}% × {formatCurrency(calculations.cpp1Pensionable)}):</span>
+                              <span className="font-semibold text-orange-700">{formatCurrency(calculations.cpp1Pensionable * calculations.cppEnhancedRate1)}</span>
+                            </div>
+                            {calculations.cpp2Contribution > 0 && (
+                              <div className="flex justify-between">
+                                <span className="text-gray-700">CPP2 ({(yearData.cpp2Rate * 100).toFixed(2)}% × {formatCurrency(calculations.cpp2Pensionable)}):</span>
+                                <span className="font-semibold text-orange-700">{formatCurrency(calculations.cpp2Contribution)}</span>
+                              </div>
+                            )}
+                            <div className="flex justify-between pt-1 border-t border-orange-200">
+                              <span className="font-medium text-gray-800">Total income deduction:</span>
+                              <span className="font-bold text-orange-800">-{formatCurrency(calculations.cppEnhancedDeduction)}</span>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-600 mt-2">
+                            Lowers your taxable income to <span className="font-semibold">{formatCurrency(calculations.taxableIncome)}</span> before tax is calculated.
+                          </p>
+                        </div>
+
+                        {/* Credit side */}
+                        <div className="bg-white/70 p-3 rounded-md">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-bold text-green-700 uppercase tracking-wide">Non-refundable tax credit</span>
+                            <PiggyBank className="w-4 h-4 text-green-600" />
+                          </div>
+                          <div className="space-y-1 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-700">Base CPP (4.95% × {formatCurrency(calculations.cpp1Pensionable)}):</span>
+                              <span className="font-semibold text-green-700">{formatCurrency(calculations.cppBaseContribution)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-700">EI premium ({(yearData.eiRate * 100).toFixed(2)}% × {formatCurrency(calculations.eiInsurable)}):</span>
+                              <span className="font-semibold text-green-700">{formatCurrency(calculations.eiContribution)}</span>
+                            </div>
+                            <div className="flex justify-between pt-1 border-t border-green-200">
+                              <span className="font-medium text-gray-800">Credit base:</span>
+                              <span className="font-bold text-green-800">{formatCurrency(calculations.cppBaseContribution + calculations.eiContribution)}</span>
+                            </div>
+                            <div className="flex justify-between text-xs text-gray-600">
+                              <span>× Federal rate ({(calculations.federalCreditRate * 100).toFixed(0)}%):</span>
+                              <span className="font-semibold text-green-700">−{formatCurrency(calculations.federalCppEiCredit)} off federal tax</span>
+                            </div>
+                            <div className="flex justify-between text-xs text-gray-600">
+                              <span>× {provName} rate ({(calculations.provincialLowestRate * 100).toFixed(2)}%):</span>
+                              <span className="font-semibold text-green-700">−{formatCurrency(calculations.provincialCppEiCredit)} off {provName} tax</span>
+                            </div>
+                            <div className="flex justify-between pt-1 border-t border-green-200">
+                              <span className="font-medium text-gray-800">Total tax reduction:</span>
+                              <span className="font-bold text-green-800">−{formatCurrency(calculations.federalCppEiCredit + calculations.provincialCppEiCredit)}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     {calculations.totalDeductions > 0 && (
                       <div className="bg-blue-50 p-4 rounded-lg">
