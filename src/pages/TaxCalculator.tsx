@@ -232,6 +232,15 @@ const TaxCalculator = () => {
     const cpp2Contribution = cpp2Pensionable * yearData.cpp2Rate;
     const totalCppContribution = cpp1Contribution + cpp2Contribution;
 
+    // CRA treatment of CPP:
+    //  - Base CPP (4.95% portion of CPP1) = non-refundable tax credit
+    //  - Enhanced CPP1 (rate above 4.95%) + all CPP2 = deduction from income (line 22215)
+    const CPP_BASE_RATE = 0.0495;
+    const cppBaseRateApplied = Math.min(yearData.cpp1Rate, CPP_BASE_RATE);
+    const cppEnhancedRate1 = Math.max(0, yearData.cpp1Rate - CPP_BASE_RATE);
+    const cppBaseContribution = cpp1Pensionable * cppBaseRateApplied;
+    const cppEnhancedDeduction = cpp1Pensionable * cppEnhancedRate1 + cpp2Contribution;
+
     const eiInsurable = Math.min(income, yearData.eiMaxInsurableEarnings);
     const eiContribution = eiInsurable * yearData.eiRate;
 
@@ -250,7 +259,7 @@ const TaxCalculator = () => {
     }
 
     const employmentExpenses = mealDeduction + lodgingDeduction;
-    const taxableIncome = Math.max(0, income - rrsp - fhsa - employmentExpenses);
+    const taxableIncome = Math.max(0, income - rrsp - fhsa - employmentExpenses - cppEnhancedDeduction);
     
     let federalSpouseCredit = 0;
     let provincialSpouseCredit = 0;
@@ -264,12 +273,13 @@ const TaxCalculator = () => {
     
     const federalTaxBeforeCredits = calculateTax(taxableIncome, yearData.federalBrackets);
     const federalTaxCredit = yearData.federalBPA * 0.15;
-    const federalCppEiCredit = (totalCppContribution + eiContribution) * 0.15;
+    // Only base CPP + EI are non-refundable credits; enhanced CPP is already deducted above.
+    const federalCppEiCredit = (cppBaseContribution + eiContribution) * 0.15;
     const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit - federalSpouseCredit);
 
     const provincialTaxBeforeCredits = calculateTax(taxableIncome, provBrackets);
     const provincialTaxCredit = provBPA * provLowestRate;
-    const provincialCppEiCredit = (totalCppContribution + eiContribution) * provLowestRate;
+    const provincialCppEiCredit = (cppBaseContribution + eiContribution) * provLowestRate;
     const provincialTax = Math.max(0, provincialTaxBeforeCredits - provincialTaxCredit - provincialCppEiCredit - provincialSpouseCredit);
 
     const totalTax = federalTax + provincialTax;
