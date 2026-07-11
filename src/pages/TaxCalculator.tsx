@@ -60,6 +60,7 @@ const taxData = {
     federalSpouseAmount: 13229,
     provincialSpouseAmount: { manitoba: 9134, alberta: 19369, ontario: 9156 },
     provincialLowestRate: { manitoba: 0.108, alberta: 0.10, ontario: 0.0505 },
+    federalCreditRate: 0.15,
     cpp1MaxEarnings: 58700,
     cpp2MaxEarnings: 58700,
     cppExemption: 3500,
@@ -106,6 +107,7 @@ const taxData = {
     federalSpouseAmount: 16129,
     provincialSpouseAmount: { manitoba: 9134, alberta: 22323, ontario: 10823 },
     provincialLowestRate: { manitoba: 0.108, alberta: 0.08, ontario: 0.0505 },
+    federalCreditRate: 0.15,
     cpp1MaxEarnings: 71300,
     cpp2MaxEarnings: 81200,
     cppExemption: 3500,
@@ -152,6 +154,7 @@ const taxData = {
     federalSpouseAmount: 16452,
     provincialSpouseAmount: { manitoba: 9134, alberta: 22769, ontario: 11029 },
     provincialLowestRate: { manitoba: 0.108, alberta: 0.08, ontario: 0.0505 },
+    federalCreditRate: 0.14,
     cpp1MaxEarnings: 74600,
     cpp2MaxEarnings: 85000,
     cppExemption: 3500,
@@ -266,15 +269,15 @@ const TaxCalculator = () => {
     
     if (filingStatus === 'couple') {
       const federalSpouseClaimable = Math.max(0, yearData.federalSpouseAmount - spouseInc);
-      federalSpouseCredit = federalSpouseClaimable * 0.15;
+      federalSpouseCredit = federalSpouseClaimable * yearData.federalCreditRate;
       const provincialSpouseClaimable = Math.max(0, provSpouseAmount - spouseInc);
       provincialSpouseCredit = provincialSpouseClaimable * provLowestRate;
     }
     
     const federalTaxBeforeCredits = calculateTax(taxableIncome, yearData.federalBrackets);
-    const federalTaxCredit = yearData.federalBPA * 0.15;
+    const federalTaxCredit = yearData.federalBPA * yearData.federalCreditRate;
     // Only base CPP + EI are non-refundable credits; enhanced CPP is already deducted above.
-    const federalCppEiCredit = (cppBaseContribution + eiContribution) * 0.15;
+    const federalCppEiCredit = (cppBaseContribution + eiContribution) * yearData.federalCreditRate;
     const federalTax = Math.max(0, federalTaxBeforeCredits - federalTaxCredit - federalCppEiCredit - federalSpouseCredit);
 
     const provincialTaxBeforeCredits = calculateTax(taxableIncome, provBrackets);
