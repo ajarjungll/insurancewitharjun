@@ -3,7 +3,7 @@ import { Calculator } from 'lucide-react';
 
 type PlanTier = 'STANDARD' | 'ENHANCED';
 type PayMode = 'annual' | 'monthly';
-type Coverage = 100000 | 150000;
+type Coverage = 100000 | 150000 | 300000 | 500000 | 1000000 | 2000000;
 type CommonDed = 0 | 100 | 500 | 1000;
 
 // -------- INSURE CANADA (fixed annual schedule) --------
@@ -116,7 +116,8 @@ const GMS_RATES: Record<GmsBand, GmsCovRow> = {
   },
 };
 
-const COVERAGES: Coverage[] = [100000, 150000];
+const COVERAGES: Coverage[] = [100000, 150000, 300000, 500000, 1000000, 2000000];
+const GMS_MAX_COVERAGE = 150000;
 const COMMON_DEDUCTIBLES: CommonDed[] = [0, 100, 500, 1000];
 const MONTHLY_FEE = 120;
 const fmt = (n: number) => n.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
@@ -186,7 +187,8 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const rimiPremium = useMemo<number | null>(() => {
     if (!rb) return null;
     const table = tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED;
-    const row = table[rb][coverage];
+    const row = (table[rb] as any)[coverage];
+    if (!row) return null;
     const dailyRate = preExisting ? row[1] : row[0];
     if (dailyRate == null) return null;
     const is80Plus = age >= 80;
@@ -197,15 +199,48 @@ const SuperVisaPremiumCalculator: React.FC = () => {
 
   const gmsPremium = useMemo<number | null>(() => {
     if (!gb) return null;
-    return GMS_RATES[gb][coverage][deductible];
+    if (coverage > GMS_MAX_COVERAGE) return null;
+    const row = (GMS_RATES[gb] as any)[coverage];
+    if (!row) return null;
+    return row[deductible];
   }, [gb, coverage, deductible]);
 
   const insurers: Array<{
     key: string; name: string; logo: string; band: string | null; annual: number | null; note?: string;
   }> = [
-    { key: 'insure-canada', name: 'Insure Canada', logo: '/partner-logos/insure-canada.png', band: ib, annual: icPremium, note: 'Uses fixed annual schedule (coverage selection not applied).' },
-    { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rb, annual: rimiPremium },
-    { key: 'gms', name: 'GMS', logo: '/partner-logos/gms.jpg', band: gb, annual: gmsPremium, note: gb ? undefined : 'GMS does not cover ages 80+.' },
+    {
+      key: 'insure-canada',
+      name: 'Insure Canada',
+      logo: '/partner-logos/insure-canada.png',
+      band: ib,
+      annual: icPremium,
+      note:
+        coverage > 150000
+          ? 'Rate for this coverage not published — please request a manual quote. Insure Canada uses a fixed annual schedule (coverage selector does not affect price).'
+          : 'Uses fixed annual schedule (coverage selection not applied).',
+    },
+    {
+      key: 'rimi',
+      name: 'RIMI',
+      logo: '/partner-logos/rimi.png',
+      band: rb,
+      annual: rimiPremium,
+      note: rb && coverage > 150000 ? 'Rate for this coverage not published in our table — please request a manual quote.' : undefined,
+    },
+    {
+      key: 'gms',
+      name: 'GMS',
+      logo: '/partner-logos/gms.jpg',
+      band: gb,
+      annual: gmsPremium,
+      note: !gb
+        ? 'GMS does not cover ages 80+.'
+        : coverage > GMS_MAX_COVERAGE
+          ? '⚠️ GMS maximum coverage is $150,000. Please select $100,000 or $150,000, or choose RIMI / Insure Canada for higher coverage.'
+          : preExisting
+            ? 'GMS offers a single plan covering pre-existing conditions — conditions must be stable for more than 180 days prior to the effective date.'
+            : undefined,
+    },
   ];
 
   const monthlyFee = payMode === 'monthly' ? MONTHLY_FEE : 0;
@@ -256,17 +291,20 @@ const SuperVisaPremiumCalculator: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Coverage Amount</label>
-                <div className="grid grid-cols-2 gap-2">
+                <select
+                  value={coverage}
+                  onChange={(e) => setCoverage(Number(e.target.value) as Coverage)}
+                  className="w-full h-11 rounded-md border border-input px-3 text-base bg-white font-semibold"
+                >
                   {COVERAGES.map((c) => (
-                    <button key={c} onClick={() => setCoverage(c)}
-                      className={`h-11 rounded-md border font-semibold transition ${
-                        coverage === c ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}>
+                    <option key={c} value={c}>
                       {fmtCov(c)}
-                    </button>
+                    </option>
                   ))}
-                </div>
-                <p className="text-xs text-gray-500 mt-1">Super Visa requires $100,000 minimum coverage.</p>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">
+                  Super Visa requires $100,000 minimum coverage. GMS caps coverage at $150,000; RIMI &amp; Insure Canada offer higher limits.
+                </p>
               </div>
 
               <div>
