@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Home, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
+import { Home, Phone, ArrowLeft, CheckCircle, X, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg-fhsa.jpg';
 import SIPCalculator from '@/components/SIPCalculator';
