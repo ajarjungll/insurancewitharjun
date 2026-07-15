@@ -77,6 +77,60 @@ const FHSADetails = () => {
                 </div>
 
                 <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Who Can Open an FHSA?</h3>
+                  <div className="bg-green-50 p-8 rounded-xl card-3d border-2 border-green-200">
+                    <p className="text-gray-700 mb-6">
+                      To open an FHSA, you must meet <span className="font-semibold">all</span> of the following CRA requirements:
+                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are a resident of Canada.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are at least 18 years old (or the age of majority in your province).</p>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are a first-time homebuyer: at no time in the current year or any of the 4 preceding calendar years did you live in a home that you, or your spouse/common-law partner, owned.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You intend to use the funds to buy a qualifying home in Canada as your principal residence.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Who Cannot Open an FHSA?</h3>
+                  <div className="bg-red-50 p-8 rounded-xl card-3d border-2 border-red-200">
+                    <p className="text-gray-700 mb-6">
+                      You are <span className="font-semibold">not</span> eligible to open an FHSA if any of the following apply:
+                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You currently live in a home that you or your spouse/common-law partner owns as a principal residence.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">Your spouse/common-law partner bought a home and you lived in it as your principal residence at any time in the current year or the previous 4 calendar years.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You owned a home in the past 4 years and lived in it as your principal residence.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p classNameError setting up tool: The 'X' icon may not exist in lucide-react with that exact name. Let me verify the icon name. Actually, I should use `XCircle` or `XOctagon` instead. The `X` icon does exist in lucide-react as `X`. But to be safe, let me use `XCircle` which is definitely available. Actually, `X` is a valid lucide-react icon. But the error message suggests something went wrong. Let me re-read the file and try again with `XCircle` to be safe.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-12">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Double Tax Advantage</h3>
                   <div className="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-xl card-3d mb-8">
                     <div className="grid md:grid-cols-2 gap-8">
