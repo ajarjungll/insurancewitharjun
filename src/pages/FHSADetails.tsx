@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Home, Phone, ArrowLeft, CheckCircle, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
+import { Home, Phone, ArrowLeft, CheckCircle, X, TrendingUp, Shield, Calculator, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg-fhsa.jpg';
 import SIPCalculator from '@/components/SIPCalculator';
@@ -74,6 +74,68 @@ const FHSADetails = () => {
                     Unused contribution room can be carried forward, with a maximum carry-forward of $8,000 per year, 
                     allowing you to contribute up to $16,000 in a single year if you have unused room from the previous year.
                   </p>
+                </div>
+
+                <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Who Can Open an FHSA?</h3>
+                  <div className="bg-green-50 p-8 rounded-xl card-3d border-2 border-green-200">
+                    <p className="text-gray-700 mb-6">
+                      To open an FHSA, you must meet <span className="font-semibold">all</span> of the following CRA requirements:
+                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are a resident of Canada.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are at least 18 years old (or the age of majority in your province).</p>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are a first-time homebuyer: at no time in the current year or any of the 4 preceding calendar years did you live in a home that you, or your spouse/common-law partner, owned.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle size={22} className="text-green-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You intend to use the funds to buy a qualifying home in Canada as your principal residence.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-12">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Who Cannot Open an FHSA?</h3>
+                  <div className="bg-red-50 p-8 rounded-xl card-3d border-2 border-red-200">
+                    <p className="text-gray-700 mb-6">
+                      You are <span className="font-semibold">not</span> eligible to open an FHSA if any of the following apply:
+                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You currently live in a home that you or your spouse/common-law partner owns as a principal residence.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">Your spouse/common-law partner bought a home and you lived in it as your principal residence at any time in the current year or the previous 4 calendar years.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You owned a home in the past 4 years and lived in it as your principal residence.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are under 18 years old (or under the age of majority in your province).</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are not a resident of Canada.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You already have an existing FHSA in your name (only one FHSA is allowed per individual).</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mb-12">
