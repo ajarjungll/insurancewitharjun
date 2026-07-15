@@ -124,7 +124,15 @@ const FHSADetails = () => {
                       </div>
                       <div className="flex items-start">
                         <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
-                        <p classNameError setting up tool: The 'X' icon may not exist in lucide-react with that exact name. Let me verify the icon name. Actually, I should use `XCircle` or `XOctagon` instead. The `X` icon does exist in lucide-react as `X`. But to be safe, let me use `XCircle` which is definitely available. Actually, `X` is a valid lucide-react icon. But the error message suggests something went wrong. Let me re-read the file and try again with `XCircle` to be safe.</p>
+                        <p className="text-gray-700">You are under 18 years old (or under the age of majority in your province).</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You are not a resident of Canada.</p>
+                      </div>
+                      <div className="flex items-start">
+                        <X size={22} className="text-red-600 mr-4 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700">You already have an existing FHSA in your name (only one FHSA is allowed per individual).</p>
                       </div>
                     </div>
                   </div>
