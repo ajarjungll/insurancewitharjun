@@ -266,13 +266,17 @@ const SuperVisaInsuranceDetails = () => {
                     className="max-h-20 w-auto object-contain"
                   />
                 </div>
-                <div className="bg-white p-6 rounded-2xl card-3d border flex items-center justify-center min-h-[160px]">
+                <Link
+                  to="/insurance-types/super-visa/gms"
+                  className="bg-white p-6 rounded-2xl card-3d border flex flex-col items-center justify-center min-h-[160px]"
+                >
                   <img
                     src="/partner-logos/gms.jpg"
                     alt="GMS — Super Visa Insurance Partner"
                     className="max-h-20 w-auto object-contain"
                   />
-                </div>
+                  <span className="mt-3 text-sm font-semibold text-blue-700">View GMS plan details →</span>
+                </Link>
                 <div className="bg-white p-6 rounded-2xl card-3d border flex items-center justify-center min-h-[160px]">
                   <img
                     src="/partner-logos/insure-canada.png"
