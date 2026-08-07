@@ -252,13 +252,17 @@ const SuperVisaInsuranceDetails = () => {
                 We work with Canada's most trusted insurers to deliver reliable Super Visa coverage
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <div className="bg-white p-6 rounded-2xl card-3d border flex items-center justify-center min-h-[160px]">
+                <Link
+                  to="/insurance-types/super-visa/manulife"
+                  className="bg-white p-6 rounded-2xl card-3d border flex flex-col items-center justify-center min-h-[160px]"
+                >
                   <img
                     src={manulifeLogo}
                     alt="Manulife Insurance — Super Visa Insurance Partner"
                     className="max-h-20 w-auto object-contain"
                   />
-                </div>
+                  <span className="mt-3 text-sm font-semibold text-blue-700">View Manulife plan details →</span>
+                </Link>
                 <div className="bg-white p-6 rounded-2xl card-3d border flex items-center justify-center min-h-[160px]">
                   <img
                     src={travelanceLogo}
@@ -277,20 +281,28 @@ const SuperVisaInsuranceDetails = () => {
                   />
                   <span className="mt-3 text-sm font-semibold text-blue-700">View GMS plan details →</span>
                 </Link>
-                <div className="bg-white p-6 rounded-2xl card-3d border flex items-center justify-center min-h-[160px]">
+                <Link
+                  to="/insurance-types/super-visa/insure-canada"
+                  className="bg-white p-6 rounded-2xl card-3d border flex flex-col items-center justify-center min-h-[160px]"
+                >
                   <img
                     src="/partner-logos/insure-canada.png"
                     alt="Insure Canada — Super Visa Insurance Partner"
                     className="max-h-20 w-auto object-contain"
                   />
-                </div>
-                <div className="bg-white p-6 rounded-2xl card-3d border flex items-center justify-center min-h-[160px]">
+                  <span className="mt-3 text-sm font-semibold text-blue-700">View Insure Canada details →</span>
+                </Link>
+                <Link
+                  to="/insurance-types/super-visa/rimi"
+                  className="bg-white p-6 rounded-2xl card-3d border flex flex-col items-center justify-center min-h-[160px]"
+                >
                   <img
                     src="/partner-logos/rimi.png"
                     alt="RIMI — Super Visa Insurance Partner"
                     className="max-h-20 w-auto object-contain"
                   />
-                </div>
+                  <span className="mt-3 text-sm font-semibold text-blue-700">View RIMI plan details →</span>
+                </Link>
               </div>
             </div>
           </div>
