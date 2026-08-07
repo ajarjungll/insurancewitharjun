@@ -27,6 +27,9 @@ import HealthInsuranceDetails from "./pages/HealthInsuranceDetails";
 import StudentInsuranceDetails from "./pages/StudentInsuranceDetails";
 import SuperVisaInsuranceDetails from "./pages/SuperVisaInsuranceDetails";
 import GmsSuperVisaDetails from "./pages/GmsSuperVisaDetails";
+import InsureCanadaSuperVisaDetails from "./pages/InsureCanadaSuperVisaDetails";
+import RimiSuperVisaDetails from "./pages/RimiSuperVisaDetails";
+import ManulifeSuperVisaDetails from "./pages/ManulifeSuperVisaDetails";
 import CppEiContributions from "./pages/CppEiContributions";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
@@ -69,6 +72,9 @@ const App = () => (
           <Route path="/insurance-types/student" element={<StudentInsuranceDetails />} />
           <Route path="/insurance-types/super-visa" element={<SuperVisaInsuranceDetails />} />
           <Route path="/insurance-types/super-visa/gms" element={<GmsSuperVisaDetails />} />
+          <Route path="/insurance-types/super-visa/insure-canada" element={<InsureCanadaSuperVisaDetails />} />
+          <Route path="/insurance-types/super-visa/rimi" element={<RimiSuperVisaDetails />} />
+          <Route path="/insurance-types/super-visa/manulife" element={<ManulifeSuperVisaDetails />} />
           <Route path="/investment-types" element={<InvestmentTypes />} />
           <Route path="/investment-types/rrsp" element={<RRSPDetails />} />
           <Route path="/investment-types/fhsa" element={<FHSADetails />} />

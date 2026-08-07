@@ -3,27 +3,24 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Button } from '../components/ui/button';
-import {
-  Shield, Phone, Download, CheckCircle, AlertTriangle, Pill, Stethoscope,
-  Ambulance, HeartPulse, Baby, Plane, Hotel, Activity, FileText, Clock
-} from 'lucide-react';
+import { Phone, Download, CheckCircle, AlertTriangle, FileText, Clock } from 'lucide-react';
 import brochureAsset from '@/assets/gms-brochure.pdf.asset.json';
 import policyAsset from '@/assets/gms-policy-wording.pdf.asset.json';
 import heroBg from '@/assets/hero-bg-super-visa.jpg';
 
 const benefits = [
-  { icon: <Hotel className="w-10 h-10 text-blue-600" />, title: 'In-Hospital Care', text: 'Hospital accommodation up to a semi-private room, plus hospital services and supplies for an emergency. Medically necessary follow-up visits covered (normally within 14 days of the emergency).' },
-  { icon: <Stethoscope className="w-10 h-10 text-indigo-600" />, title: 'Medical Services', text: 'Treatment provided by a physician or surgeon during a covered medical emergency.' },
-  { icon: <Activity className="w-10 h-10 text-purple-600" />, title: 'Diagnostic Services', text: 'X-rays and other diagnostic tests. MRI, CT scans, sonograms, ultrasounds and biopsies require pre-authorization by GMS.' },
-  { icon: <HeartPulse className="w-10 h-10 text-red-600" />, title: 'Out-Patient Treatment', text: 'Emergency room expenses when you are treated as an out-patient.' },
-  { icon: <Pill className="w-10 h-10 text-green-600" />, title: 'Prescription Medication', text: 'Drugs prescribed by the attending physician and dispensed by a licensed pharmacist, up to a 30-day supply. Refills are not covered.' },
-  { icon: <Ambulance className="w-10 h-10 text-orange-600" />, title: 'Ambulance', text: 'Licensed road or air ambulance to the nearest hospital with adequate facilities. Air ambulance requires prior GMS approval. Helicopter transport is excluded.' },
-  { icon: <Activity className="w-10 h-10 text-teal-600" />, title: 'Health Practitioners — $500', text: 'Aggregate maximum of $500 per person for emergency services of an osteopath, optometrist, physiotherapist, chiropractor, chiropodist and/or podiatrist.' },
-  { icon: <Shield className="w-10 h-10 text-cyan-600" />, title: 'Accidental Dental — $2,000', text: 'Up to $2,000 per person to repair or replace natural teeth after an accidental blow to the mouth, plus up to $300 for relief of dental pain. Implants excluded.' },
-  { icon: <FileText className="w-10 h-10 text-gray-600" />, title: 'Return of Remains — $10,000', text: 'Up to $10,000 for preparation and transportation of the deceased, or up to $4,000 for cremation or burial at the place of death.' },
-  { icon: <Baby className="w-10 h-10 text-pink-600" />, title: 'Child Care — $500', text: 'Up to $500, with prior GMS approval, for licensed care of dependent children travelling with you if you are hospitalized.' },
-  { icon: <Hotel className="w-10 h-10 text-amber-600" />, title: 'Out-of-Pocket Expenses — $1,000', text: 'Up to $150 per day to a $1,000 maximum for accommodation, meals, phone calls and taxi/bus fares for an accompanying family member if you are in hospital on your return date.' },
-  { icon: <Plane className="w-10 h-10 text-blue-700" />, title: 'Repatriation — $5,000+', text: 'Up to $5,000 to return you home by commercial airline without a medical attendant (includes 1 insured family member). With a medical attendant or air ambulance, transport is covered when pre-approved and arranged by GMS.' },
+  '<strong>In-Hospital Care</strong> — hospital accommodation up to a semi-private room, plus hospital services and supplies for an emergency. Medically necessary follow-up visits are covered (normally within 14 days of the emergency).',
+  '<strong>Medical Services</strong> — treatment provided by a physician or surgeon during a covered medical emergency.',
+  '<strong>Diagnostic Services</strong> — x-rays and other diagnostic tests. MRI, CT scans, sonograms, ultrasounds and biopsies require pre-authorization by GMS.',
+  '<strong>Out-Patient Treatment</strong> — emergency room expenses when you are treated as an out-patient.',
+  '<strong>Prescription Medication</strong> — drugs prescribed by the attending physician and dispensed by a licensed pharmacist, up to a 30-day supply. Refills are not covered.',
+  '<strong>Ambulance</strong> — licensed road or air ambulance to the nearest hospital with adequate facilities. Air ambulance requires prior GMS approval; helicopter transport is excluded.',
+  '<strong>Health Practitioners — $500</strong> — aggregate maximum of $500 per person for emergency services of an osteopath, optometrist, physiotherapist, chiropractor, chiropodist and/or podiatrist.',
+  '<strong>Accidental Dental — $2,000</strong> — up to $2,000 per person to repair or replace natural teeth after an accidental blow to the mouth, plus up to $300 for relief of dental pain. Implants are excluded.',
+  '<strong>Return of Remains — $10,000</strong> — up to $10,000 for preparation and transportation of the deceased, or up to $4,000 for cremation or burial at the place of death.',
+  '<strong>Child Care — $500</strong> — up to $500, with prior GMS approval, for licensed care of dependent children travelling with you if you are hospitalized.',
+  '<strong>Out-of-Pocket Expenses — $1,000</strong> — up to $150 per day to a $1,000 maximum for accommodation, meals, phone calls and taxi/bus fares for an accompanying family member if you are in hospital on your return date.',
+  '<strong>Repatriation — $5,000+</strong> — up to $5,000 to return you home by commercial airline without a medical attendant (includes 1 insured family member). With a medical attendant or air ambulance, transport is covered when pre-approved and arranged by GMS.',
 ];
 
 const GmsSuperVisaDetails = () => {
@@ -119,14 +116,15 @@ const GmsSuperVisaDetails = () => {
               <p className="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">
                 GMS pays reasonable and customary charges for eligible expenses from an unexpected medical emergency, up to your policy limit and less your chosen deductible.
               </p>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {benefits.map((b, i) => (
-                  <div key={i} className="bg-white p-8 rounded-xl card-3d-super border">
-                    <div className="mb-4">{b.icon}</div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{b.title}</h3>
-                    <p className="text-gray-600">{b.text}</p>
-                  </div>
-                ))}
+              <div className="bg-white p-8 rounded-2xl card-3d border max-w-5xl mx-auto">
+                <ul className="space-y-3">
+                  {benefits.map((b, i) => (
+                    <li key={i} className="flex items-start text-gray-700 leading-relaxed">
+                      <CheckCircle className="w-5 h-5 text-blue-600 mr-3 mt-1 flex-shrink-0" />
+                      <span dangerouslySetInnerHTML={{ __html: b }} />
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
