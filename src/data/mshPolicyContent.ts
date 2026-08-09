@@ -5,21 +5,21 @@ export const mshBenefits: string[] = [
   '<strong>Hospital accommodation</strong> — charges up to the ward rate (semi-private room on the Enhanced plan), intensive care or coronary care when medically necessary, emergency-room fees and emergency out-patient hospital services.',
   '<strong>Medical services</strong> — treatment by a legally licensed physician, surgeon, anesthetist or registered graduate nurse (not an immediate family member).',
   '<strong>Diagnostic services</strong> — laboratory tests and x-rays ordered by the attending physician. MRI, CAT scans, digital x-rays, sonograms, ultrasounds, biopsies and cardiac catheterization require prior approval from MSH Assistance.',
-  '<strong>Prescription drugs</strong> — prescribed drugs, injectables and sera dispensed by a licensed pharmacist, limited to a 30-day supply and up to $500 per prescription ($1,000 on the Enhanced plan) unless hospitalized. Drugs to stabilize a chronic or pre-trip condition are not covered.',
-  '<strong>Private duty nurse</strong> — professional services of a registered private duty nurse when prescribed and pre-approved, up to $5,000 when used in lieu of hospitalization.',
-  '<strong>Follow-up visits</strong> — up to $1,000 for follow-up visits directly related to your emergency, when approved in advance.',
-  '<strong>Paramedical services</strong> — licensed chiropractor, physiotherapist, podiatrist or osteopath (including x-rays) up to $300 per profession ($500 on the Enhanced plan), when pre-approved.',
-  '<strong>Emergency dental</strong> — up to $1,000 ($3,000 Enhanced) to repair or replace sound natural teeth after an accidental blow to the face, and up to $300 ($500 Enhanced) for relief of dental pain. Treatment must start within 48 hours and finish within 90 days.',
-  '<strong>Medical appliances</strong> — up to $5,000 for crutches, casts, splints, canes, slings, trusses, braces, walkers or temporary wheelchair rental, when prescribed and pre-approved.',
+  '<strong>Prescription drugs</strong> — prescribed drugs, injectables and sera dispensed by a licensed pharmacist, limited to a <strong>30-day supply</strong> and up to <strong>$500 per prescription</strong> (<strong>$1,000 on the Enhanced plan</strong>) unless hospitalized. Drugs to stabilize a chronic or pre-trip condition are <strong>not covered</strong>.',
+  '<strong>Private duty nurse</strong> — professional services of a registered private duty nurse when prescribed and pre-approved, up to <strong>$5,000</strong> when used in lieu of hospitalization.',
+  '<strong>Follow-up visits</strong> — up to <strong>$1,000</strong> for follow-up visits directly related to your emergency, when <strong>approved in advance</strong>.',
+  '<strong>Paramedical services</strong> — licensed chiropractor, physiotherapist, podiatrist or osteopath (including x-rays) up to <strong>$300 per profession</strong> (<strong>$500 Enhanced</strong>), when <strong>pre-approved</strong>.',
+  '<strong>Emergency dental</strong> — up to <strong>$1,000</strong> (<strong>$3,000 Enhanced</strong>) to repair or replace sound natural teeth after an accidental blow to the face, and up to <strong>$300</strong> (<strong>$500 Enhanced</strong>) for relief of dental pain. Treatment must start <strong>within 48 hours</strong> and finish <strong>within 90 days</strong>.',
+  '<strong>Medical appliances</strong> — up to <strong>$5,000</strong> for crutches, casts, splints, canes, slings, trusses, braces, walkers or temporary wheelchair rental, when prescribed and pre-approved.',
   '<strong>Emergency transportation</strong> — licensed ambulance (or taxi in lieu) to the nearest capable facility, transfers between hospitals, and — when approved and arranged by MSH Assistance — one-way economy airfare home, a medical attendant, or air ambulance where medically necessary.',
-  '<strong>Accidental Death & Dismemberment</strong> — up to $100,000; 100% of the sum insured for loss of life, both hands, both feet or entire sight of both eyes, and 50% for loss of one hand, one foot or sight of one eye. Only the largest single amount is payable.',
-  '<strong>Flight accident</strong> — up to $50,000 for death as a fare-paying passenger on a commercial airline, with the insurer’s total liability capped at $300,000 per accident.',
-  '<strong>Repatriation of remains</strong> — up to $5,000 ($10,000 Enhanced) for preparation of remains, a standard shipping container and transportation home, or up to $2,500 ($5,000 Enhanced) for cremation or burial at the place of death. Casket, urn and funeral costs are not covered.',
-  '<strong>Transportation to bedside (Enhanced plan)</strong> — round-trip economy airfare plus $150 per day to a $3,000 maximum for one person to be with you if you are hospitalized as an in-patient for at least 3 consecutive days, or to identify the deceased.',
-  '<strong>Meals and accommodation</strong> — up to $150 per day to a $3,000 maximum for commercial accommodation, meals, essential calls, internet, bus/taxi/rental car and child care for dependents under 18, when pre-approved.',
-  '<strong>Hospital allowance</strong> — up to $50 per day to a $500 maximum for incidental hospital charges such as telephone, television or internet while hospitalized.',
+  '<strong>Accidental Death & Dismemberment</strong> — up to <strong>$100,000</strong>; <strong>100%</strong> of the sum insured for loss of life, both hands, both feet or entire sight of both eyes, and <strong>50%</strong> for loss of one hand, one foot or sight of one eye. Only the largest single amount is payable.',
+  '<strong>Flight accident</strong> — up to <strong>$50,000</strong> for death as a fare-paying passenger on a commercial airline, with total liability capped at <strong>$300,000 per accident</strong>.',
+  '<strong>Repatriation of remains</strong> — up to <strong>$5,000</strong> (<strong>$10,000 Enhanced</strong>) for preparation of remains, a standard shipping container and transportation home, or up to <strong>$2,500</strong> (<strong>$5,000 Enhanced</strong>) for cremation or burial at the place of death. Casket, urn and funeral costs are <strong>not covered</strong>.',
+  '<strong>Transportation to bedside (Enhanced plan only)</strong> — round-trip economy airfare plus <strong>$150 per day</strong> to a <strong>$3,000 maximum</strong> for one person if you are hospitalized for at least <strong>3 consecutive days</strong>, or to identify the deceased.',
+  '<strong>Meals and accommodation</strong> — up to <strong>$150 per day</strong> to a <strong>$3,000 maximum</strong> for accommodation, meals, essential calls, internet, bus/taxi/rental car and child care for dependents under 18, when pre-approved.',
+  '<strong>Hospital allowance</strong> — up to <strong>$50 per day</strong> to a <strong>$500 maximum</strong> for incidental hospital charges such as telephone, television or internet while hospitalized.',
   '<strong>Return and escort of children</strong> — economy airfare to return accompanying dependent children plus an escort, when you are transported home under the Emergency Transportation benefit.',
-  '<strong>Excess baggage return</strong> — up to $500 to return your excess baggage to the departure point when you are transported home under the Emergency Transportation benefit.',
+  '<strong>Excess baggage return</strong> — up to <strong>$500</strong> to return your excess baggage to the departure point when you are transported home under the Emergency Transportation benefit.',
 ];
 
 export const mshEligibility = {
@@ -36,12 +36,12 @@ export const mshEligibility = {
 };
 
 export const mshExclusions: string[] = [
-  'Pre-existing conditions — all of them under Plan 1; under Plan 2, any condition that was not stable for 90 days (up to age 69) or 180 days (ages 70–84) before the effective date.',
-  'Any sickness or injury that would have caused an ordinarily prudent person to seek medical attention in the 90 days before the effective date.',
-  'Non-emergency treatment, elective or cosmetic surgery, and any treatment that can reasonably be delayed until you return to your country of origin.',
-  'Any medical treatment received in your country of origin, or a condition treated during a temporary visit there.',
-  'Costs incurred outside Canada after 30 consecutive days in any other country during the coverage period.',
-  'Travel against a physician’s advice, or a condition diagnosed as a terminal illness before the effective date.',
+  '<strong>Pre-existing conditions</strong> — all of them under <strong>Plan 1</strong>; under <strong>Plan 2</strong>, any condition <strong>not stable for 90 days</strong> (up to age 69) or <strong>180 days</strong> (ages 70–84) before the effective date.',
+  'Any sickness or injury that would have caused an ordinarily prudent person to seek medical attention in the <strong>90 days before the effective date</strong>.',
+  '<strong>Non-emergency treatment</strong>, elective or cosmetic surgery, and any treatment that can reasonably be delayed until you return to your country of origin.',
+  'Any medical treatment received in your <strong>country of origin</strong>, or a condition treated during a temporary visit there.',
+  'Costs incurred outside Canada after <strong>30 consecutive days</strong> in any other country during the coverage period.',
+  'Travel <strong>against a physician’s advice</strong>, or a condition diagnosed as a <strong>terminal illness</strong> before the effective date.',
   'Ongoing or regular care of a chronic condition, home health care, investigative testing, rehabilitation or convalescent care after the initial emergency has ended.',
   'Trips taken specifically to obtain medical treatment outside your country of origin.',
   'Transplants, artificial joints, prosthetic devices and implants (implants to stabilize an emergency may be covered if pre-approved).',
@@ -49,7 +49,7 @@ export const mshExclusions: string[] = [
   'Loss or damage to hearing devices, eyeglasses, contact lenses or prosthetic teeth, limbs or devices.',
   'Routine pre-natal care, pregnancy or childbirth and complications in the 9 weeks before or after the expected delivery date.',
   'Congenital defects and related conditions for children under 2 years of age.',
-  'Any benefit requiring prior MSH Assistance approval where that approval was not obtained.',
+  'Any benefit requiring <strong>prior MSH Assistance approval</strong> where that approval was not obtained.',
   'Emotional, psychological or mental disorders unless you are hospitalized.',
   'Losses contributed to by alcohol, prohibited drugs or other intoxicants.',
   'Illegal or criminal acts, suicide, attempted suicide or self-inflicted injury.',
@@ -60,6 +60,38 @@ export const mshExclusions: string[] = [
   'Radioactive contamination and weapons of mass destruction.',
   'Service in or training for any armed forces, national guard or reserve corps.',
   'Worsening or complications caused by your failure to follow a physician’s directions.',
+];
+
+export const mshPlanComparison = {
+  title: 'Standard Plan vs Enhanced Plan — Side by Side',
+  subtitle:
+    'Both plans cover the same emergency benefits. The Enhanced plan pays higher limits on the benefits people use most, and adds Transportation to Bedside.',
+  planALabel: 'Standard Plan',
+  planBLabel: 'Enhanced Plan',
+  planANote: 'Lower premium, ward-rate hospital room',
+  planBNote: 'Higher limits, semi-private room',
+  rows: [
+    { feature: 'Hospital room', a: '<strong>Ward rate</strong> (ICU/CCU covered when medically necessary)', b: '<strong>Semi-private room</strong> (ICU/CCU covered when medically necessary)' },
+    { feature: 'Prescription drugs', a: 'Up to <strong>$500 per prescription</strong>, <strong>30-day supply</strong> limit unless hospitalized', b: 'Up to <strong>$1,000 per prescription</strong>, <strong>30-day supply</strong> limit unless hospitalized' },
+    { feature: 'Paramedical services', a: 'Up to <strong>$300 per profession</strong> (chiropractor, physiotherapist, podiatrist, osteopath)', b: 'Up to <strong>$500 per profession</strong> (chiropractor, physiotherapist, podiatrist, osteopath)' },
+    { feature: 'Dental — accident', a: 'Up to <strong>$1,000</strong>', b: 'Up to <strong>$3,000</strong>' },
+    { feature: 'Dental — pain relief', a: 'Up to <strong>$300</strong>', b: 'Up to <strong>$500</strong>' },
+    { feature: 'Repatriation of remains', a: 'Up to <strong>$5,000</strong> (or <strong>$2,500</strong> cremation/burial at place of death)', b: 'Up to <strong>$10,000</strong> (or <strong>$5,000</strong> cremation/burial at place of death)' },
+    { feature: 'Transportation to bedside', a: '<strong>Not included</strong>', b: 'Round-trip economy airfare + <strong>$150/day</strong> to a <strong>$3,000 max</strong> after <strong>3 consecutive days</strong> in hospital' },
+    { feature: 'Private duty nurse', a: 'Up to <strong>$5,000</strong> (pre-approval required)', b: 'Up to <strong>$5,000</strong> (pre-approval required)' },
+    { feature: 'Follow-up visits', a: 'Up to <strong>$1,000</strong> (pre-approved)', b: 'Up to <strong>$1,000</strong> (pre-approved)' },
+    { feature: 'Accidental Death & Dismemberment', a: 'Up to <strong>$100,000</strong>', b: 'Up to <strong>$100,000</strong>' },
+    { feature: 'Meals & accommodation', a: '<strong>$150/day</strong> to a <strong>$3,000</strong> maximum', b: '<strong>$150/day</strong> to a <strong>$3,000</strong> maximum' },
+    { feature: 'Pre-existing conditions', a: 'Choose <strong>Plan 1</strong> (never covered) or <strong>Plan 2</strong> (covered if stable)', b: 'Choose <strong>Plan 1</strong> (never covered) or <strong>Plan 2</strong> (covered if stable)' },
+  ],
+};
+
+export const mshPreExisting: string[] = [
+  '<strong>Plan 1 — no pre-existing coverage.</strong> Any sickness, injury or medical condition that existed before your effective date is <strong>not covered at all</strong>.',
+  '<strong>Plan 2 — stable conditions covered.</strong> Up to <strong>age 69</strong>: must be <strong>stable for 90 days</strong> before the effective date. <strong>Ages 70–84</strong>: must be <strong>stable for 180 days</strong>.',
+  '<strong>Medical declaration required for Plan 2.</strong> Every question must be answered <strong>“no”</strong> — a single <strong>“yes”</strong> means pre-existing conditions are <strong>not covered</strong>, stable or not.',
+  '<strong>“Stable” means all of the following:</strong> no hospitalization, no new diagnosis, no new treatment or medication, no change in treatment or medication, no new or worsening symptoms, no test results showing deterioration, and no specialist referral or pending investigation.',
+  '<strong>Tip:</strong> stability is measured on the <strong>day your policy takes effect</strong> — a medication change the week before can void the coverage.',
 ];
 
 export const mshEmergency: string[] = [
