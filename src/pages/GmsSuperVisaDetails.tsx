@@ -9,18 +9,32 @@ import policyAsset from '@/assets/gms-policy-wording.pdf.asset.json';
 import heroBg from '@/assets/hero-bg-super-visa.jpg';
 
 const benefits = [
-  '<strong>In-Hospital Care</strong> — hospital accommodation up to a semi-private room, plus hospital services and supplies for an emergency. Medically necessary follow-up visits are covered (normally within 14 days of the emergency).',
+  '<strong>In-Hospital Care</strong> — hospital accommodation up to a <strong>semi-private room</strong>, plus hospital services and supplies for an emergency. Follow-up visits are covered when medically necessary (normally <strong>within 14 days</strong> of the emergency).',
   '<strong>Medical Services</strong> — treatment provided by a physician or surgeon during a covered medical emergency.',
-  '<strong>Diagnostic Services</strong> — x-rays and other diagnostic tests. MRI, CT scans, sonograms, ultrasounds and biopsies require pre-authorization by GMS.',
+  '<strong>Diagnostic Services</strong> — x-rays and other diagnostic tests. <strong>MRI, CT scans, sonograms, ultrasounds and biopsies require pre-authorization</strong> by GMS.',
   '<strong>Out-Patient Treatment</strong> — emergency room expenses when you are treated as an out-patient.',
-  '<strong>Prescription Medication</strong> — drugs prescribed by the attending physician and dispensed by a licensed pharmacist, up to a 30-day supply. Refills are not covered.',
-  '<strong>Ambulance</strong> — licensed road or air ambulance to the nearest hospital with adequate facilities. Air ambulance requires prior GMS approval; helicopter transport is excluded.',
+  '<strong>Prescription Medication</strong> — drugs prescribed by the attending physician and dispensed by a licensed pharmacist, up to a <strong>30-day supply</strong>. <strong>Refills are not covered.</strong>',
+  '<strong>Ambulance</strong> — licensed road or air ambulance to the nearest hospital with adequate facilities. Air ambulance requires <strong>prior GMS approval</strong>; <strong>helicopter transport is excluded</strong>.',
   '<strong>Health Practitioners — $500</strong> — aggregate maximum of $500 per person for emergency services of an osteopath, optometrist, physiotherapist, chiropractor, chiropodist and/or podiatrist.',
-  '<strong>Accidental Dental — $2,000</strong> — up to $2,000 per person to repair or replace natural teeth after an accidental blow to the mouth, plus up to $300 for relief of dental pain. Implants are excluded.',
-  '<strong>Return of Remains — $10,000</strong> — up to $10,000 for preparation and transportation of the deceased, or up to $4,000 for cremation or burial at the place of death.',
-  '<strong>Child Care — $500</strong> — up to $500, with prior GMS approval, for licensed care of dependent children travelling with you if you are hospitalized.',
-  '<strong>Out-of-Pocket Expenses — $1,000</strong> — up to $150 per day to a $1,000 maximum for accommodation, meals, phone calls and taxi/bus fares for an accompanying family member if you are in hospital on your return date.',
-  '<strong>Repatriation — $5,000+</strong> — up to $5,000 to return you home by commercial airline without a medical attendant (includes 1 insured family member). With a medical attendant or air ambulance, transport is covered when pre-approved and arranged by GMS.',
+  '<strong>Accidental Dental — $2,000</strong> — up to <strong>$2,000</strong> per person to repair or replace natural teeth after an accidental blow to the mouth, plus up to <strong>$300</strong> for relief of dental pain. <strong>Implants are excluded.</strong>',
+  '<strong>Return of Remains — $10,000</strong> — up to <strong>$10,000</strong> for preparation and transportation of the deceased, or up to <strong>$4,000</strong> for cremation or burial at the place of death.',
+  '<strong>Child Care — $500</strong> — up to <strong>$500</strong>, with <strong>prior GMS approval</strong>, for licensed care of dependent children travelling with you if you are hospitalized.',
+  '<strong>Out-of-Pocket Expenses — $1,000</strong> — up to <strong>$150 per day</strong> to a <strong>$1,000 maximum</strong> for accommodation, meals, phone calls and taxi/bus fares for an accompanying family member if you are in hospital on your return date.',
+  '<strong>Repatriation — $5,000+</strong> — up to <strong>$5,000</strong> to return you home by commercial airline without a medical attendant (includes <strong>1 insured family member</strong>). With a medical attendant or air ambulance, transport is covered when <strong>pre-approved and arranged by GMS</strong>.',
+];
+
+const planRows: { feature: string; a: string; b: string }[] = [
+  { feature: 'Emergency medical maximum', a: '<strong>$100,000</strong> per insured person', b: '<strong>$150,000</strong> per insured person' },
+  { feature: 'Super Visa qualified', a: '<strong>Yes</strong> — meets the IRCC <strong>$100,000 minimum</strong>', b: '<strong>Yes</strong> — extra buffer for major hospital stays' },
+  { feature: 'Pre-existing conditions', a: 'Covered only if <strong>stable for 180 days</strong> before the effective date', b: 'Covered only if <strong>stable for 180 days</strong> before the effective date' },
+  { feature: 'Hospital room', a: 'Up to a <strong>semi-private room</strong>', b: 'Up to a <strong>semi-private room</strong>' },
+  { feature: 'Prescription medication', a: '<strong>30-day supply</strong>, <strong>refills not covered</strong>', b: '<strong>30-day supply</strong>, <strong>refills not covered</strong>' },
+  { feature: 'Accidental dental', a: 'Up to <strong>$2,000</strong> + <strong>$300</strong> pain relief', b: 'Up to <strong>$2,000</strong> + <strong>$300</strong> pain relief' },
+  { feature: 'Health practitioners', a: '<strong>$500</strong> aggregate maximum', b: '<strong>$500</strong> aggregate maximum' },
+  { feature: 'Return of remains', a: 'Up to <strong>$10,000</strong> (or <strong>$4,000</strong> cremation/burial)', b: 'Up to <strong>$10,000</strong> (or <strong>$4,000</strong> cremation/burial)' },
+  { feature: 'Deductible options', a: '<strong>$0, $100, $250, $500, $1,000, $3,000</strong> — applied to <strong>each claim</strong>', b: '<strong>$0, $100, $250, $500, $1,000, $3,000</strong> — applied to <strong>each claim</strong>' },
+  { feature: 'Maximum policy length', a: '<strong>365 days</strong>', b: '<strong>365 days</strong>' },
+  { feature: 'Premium', a: '<strong>Lower</strong> — best when budget matters most', b: '<strong>Higher</strong> — best for older applicants or higher risk' },
 ];
 
 const GmsSuperVisaDetails = () => {
@@ -133,6 +147,39 @@ const GmsSuperVisaDetails = () => {
         {/* Deductibles & limits */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">$100,000 vs $150,000 Plan — Side by Side</h2>
+              <p className="text-lg text-gray-600 mb-10 text-center max-w-3xl mx-auto">
+                GMS offers <strong>one benefit plan</strong> with two coverage amounts. The benefits are identical — only the maximum payout and your premium change.
+              </p>
+              <div className="bg-white rounded-2xl card-3d border overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[640px] text-left">
+                    <thead>
+                      <tr className="bg-blue-900 text-white">
+                        <th className="p-4 w-1/4 text-base font-bold">Feature</th>
+                        <th className="p-4 w-[37.5%] text-base font-bold">$100,000 Plan<span className="block text-xs font-normal text-blue-200 mt-1">Minimum required for Super Visa</span></th>
+                        <th className="p-4 w-[37.5%] text-base font-bold bg-blue-800">$150,000 Plan<span className="block text-xs font-normal text-blue-200 mt-1">Extra protection, higher premium</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {planRows.map((r, i) => (
+                        <tr key={r.feature} className={i % 2 ? 'bg-gray-50' : 'bg-white'}>
+                          <th scope="row" className="p-4 align-top font-bold text-gray-900">{r.feature}</th>
+                          <td className="p-4 align-top text-gray-700 border-l" dangerouslySetInnerHTML={{ __html: r.a }} />
+                          <td className="p-4 align-top text-gray-700 border-l bg-blue-50/60" dangerouslySetInnerHTML={{ __html: r.b }} />
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Coverage Limits &amp; Deductibles</h2>
               <div className="grid md:grid-cols-2 gap-8">
@@ -197,9 +244,20 @@ const GmsSuperVisaDetails = () => {
                   <AlertTriangle className="w-10 h-10 text-yellow-600 mr-4 flex-shrink-0" />
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-3">Pre-Existing Conditions — 180-Day Stability</h3>
-                    <p className="text-gray-700">
-                      GMS does not cover expenses from medical conditions that have <strong>not been stable for the 180 days immediately before your effective date</strong>. This applies to conditions you received treatment or consultation for, and to undiagnosed conditions with symptoms you sought treatment or advice for. Stability is judged by the policy's definition, regardless of a physician's opinion.
-                    </p>
+                    <ul className="space-y-3">
+                      {[
+                        'GMS covers pre-existing conditions <strong>only if they were stable for the 180 days</strong> immediately before your effective date.',
+                        'This applies to conditions you received <strong>treatment or consultation</strong> for, and to <strong>undiagnosed conditions</strong> with symptoms you sought advice for.',
+                        '<strong>Stability is judged by the policy definition</strong> — <strong>not</strong> by your physician’s opinion.',
+                        '<strong>Not stable</strong> means: new diagnosis, <strong>new or changed medication</strong>, new or worsening symptoms, hospitalization, or a <strong>pending test or specialist referral</strong>.',
+                        '<strong>Unlike some insurers, GMS has only one plan</strong> — there is no cheaper "no pre-existing" option and no more generous 90-day window.',
+                      ].map((line, i) => (
+                        <li key={i} className="flex items-start text-gray-700 leading-relaxed">
+                          <span className="w-2 h-2 rounded-full bg-yellow-500 mr-3 mt-2 flex-shrink-0" />
+                          <span dangerouslySetInnerHTML={{ __html: line }} />
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -243,26 +301,26 @@ const GmsSuperVisaDetails = () => {
               <div className="bg-white p-8 rounded-xl card-3d border">
                 <ul className="grid md:grid-cols-2 gap-4 text-gray-700">
                   {[
-                    'Expenses incurred in your country of origin',
-                    'Conditions not stable for 180 days before the effective date',
-                    'Regular care or continuation of a chronic condition',
-                    'Non-emergency care: check-ups, elective, cosmetic or dental surgery',
-                    'Treatment received against medical advice or the advice of GMS',
-                    'Pregnancy, childbirth, abortion, miscarriage and related complications',
-                    'Newborns until released from hospital for 48 hours and added as a dependant',
-                    'Diagnostic facility treatment or air transport not pre-approved by GMS',
-                    'Over-the-counter drugs, experimental drugs, vaccines and preventative medicine',
-                    'Trips taken for the purpose of obtaining diagnosis or treatment',
-                    'Claims involving alcohol, drug or intoxicant use or misuse of medication',
-                    'Criminal or illegal acts, war, terrorism and armed forces service',
-                    'Professional sport, racing and extreme sports (skydiving, bungee, mountaineering, etc.)',
-                    'Motor vehicle accident costs payable by any other public or private auto insurance',
-                    'Travel to destinations under a Canadian government "avoid travel" advisory',
-                    'Services duplicated by a government or private health plan',
+                    'Expenses incurred in your <strong>country of origin</strong>',
+                    'Conditions <strong>not stable for 180 days</strong> before the effective date',
+                    '<strong>Regular care or continuation of a chronic condition</strong>',
+                    '<strong>Non-emergency care</strong>: check-ups, elective, cosmetic or dental surgery',
+                    'Treatment received <strong>against medical advice</strong> or the advice of GMS',
+                    '<strong>Pregnancy, childbirth</strong>, abortion, miscarriage and related complications',
+                    'Newborns until released from hospital for <strong>48 hours</strong> and added as a dependant',
+                    'Diagnostic facility treatment or air transport <strong>not pre-approved by GMS</strong>',
+                    '<strong>Over-the-counter drugs</strong>, experimental drugs, vaccines and preventative medicine',
+                    'Trips taken <strong>for the purpose of obtaining diagnosis or treatment</strong>',
+                    'Claims involving <strong>alcohol, drugs or intoxicants</strong> or misuse of medication',
+                    '<strong>Criminal or illegal acts</strong>, war, terrorism and armed forces service',
+                    '<strong>Professional sport, racing and extreme sports</strong> (skydiving, bungee, mountaineering, etc.)',
+                    'Motor vehicle accident costs <strong>payable by any other auto insurance</strong>',
+                    'Travel to destinations under a Canadian government <strong>“avoid travel” advisory</strong>',
+                    'Services <strong>duplicated by a government or private health plan</strong>',
                   ].map((e, i) => (
                     <li key={i} className="flex items-start">
                       <AlertTriangle className="w-5 h-5 text-red-500 mr-3 mt-1 flex-shrink-0" />
-                      <span>{e}</span>
+                      <span dangerouslySetInnerHTML={{ __html: e }} />
                     </li>
                   ))}
                 </ul>
