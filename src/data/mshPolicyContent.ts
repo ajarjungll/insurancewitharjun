@@ -36,12 +36,12 @@ export const mshEligibility = {
 };
 
 export const mshExclusions: string[] = [
-  'Pre-existing conditions — all of them under Plan 1; under Plan 2, any condition that was not stable for 90 days (up to age 69) or 180 days (ages 70–84) before the effective date.',
-  'Any sickness or injury that would have caused an ordinarily prudent person to seek medical attention in the 90 days before the effective date.',
-  'Non-emergency treatment, elective or cosmetic surgery, and any treatment that can reasonably be delayed until you return to your country of origin.',
-  'Any medical treatment received in your country of origin, or a condition treated during a temporary visit there.',
-  'Costs incurred outside Canada after 30 consecutive days in any other country during the coverage period.',
-  'Travel against a physician’s advice, or a condition diagnosed as a terminal illness before the effective date.',
+  '<strong>Pre-existing conditions</strong> — all of them under <strong>Plan 1</strong>; under <strong>Plan 2</strong>, any condition <strong>not stable for 90 days</strong> (up to age 69) or <strong>180 days</strong> (ages 70–84) before the effective date.',
+  'Any sickness or injury that would have caused an ordinarily prudent person to seek medical attention in the <strong>90 days before the effective date</strong>.',
+  '<strong>Non-emergency treatment</strong>, elective or cosmetic surgery, and any treatment that can reasonably be delayed until you return to your country of origin.',
+  'Any medical treatment received in your <strong>country of origin</strong>, or a condition treated during a temporary visit there.',
+  'Costs incurred outside Canada after <strong>30 consecutive days</strong> in any other country during the coverage period.',
+  'Travel <strong>against a physician’s advice</strong>, or a condition diagnosed as a <strong>terminal illness</strong> before the effective date.',
   'Ongoing or regular care of a chronic condition, home health care, investigative testing, rehabilitation or convalescent care after the initial emergency has ended.',
   'Trips taken specifically to obtain medical treatment outside your country of origin.',
   'Transplants, artificial joints, prosthetic devices and implants (implants to stabilize an emergency may be covered if pre-approved).',
@@ -49,7 +49,7 @@ export const mshExclusions: string[] = [
   'Loss or damage to hearing devices, eyeglasses, contact lenses or prosthetic teeth, limbs or devices.',
   'Routine pre-natal care, pregnancy or childbirth and complications in the 9 weeks before or after the expected delivery date.',
   'Congenital defects and related conditions for children under 2 years of age.',
-  'Any benefit requiring prior MSH Assistance approval where that approval was not obtained.',
+  'Any benefit requiring <strong>prior MSH Assistance approval</strong> where that approval was not obtained.',
   'Emotional, psychological or mental disorders unless you are hospitalized.',
   'Losses contributed to by alcohol, prohibited drugs or other intoxicants.',
   'Illegal or criminal acts, suicide, attempted suicide or self-inflicted injury.',
@@ -60,6 +60,38 @@ export const mshExclusions: string[] = [
   'Radioactive contamination and weapons of mass destruction.',
   'Service in or training for any armed forces, national guard or reserve corps.',
   'Worsening or complications caused by your failure to follow a physician’s directions.',
+];
+
+export const mshPlanComparison = {
+  title: 'Standard Plan vs Enhanced Plan — Side by Side',
+  subtitle:
+    'Both plans cover the same emergency benefits. The Enhanced plan pays higher limits on the benefits people use most, and adds Transportation to Bedside.',
+  planALabel: 'Standard Plan',
+  planBLabel: 'Enhanced Plan',
+  planANote: 'Lower premium, ward-rate hospital room',
+  planBNote: 'Higher limits, semi-private room',
+  rows: [
+    { feature: 'Hospital room', a: '<strong>Ward rate</strong> (ICU/CCU covered when medically necessary)', b: '<strong>Semi-private room</strong> (ICU/CCU covered when medically necessary)' },
+    { feature: 'Prescription drugs', a: 'Up to <strong>$500 per prescription</strong>, <strong>30-day supply</strong> limit unless hospitalized', b: 'Up to <strong>$1,000 per prescription</strong>, <strong>30-day supply</strong> limit unless hospitalized' },
+    { feature: 'Paramedical services', a: 'Up to <strong>$300 per profession</strong> (chiropractor, physiotherapist, podiatrist, osteopath)', b: 'Up to <strong>$500 per profession</strong> (chiropractor, physiotherapist, podiatrist, osteopath)' },
+    { feature: 'Dental — accident', a: 'Up to <strong>$1,000</strong>', b: 'Up to <strong>$3,000</strong>' },
+    { feature: 'Dental — pain relief', a: 'Up to <strong>$300</strong>', b: 'Up to <strong>$500</strong>' },
+    { feature: 'Repatriation of remains', a: 'Up to <strong>$5,000</strong> (or <strong>$2,500</strong> cremation/burial at place of death)', b: 'Up to <strong>$10,000</strong> (or <strong>$5,000</strong> cremation/burial at place of death)' },
+    { feature: 'Transportation to bedside', a: '<strong>Not included</strong>', b: 'Round-trip economy airfare + <strong>$150/day</strong> to a <strong>$3,000 max</strong> after <strong>3 consecutive days</strong> in hospital' },
+    { feature: 'Private duty nurse', a: 'Up to <strong>$5,000</strong> (pre-approval required)', b: 'Up to <strong>$5,000</strong> (pre-approval required)' },
+    { feature: 'Follow-up visits', a: 'Up to <strong>$1,000</strong> (pre-approved)', b: 'Up to <strong>$1,000</strong> (pre-approved)' },
+    { feature: 'Accidental Death & Dismemberment', a: 'Up to <strong>$100,000</strong>', b: 'Up to <strong>$100,000</strong>' },
+    { feature: 'Meals & accommodation', a: '<strong>$150/day</strong> to a <strong>$3,000</strong> maximum', b: '<strong>$150/day</strong> to a <strong>$3,000</strong> maximum' },
+    { feature: 'Pre-existing conditions', a: 'Choose <strong>Plan 1</strong> (never covered) or <strong>Plan 2</strong> (covered if stable)', b: 'Choose <strong>Plan 1</strong> (never covered) or <strong>Plan 2</strong> (covered if stable)' },
+  ],
+};
+
+export const mshPreExisting: string[] = [
+  '<strong>Plan 1 — no pre-existing coverage.</strong> Any sickness, injury or medical condition that existed before your effective date is <strong>not covered at all</strong>.',
+  '<strong>Plan 2 — stable conditions covered.</strong> Up to <strong>age 69</strong>: must be <strong>stable for 90 days</strong> before the effective date. <strong>Ages 70–84</strong>: must be <strong>stable for 180 days</strong>.',
+  '<strong>Medical declaration required for Plan 2.</strong> Every question must be answered <strong>“no”</strong> — a single <strong>“yes”</strong> means pre-existing conditions are <strong>not covered</strong>, stable or not.',
+  '<strong>“Stable” means all of the following:</strong> no hospitalization, no new diagnosis, no new treatment or medication, no change in treatment or medication, no new or worsening symptoms, no test results showing deterioration, and no specialist referral or pending investigation.',
+  '<strong>Tip:</strong> stability is measured on the <strong>day your policy takes effect</strong> — a medication change the week before can void the coverage.',
 ];
 
 export const mshEmergency: string[] = [
