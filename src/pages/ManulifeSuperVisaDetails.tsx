@@ -41,18 +41,36 @@ const ManulifeSuperVisaDetails = () => (
       '<strong>Optional Trip Interruption Insurance</strong> — available as an add-on to cover interruption of your trip for a covered reason.',
       '<strong>Maple telemedicine</strong> — the Assistance Centre can connect you within minutes to a Canadian licensed primary care physician for assessment, diagnosis and prescription, 24/7, in most provinces and territories.',
     ]}
+    planComparison={{
+      title: 'Plan A vs Plan B — Side by Side',
+      subtitle:
+        'Both plans pay the same emergency medical benefits. The only real difference is how pre-existing medical conditions are treated — and what you have to declare to get them covered.',
+      planALabel: 'Plan A',
+      planBLabel: 'Plan B',
+      planANote: 'Lower premium — no pre-existing coverage',
+      planBNote: 'Covers stable pre-existing conditions',
+      rows: [
+        { feature: 'Pre-existing conditions', a: '<strong>Not covered.</strong> Any condition — diagnosed or undiagnosed — that existed or was investigated in the <strong>180 days before the effective date</strong> is excluded.', b: '<strong>Covered if stable</strong> in the <strong>180 days before the effective date</strong>.' },
+        { feature: 'Medical questionnaire', a: '<strong>Not required</strong>', b: '<strong>Required for applicants age 40 and over</strong>' },
+        { feature: 'Family Coverage', a: '<strong>Available</strong> (parents under age 60, children 30 days to under 21)', b: '<strong>Not available</strong> — each person is insured individually' },
+        { feature: 'Emergency medical maximum', a: '<strong>$100,000 / $150,000</strong> (and higher limits where offered)', b: '<strong>$100,000 / $150,000</strong> (and higher limits where offered)' },
+        { feature: 'Deductible', a: 'Default <strong>$75 per claim</strong>; options <strong>$0, $500, $1,000, $2,500, $5,000</strong>', b: 'Default <strong>$75 per claim</strong>; options <strong>$0, $500, $1,000, $2,500, $5,000</strong>' },
+        { feature: 'Waiting period', a: '<strong>48 hours</strong> for sickness if bought <strong>after arriving</strong> in Canada; <strong>none</strong> if bought before you leave home', b: '<strong>48 hours</strong> for sickness if bought <strong>after arriving</strong> in Canada; <strong>none</strong> if bought before you leave home' },
+        { feature: 'Emergency dental', a: 'Up to <strong>$4,000</strong> (accident) and <strong>$300</strong> (pain relief)', b: 'Up to <strong>$4,000</strong> (accident) and <strong>$300</strong> (pain relief)' },
+        { feature: 'Paramedical services', a: '<strong>$70 per visit</strong> to a <strong>$700 maximum</strong>', b: '<strong>$70 per visit</strong> to a <strong>$700 maximum</strong>' },
+        { feature: 'Bedside visit', a: 'Up to <strong>$3,000</strong> airfare after <strong>5 days</strong> in hospital, plus <strong>$500</strong> hotel and meals', b: 'Up to <strong>$3,000</strong> airfare after <strong>5 days</strong> in hospital, plus <strong>$500</strong> hotel and meals' },
+        { feature: 'Always excluded on both', a: 'Heart condition needing <strong>nitroglycerine</strong> or lung condition needing <strong>oxygen / Prednisone</strong> in the prior <strong>180 days</strong>', b: 'Heart condition needing <strong>nitroglycerine</strong> or lung condition needing <strong>oxygen / Prednisone</strong> in the prior <strong>180 days</strong>' },
+        { feature: 'Age limits', a: '<strong>30 days to 85 years</strong> (<strong>69</strong> for $150,000 coverage)', b: '<strong>30 days to 85 years</strong> (<strong>69</strong> for $150,000 coverage)' },
+      ],
+    }}
     planOptions={{
-      title: 'Plan A vs Plan B, Deductibles and Coverage Rules',
+      title: 'Other Coverage Rules',
       items: [
-        '<strong>Plan A</strong> — no benefits for any medical condition, diagnosed or undiagnosed, that existed or for which you sought advice, consultation, investigation or treatment in the <strong>180 days before the effective date</strong>. Family Coverage is available under Plan A.',
-        '<strong>Plan B</strong> — covers pre-existing conditions that were <strong>stable in the 180 days</strong> before the effective date. Applicants aged <strong>40 or over must complete the medical questionnaire</strong>.',
-        'Both plans exclude any heart condition requiring nitroglycerine for angina, and any lung condition requiring oxygen or Prednisone, in the 180 days before the effective date.',
-        '<strong>Deductible:</strong> $75 per claim by default, or $0, $500, $1,000, $2,500 or $5,000 if selected and paid for. It applies per person per emergency medical claim, after any other benefit plan pays.',
-        '<strong>Family Coverage:</strong> parents must be under age 60; dependent children must be at least 30 days and under 21 (any age if mentally or physically disabled) and named on the confirmation.',
-        '<strong>Waiting period:</strong> except for injury, coverage begins <strong>48 hours after the effective date</strong> if you buy after arriving in Canada or after an existing Manulife policy expires. There is no waiting period if you buy before leaving home.',
-        '<strong>Side trips:</strong> covered outside Canada (excluding your country of origin) as long as the trip starts and ends in Canada and does not exceed the lesser of 30 days or 49% of your coverage days.',
-        '<strong>Automatic extension:</strong> 72 hours for a common carrier delay; up to 365 days while hospitalized plus 5 days after discharge; 5 days if a physician confirms you cannot travel.',
-        'Coverage cannot exceed 365 days and you may not be covered under more than one plan during your trip.',
+        '<strong>Family Coverage:</strong> parents must be <strong>under age 60</strong>; dependent children must be at least <strong>30 days and under 21</strong> (any age if mentally or physically disabled) and <strong>named on the confirmation</strong>.',
+        '<strong>Side trips:</strong> covered outside Canada (<strong>excluding your country of origin</strong>) if the trip <strong>starts and ends in Canada</strong> and does not exceed the lesser of <strong>30 days or 49% of your coverage days</strong>.',
+        '<strong>Automatic extension:</strong> <strong>72 hours</strong> for a common carrier delay; up to <strong>365 days while hospitalized</strong> plus <strong>5 days after discharge</strong>; <strong>5 days</strong> if a physician confirms you cannot travel.',
+        '<strong>Trip break:</strong> with prior Assistance Centre approval you may go home without cancelling — coverage is <strong>suspended</strong> and resumes on return (<strong>no premium refund</strong> for those days).',
+        'Coverage cannot exceed <strong>365 days</strong> and you may <strong>not be covered under more than one plan</strong> during your trip.',
       ],
     }}
     eligibility={{
@@ -69,18 +87,24 @@ const ManulifeSuperVisaDetails = () => (
         '<strong>Not eligible</strong> if you require assistance with activities of daily living.',
       ],
     }}
-    preExisting="Under <strong>Plan A</strong> there is no coverage for any medical condition — diagnosed or undiagnosed — that existed, or for which you sought or received advice, consultation, investigation or treatment, in the <strong>180 days before your effective date</strong>. Under <strong>Plan B</strong> a pre-existing condition is covered only if it was <strong>stable in the 180 days</strong> before the effective date. Both plans exclude heart conditions requiring nitroglycerine and lung conditions requiring oxygen or Prednisone in that 180-day window, and any pre-existing condition for which you were hospitalized more than once, or for at least two consecutive days, in the 12 months before your effective date."
+    preExisting={[
+      '<strong>Plan A — no pre-existing coverage.</strong> Any condition, <strong>diagnosed or undiagnosed</strong>, that existed or was advised on, investigated or treated in the <strong>180 days before your effective date</strong> is excluded.',
+      '<strong>Plan B — stable conditions covered.</strong> A pre-existing condition is covered only if it was <strong>stable for the full 180 days</strong> before the effective date.',
+      '<strong>Questionnaire:</strong> Plan B applicants <strong>age 40 and over must complete the medical questionnaire</strong> — answers must be <strong>truthful and accurate</strong> or the claim can be denied.',
+      '<strong>Excluded on both plans:</strong> heart conditions requiring <strong>nitroglycerine</strong> for angina, and lung conditions requiring <strong>oxygen or Prednisone</strong>, in that <strong>180-day window</strong>.',
+      '<strong>Excluded on both plans:</strong> any pre-existing condition you were hospitalized for <strong>more than once</strong>, or for <strong>2+ consecutive days</strong>, in the <strong>12 months</strong> before your effective date.',
+    ]}
     exclusions={[
-      'Any sickness that first appears during the 48-hour waiting period, even if the expenses are incurred later.',
-      'Pre-existing conditions as described above (Plan A: any condition in the prior 180 days; Plan B: conditions not stable for 180 days).',
-      'Any pre-existing condition for which you were hospitalized more than once, or for at least two consecutive days, in the 12 months before the effective date.',
-      'Charges exceeding reasonable and customary rates, or exceeding the maximum insured amount of the plan you purchased.',
-      'Any claim where the information on your application was not truthful and accurate, or you did not meet the eligibility requirements.',
-      '20% of eligible expenses if you do not contact the Assistance Centre within 24 hours of hospitalization (waived when it was medically impossible to call).',
-      'Any treatment that is not for an emergency, and continued treatment after the medical advisors determine the emergency has ended.',
-      'MRI, CAT scans, sonograms, ultrasounds, biopsies, cardiac catheterization, angioplasty, cardiovascular surgery and any surgery not authorized in advance by the Assistance Centre.',
-      'A condition you knew or could reasonably expect would need treatment during your trip, had planned investigation for, produced symptoms in the 3 months before leaving home, or that your physician advised you not to travel with.',
-      'Injury or sickness that started or was treated during a trip break, or after the permitted days outside Canada.',
+      'Any sickness that first appears during the <strong>48-hour waiting period</strong>, even if the expenses are incurred later.',
+      '<strong>Pre-existing conditions</strong> as described above (<strong>Plan A:</strong> any condition in the prior <strong>180 days</strong>; <strong>Plan B:</strong> conditions <strong>not stable for 180 days</strong>).',
+      'Any pre-existing condition you were hospitalized for <strong>more than once</strong>, or for <strong>2+ consecutive days</strong>, in the <strong>12 months</strong> before the effective date.',
+      'Charges exceeding <strong>reasonable and customary</strong> rates, or exceeding the <strong>maximum insured amount</strong> of the plan you purchased.',
+      'Any claim where your application was <strong>not truthful and accurate</strong>, or you did not meet the <strong>eligibility requirements</strong>.',
+      '<strong>20% of eligible expenses</strong> if you do not contact the Assistance Centre <strong>within 24 hours of hospitalization</strong> (waived when it was medically impossible to call).',
+      'Any treatment that is <strong>not for an emergency</strong>, and continued treatment after the emergency is <strong>declared over</strong>.',
+      '<strong>MRI, CAT scans, sonograms, ultrasounds, biopsies, cardiac catheterization, angioplasty, cardiovascular surgery</strong> and any surgery <strong>not authorized in advance</strong> by the Assistance Centre.',
+      'A condition you knew would need treatment during your trip, had <strong>planned investigation</strong> for, produced <strong>symptoms in the 3 months</strong> before leaving home, or that your physician advised you not to travel with.',
+      'Injury or sickness that started or was treated during a <strong>trip break</strong>, or after the <strong>permitted days outside Canada</strong>.',
       'Mountain climbing with specialized equipment, rock climbing, parachuting, skydiving, hang gliding, air-supported sporting devices, motorized speed contests, and professional participation in sport, snorkeling or diving.',
       'Self-inflicted injuries, unless medical evidence establishes they are related to a mental health illness.',
       'Committing or attempting to commit a criminal act.',
