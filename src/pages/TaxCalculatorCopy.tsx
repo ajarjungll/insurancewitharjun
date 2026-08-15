@@ -197,7 +197,7 @@ const calculateTax = (income: number, brackets: { min: number; max: number; rate
 
 type FilingStatus = 'single' | 'couple';
 
-const TaxCalculator = () => {
+const TaxCalculatorCopy = () => {
   const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
   const [selectedProvince, setSelectedProvince] = useState<Province>('manitoba');
   const [filingStatus, setFilingStatus] = useState<FilingStatus>('single');
