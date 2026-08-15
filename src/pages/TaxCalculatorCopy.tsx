@@ -209,6 +209,14 @@ const TaxCalculatorCopy = () => {
   const [hourlyWage, setHourlyWage] = useState<string>('');
   const [hoursPerWeek, setHoursPerWeek] = useState<string>('40');
 
+  // Additional (non-income) taxes
+  const [homeValue, setHomeValue] = useState<string>('');
+  const [propertyTaxRate, setPropertyTaxRate] = useState<string>('');
+  const [monthlyGroceries, setMonthlyGroceries] = useState<string>('');
+  const [monthlyDining, setMonthlyDining] = useState<string>('');
+  const [monthlyOtherSpending, setMonthlyOtherSpending] = useState<string>('');
+  const [monthlyRent, setMonthlyRent] = useState<string>('');
+
   const yearData = taxData[selectedYear];
   const provBrackets = yearData.provincialBrackets[selectedProvince];
   const provBPA = yearData.provincialBPA[selectedProvince];
