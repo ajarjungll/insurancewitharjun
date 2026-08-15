@@ -26,7 +26,7 @@ const HeroSection = () => {
               Protect What Matters Most With 
               <span className="text-orange-400"> Trusted Insurance</span>
             </h1>
-            <p className="text-xl mb-8 text-blue-100">Over 3+ years of experience providing comprehensive insurance solutions. From life to travel, critical illness to super visa - we've got you covered.</p>
+            <p className="text-xl mb-8 text-blue-100">Over 4+ years of experience providing comprehensive insurance solutions. From life to travel, critical illness to super visa - we've got you covered.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/quote" className="bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-colors text-center btn-3d">
                 Get Free Quote
@@ -44,7 +44,7 @@ const HeroSection = () => {
           <div className="grid grid-cols-2 gap-6">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center card-3d">
               <Shield className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">3+</h3>
+              <h3 className="text-2xl font-bold mb-2">4+</h3>
               <p className="text-blue-100">Years Experience</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center card-3d">
