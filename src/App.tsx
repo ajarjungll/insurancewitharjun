@@ -82,6 +82,7 @@ const App = () => (
           <Route path="/investment-types/tfsa" element={<TFSADetails />} />
           <Route path="/investment-types/resp" element={<RESPDetails />} />
           <Route path="/tax-calculator" element={<TaxCalculator />} />
+          <Route path="/tax-calculator-copy" element={<TaxCalculatorCopy />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
