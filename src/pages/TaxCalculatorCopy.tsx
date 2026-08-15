@@ -1533,4 +1533,4 @@ const TaxCalculatorCopy = () => {
   );
 };
 
-export default TaxCalculator;
+export default TaxCalculatorCopy;
