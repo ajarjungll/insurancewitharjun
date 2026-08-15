@@ -15,6 +15,7 @@ import FHSADetails from "./pages/FHSADetails";
 import TFSADetails from "./pages/TFSADetails";
 import RESPDetails from "./pages/RESPDetails";
 import TaxCalculator from "./pages/TaxCalculator";
+import TaxCalculatorCopy from "./pages/TaxCalculatorCopy";
 import CriticalIllnessDetails from "./pages/CriticalIllnessDetails";
 import DentalInsuranceDetails from "./pages/DentalInsuranceDetails";
 import LifeInsuranceDetails from "./pages/LifeInsuranceDetails";
