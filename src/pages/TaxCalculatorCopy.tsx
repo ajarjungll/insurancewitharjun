@@ -365,6 +365,37 @@ const TaxCalculatorCopy = () => {
     }).format(value);
   };
 
+  const otherTaxes = useMemo(() => {
+    const rates = salesTaxRates[selectedProvince];
+    const combinedRate = rates.gst + rates.pst;
+    const groceries = (parseFloat(monthlyGroceries) || 0) * 12; // basic groceries are zero-rated
+    const dining = (parseFloat(monthlyDining) || 0) * 12;
+    const other = (parseFloat(monthlyOtherSpending) || 0) * 12;
+    const rent = (parseFloat(monthlyRent) || 0) * 12; // residential rent is exempt
+
+    const diningTax = dining * combinedRate;
+    const otherTax = other * combinedRate;
+    const groceryTax = 0;
+    const salesTaxTotal = diningTax + otherTax;
+
+    const value = parseFloat(homeValue) || 0;
+    const rate = propertyTaxRate === '' ? defaultPropertyTaxRates[selectedProvince] : (parseFloat(propertyTaxRate) || 0);
+    const propertyTax = value * (rate / 100);
+
+    const payroll = calculations.totalCppContribution + calculations.eiContribution;
+    const totalTaxBurden = calculations.totalTax + payroll + salesTaxTotal + propertyTax;
+    const burdenRate = calculations.grossIncome > 0 ? (totalTaxBurden / calculations.grossIncome) * 100 : 0;
+    const trueNet = calculations.netIncome - salesTaxTotal - propertyTax;
+
+    return {
+      combinedRate, rates, groceries, dining, other, rent,
+      groceryTax, diningTax, otherTax, salesTaxTotal,
+      propertyTax, propertyRateUsed: rate,
+      payroll, totalTaxBurden, burdenRate, trueNet,
+      taxFreeDays: Math.round((burdenRate / 100) * 365),
+    };
+  }, [selectedProvince, monthlyGroceries, monthlyDining, monthlyOtherSpending, monthlyRent, homeValue, propertyTaxRate, calculations]);
+
   const formatBracket = (min: number, max: number) => {
     if (max === Infinity) return `Over $${min.toLocaleString()}`;
     return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
