@@ -224,12 +224,12 @@ const TaxCalculatorCopy = () => {
   const [hoursPerWeek, setHoursPerWeek] = useState<string>('40');
 
   // Additional (non-income) taxes
-  const [homeValue, setHomeValue] = useState<string>('');
-  const [propertyTaxRate, setPropertyTaxRate] = useState<string>('');
+  const [propertyTaxAmount, setPropertyTaxAmount] = useState<string>('');
+  const [propertyTaxPeriod, setPropertyTaxPeriod] = useState<'monthly' | 'yearly'>('yearly');
   const [monthlyGroceries, setMonthlyGroceries] = useState<string>('');
   const [monthlyDining, setMonthlyDining] = useState<string>('');
-  const [monthlyOtherSpending, setMonthlyOtherSpending] = useState<string>('');
-  const [monthlyRent, setMonthlyRent] = useState<string>('');
+  const [monthlyMisc, setMonthlyMisc] = useState<string>('');
+  const [monthlyFun, setMonthlyFun] = useState<string>('');
 
   const yearData = taxData[selectedYear];
   const provBrackets = yearData.provincialBrackets[selectedProvince];
@@ -368,19 +368,19 @@ const TaxCalculatorCopy = () => {
   const otherTaxes = useMemo(() => {
     const rates = salesTaxRates[selectedProvince];
     const combinedRate = rates.gst + rates.pst;
-    const groceries = (parseFloat(monthlyGroceries) || 0) * 12; // basic groceries are zero-rated
+    const groceries = (parseFloat(monthlyGroceries) || 0) * 12;
     const dining = (parseFloat(monthlyDining) || 0) * 12;
-    const other = (parseFloat(monthlyOtherSpending) || 0) * 12;
-    const rent = (parseFloat(monthlyRent) || 0) * 12; // residential rent is exempt
+    const misc = (parseFloat(monthlyMisc) || 0) * 12;
+    const fun = (parseFloat(monthlyFun) || 0) * 12;
 
+    const groceryTax = groceries * combinedRate;
     const diningTax = dining * combinedRate;
-    const otherTax = other * combinedRate;
-    const groceryTax = 0;
-    const salesTaxTotal = diningTax + otherTax;
+    const miscTax = misc * combinedRate;
+    const funTax = fun * combinedRate;
+    const salesTaxTotal = groceryTax + diningTax + miscTax + funTax;
 
-    const value = parseFloat(homeValue) || 0;
-    const rate = propertyTaxRate === '' ? defaultPropertyTaxRates[selectedProvince] : (parseFloat(propertyTaxRate) || 0);
-    const propertyTax = value * (rate / 100);
+    const propAmt = parseFloat(propertyTaxAmount) || 0;
+    const propertyTax = propertyTaxPeriod === 'monthly' ? propAmt * 12 : propAmt;
 
     const payroll = calculations.totalCppContribution + calculations.eiContribution;
     const totalTaxBurden = calculations.totalTax + payroll + salesTaxTotal + propertyTax;
@@ -388,13 +388,13 @@ const TaxCalculatorCopy = () => {
     const trueNet = calculations.netIncome - salesTaxTotal - propertyTax;
 
     return {
-      combinedRate, rates, groceries, dining, other, rent,
-      groceryTax, diningTax, otherTax, salesTaxTotal,
-      propertyTax, propertyRateUsed: rate,
+      combinedRate, rates, groceries, dining, misc, fun,
+      groceryTax, diningTax, miscTax, funTax, salesTaxTotal,
+      propertyTax,
       payroll, totalTaxBurden, burdenRate, trueNet,
       taxFreeDays: Math.round((burdenRate / 100) * 365),
     };
-  }, [selectedProvince, monthlyGroceries, monthlyDining, monthlyOtherSpending, monthlyRent, homeValue, propertyTaxRate, calculations]);
+  }, [selectedProvince, monthlyGroceries, monthlyDining, monthlyMisc, monthlyFun, propertyTaxAmount, propertyTaxPeriod, calculations]);
 
   const formatBracket = (min: number, max: number) => {
     if (max === Infinity) return `Over $${min.toLocaleString()}`;
@@ -582,6 +582,17 @@ const TaxCalculatorCopy = () => {
                     <span className="font-semibold">{(yearData.cpp1Rate * 100).toFixed(2)}%</span>
                   </div>
                 </div>
+                <div className="mt-3 p-3 bg-white/70 rounded-lg text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Max CPP deducted ({(yearData.cpp1Rate * 100).toFixed(2)}%):</span>
+                    <span className="font-bold text-purple-800">
+                      {formatCurrency((yearData.cpp1MaxEarnings - yearData.cppExemption) * yearData.cpp1Rate)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    (${yearData.cpp1MaxEarnings.toLocaleString()} − ${yearData.cppExemption.toLocaleString()}) × {(yearData.cpp1Rate * 100).toFixed(2)}%
+                  </p>
+                </div>
               </div>
 
               {yearData.cpp2Rate > 0 ? (
@@ -603,6 +614,17 @@ const TaxCalculatorCopy = () => {
                       <span className="text-gray-600">Rate:</span>
                       <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
                     </div>
+                  </div>
+                  <div className="mt-3 p-3 bg-white/70 rounded-lg text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Max CPP2 deducted ({(yearData.cpp2Rate * 100).toFixed(2)}%):</span>
+                      <span className="font-bold text-indigo-800">
+                        {formatCurrency((yearData.cpp2MaxEarnings - yearData.cpp1MaxEarnings) * yearData.cpp2Rate)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">
+                      (${yearData.cpp2MaxEarnings.toLocaleString()} − ${yearData.cpp1MaxEarnings.toLocaleString()}) × {(yearData.cpp2Rate * 100).toFixed(2)}%
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -934,80 +956,6 @@ const TaxCalculatorCopy = () => {
                       </div>
                     </div>
 
-                    {/* CPP & EI Breakdown: Deduction vs Credit */}
-                    {calculations.grossIncome > 0 && (
-                      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-4 rounded-lg border border-indigo-200">
-                        <h4 className="font-semibold text-indigo-900 mb-1 flex items-center">
-                          <Info className="w-4 h-4 mr-2" />
-                          CPP & EI Tax Treatment ({selectedYear})
-                        </h4>
-                        <p className="text-xs text-indigo-700 mb-3">
-                          CRA treats CPP in two parts. Base CPP + EI reduce your <em>tax</em> (credit). Enhanced CPP reduces your <em>income</em> (deduction).
-                        </p>
-
-                        {/* Deduction side */}
-                        <div className="bg-white/70 p-3 rounded-md mb-2">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs font-bold text-orange-700 uppercase tracking-wide">Deduction from income (line 22215)</span>
-                            <TrendingDown className="w-4 h-4 text-orange-600" />
-                          </div>
-                          <div className="space-y-1 text-sm">
-                            <div className="flex justify-between">
-                              <span className="text-gray-700">Enhanced CPP1 ({(calculations.cppEnhancedRate1 * 100).toFixed(2)}% × {formatCurrency(calculations.cpp1Pensionable)}):</span>
-                              <span className="font-semibold text-orange-700">{formatCurrency(calculations.cpp1Pensionable * calculations.cppEnhancedRate1)}</span>
-                            </div>
-                            {calculations.cpp2Contribution > 0 && (
-                              <div className="flex justify-between">
-                                <span className="text-gray-700">CPP2 ({(yearData.cpp2Rate * 100).toFixed(2)}% × {formatCurrency(calculations.cpp2Pensionable)}):</span>
-                                <span className="font-semibold text-orange-700">{formatCurrency(calculations.cpp2Contribution)}</span>
-                              </div>
-                            )}
-                            <div className="flex justify-between pt-1 border-t border-orange-200">
-                              <span className="font-medium text-gray-800">Total income deduction:</span>
-                              <span className="font-bold text-orange-800">-{formatCurrency(calculations.cppEnhancedDeduction)}</span>
-                            </div>
-                          </div>
-                          <p className="text-xs text-gray-600 mt-2">
-                            Lowers your taxable income to <span className="font-semibold">{formatCurrency(calculations.taxableIncome)}</span> before tax is calculated.
-                          </p>
-                        </div>
-
-                        {/* Credit side */}
-                        <div className="bg-white/70 p-3 rounded-md">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs font-bold text-green-700 uppercase tracking-wide">Non-refundable tax credit</span>
-                            <PiggyBank className="w-4 h-4 text-green-600" />
-                          </div>
-                          <div className="space-y-1 text-sm">
-                            <div className="flex justify-between">
-                              <span className="text-gray-700">Base CPP (4.95% × {formatCurrency(calculations.cpp1Pensionable)}):</span>
-                              <span className="font-semibold text-green-700">{formatCurrency(calculations.cppBaseContribution)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-700">EI premium ({(yearData.eiRate * 100).toFixed(2)}% × {formatCurrency(calculations.eiInsurable)}):</span>
-                              <span className="font-semibold text-green-700">{formatCurrency(calculations.eiContribution)}</span>
-                            </div>
-                            <div className="flex justify-between pt-1 border-t border-green-200">
-                              <span className="font-medium text-gray-800">Credit base:</span>
-                              <span className="font-bold text-green-800">{formatCurrency(calculations.cppBaseContribution + calculations.eiContribution)}</span>
-                            </div>
-                            <div className="flex justify-between text-xs text-gray-600">
-                              <span>× Federal rate ({(calculations.federalCreditRate * 100).toFixed(0)}%):</span>
-                              <span className="font-semibold text-green-700">−{formatCurrency(calculations.federalCppEiCredit)} off federal tax</span>
-                            </div>
-                            <div className="flex justify-between text-xs text-gray-600">
-                              <span>× {provName} rate ({(calculations.provincialLowestRate * 100).toFixed(2)}%):</span>
-                              <span className="font-semibold text-green-700">−{formatCurrency(calculations.provincialCppEiCredit)} off {provName} tax</span>
-                            </div>
-                            <div className="flex justify-between pt-1 border-t border-green-200">
-                              <span className="font-medium text-gray-800">Total tax reduction:</span>
-                              <span className="font-bold text-green-800">−{formatCurrency(calculations.federalCppEiCredit + calculations.provincialCppEiCredit)}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
                     {calculations.totalDeductions > 0 && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <h4 className="font-semibold text-blue-800 mb-2">Tax Deductions</h4>
@@ -1188,54 +1136,58 @@ const TaxCalculatorCopy = () => {
                   {/* Inputs */}
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="homeValue" className="text-sm font-semibold text-gray-700 mb-1 block">Home / Property Assessed Value</Label>
-                      <Input id="homeValue" type="number" placeholder="e.g. 400000" value={homeValue} onChange={(e) => setHomeValue(e.target.value)} />
+                      <Label htmlFor="propertyTaxAmount" className="text-sm font-semibold text-gray-700 mb-1 block">Property Tax You Pay</Label>
+                      <div className="flex gap-2">
+                        <Input id="propertyTaxAmount" type="number" placeholder="e.g. 250" value={propertyTaxAmount} onChange={(e) => setPropertyTaxAmount(e.target.value)} />
+                        <Select value={propertyTaxPeriod} onValueChange={(v) => setPropertyTaxPeriod(v as 'monthly' | 'yearly')}>
+                          <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="monthly">Per Month</SelectItem>
+                            <SelectItem value="yearly">Per Year</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">Annual property tax: <strong>{formatCurrency(otherTaxes.propertyTax)}</strong></p>
                     </div>
                     <div>
-                      <Label htmlFor="propertyTaxRate" className="text-sm font-semibold text-gray-700 mb-1 block">
-                        Property Tax Rate (%) — default {defaultPropertyTaxRates[selectedProvince]}% for {provName}
-                      </Label>
-                      <Input id="propertyTaxRate" type="number" step="0.01" placeholder={String(defaultPropertyTaxRates[selectedProvince])} value={propertyTaxRate} onChange={(e) => setPropertyTaxRate(e.target.value)} />
-                    </div>
-                    <div>
-                      <Label htmlFor="monthlyGroceries" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Groceries (basic groceries are tax-free)</Label>
+                      <Label htmlFor="monthlyGroceries" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Groceries (GST 5% + PST 7% = 12%)</Label>
                       <Input id="monthlyGroceries" type="number" placeholder="e.g. 800" value={monthlyGroceries} onChange={(e) => setMonthlyGroceries(e.target.value)} />
                     </div>
                     <div>
-                      <Label htmlFor="monthlyDining" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Restaurants / Prepared Food (taxable)</Label>
+                      <Label htmlFor="monthlyDining" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Eating Out / Restaurants (12%)</Label>
                       <Input id="monthlyDining" type="number" placeholder="e.g. 300" value={monthlyDining} onChange={(e) => setMonthlyDining(e.target.value)} />
                     </div>
                     <div>
-                      <Label htmlFor="monthlyOtherSpending" className="text-sm font-semibold text-gray-700 mb-1 block">Other Monthly Taxable Spending (fuel, clothing, services, etc.)</Label>
-                      <Input id="monthlyOtherSpending" type="number" placeholder="e.g. 1200" value={monthlyOtherSpending} onChange={(e) => setMonthlyOtherSpending(e.target.value)} />
+                      <Label htmlFor="monthlyMisc" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Miscellaneous (clothes, shopping, services) — 12%</Label>
+                      <Input id="monthlyMisc" type="number" placeholder="e.g. 400" value={monthlyMisc} onChange={(e) => setMonthlyMisc(e.target.value)} />
                     </div>
                     <div>
-                      <Label htmlFor="monthlyRent" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Rent (exempt — for reference only)</Label>
-                      <Input id="monthlyRent" type="number" placeholder="e.g. 1500" value={monthlyRent} onChange={(e) => setMonthlyRent(e.target.value)} />
+                      <Label htmlFor="monthlyFun" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Fun Activities (movies, events, hobbies) — 12%</Label>
+                      <Input id="monthlyFun" type="number" placeholder="e.g. 150" value={monthlyFun} onChange={(e) => setMonthlyFun(e.target.value)} />
                     </div>
                   </div>
 
                   {/* Results */}
                   <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 space-y-2">
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Property Tax ({otherTaxes.propertyRateUsed}%):</span>
+                      <span className="text-gray-700">Property Tax (per year):</span>
                       <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.propertyTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">GST/PST on Groceries (zero-rated):</span>
-                      <span className="font-semibold text-emerald-700">{formatCurrency(0)}</span>
+                      <span className="text-gray-700">Tax on Groceries (12%):</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.groceryTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Tax on Restaurants / Prepared Food:</span>
+                      <span className="text-gray-700">Tax on Eating Out / Restaurants:</span>
                       <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.diningTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Tax on Other Spending:</span>
-                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.otherTax)}</span>
+                      <span className="text-gray-700">Tax on Miscellaneous:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.miscTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Rent (exempt from GST/PST):</span>
-                      <span className="font-semibold text-emerald-700">{formatCurrency(0)}</span>
+                      <span className="text-gray-700">Tax on Fun Activities:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.funTax)}</span>
                     </div>
                     <div className="flex justify-between py-3 bg-amber-100 px-3 rounded-lg">
                       <span className="text-gray-900 font-bold">Total Sales Tax (GST/PST) per Year:</span>
