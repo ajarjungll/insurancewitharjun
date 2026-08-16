@@ -1136,54 +1136,58 @@ const TaxCalculatorCopy = () => {
                   {/* Inputs */}
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="homeValue" className="text-sm font-semibold text-gray-700 mb-1 block">Home / Property Assessed Value</Label>
-                      <Input id="homeValue" type="number" placeholder="e.g. 400000" value={homeValue} onChange={(e) => setHomeValue(e.target.value)} />
+                      <Label htmlFor="propertyTaxAmount" className="text-sm font-semibold text-gray-700 mb-1 block">Property Tax You Pay</Label>
+                      <div className="flex gap-2">
+                        <Input id="propertyTaxAmount" type="number" placeholder="e.g. 250" value={propertyTaxAmount} onChange={(e) => setPropertyTaxAmount(e.target.value)} />
+                        <Select value={propertyTaxPeriod} onValueChange={(v) => setPropertyTaxPeriod(v as 'monthly' | 'yearly')}>
+                          <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="monthly">Per Month</SelectItem>
+                            <SelectItem value="yearly">Per Year</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">Annual property tax: <strong>{formatCurrency(otherTaxes.propertyTax)}</strong></p>
                     </div>
                     <div>
-                      <Label htmlFor="propertyTaxRate" className="text-sm font-semibold text-gray-700 mb-1 block">
-                        Property Tax Rate (%) — default {defaultPropertyTaxRates[selectedProvince]}% for {provName}
-                      </Label>
-                      <Input id="propertyTaxRate" type="number" step="0.01" placeholder={String(defaultPropertyTaxRates[selectedProvince])} value={propertyTaxRate} onChange={(e) => setPropertyTaxRate(e.target.value)} />
-                    </div>
-                    <div>
-                      <Label htmlFor="monthlyGroceries" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Groceries (basic groceries are tax-free)</Label>
+                      <Label htmlFor="monthlyGroceries" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Groceries (GST 5% + PST 7% = 12%)</Label>
                       <Input id="monthlyGroceries" type="number" placeholder="e.g. 800" value={monthlyGroceries} onChange={(e) => setMonthlyGroceries(e.target.value)} />
                     </div>
                     <div>
-                      <Label htmlFor="monthlyDining" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Restaurants / Prepared Food (taxable)</Label>
+                      <Label htmlFor="monthlyDining" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Eating Out / Restaurants (12%)</Label>
                       <Input id="monthlyDining" type="number" placeholder="e.g. 300" value={monthlyDining} onChange={(e) => setMonthlyDining(e.target.value)} />
                     </div>
                     <div>
-                      <Label htmlFor="monthlyOtherSpending" className="text-sm font-semibold text-gray-700 mb-1 block">Other Monthly Taxable Spending (fuel, clothing, services, etc.)</Label>
-                      <Input id="monthlyOtherSpending" type="number" placeholder="e.g. 1200" value={monthlyOtherSpending} onChange={(e) => setMonthlyOtherSpending(e.target.value)} />
+                      <Label htmlFor="monthlyMisc" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Miscellaneous (clothes, shopping, services) — 12%</Label>
+                      <Input id="monthlyMisc" type="number" placeholder="e.g. 400" value={monthlyMisc} onChange={(e) => setMonthlyMisc(e.target.value)} />
                     </div>
                     <div>
-                      <Label htmlFor="monthlyRent" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Rent (exempt — for reference only)</Label>
-                      <Input id="monthlyRent" type="number" placeholder="e.g. 1500" value={monthlyRent} onChange={(e) => setMonthlyRent(e.target.value)} />
+                      <Label htmlFor="monthlyFun" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Fun Activities (movies, events, hobbies) — 12%</Label>
+                      <Input id="monthlyFun" type="number" placeholder="e.g. 150" value={monthlyFun} onChange={(e) => setMonthlyFun(e.target.value)} />
                     </div>
                   </div>
 
                   {/* Results */}
                   <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 space-y-2">
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Property Tax ({otherTaxes.propertyRateUsed}%):</span>
+                      <span className="text-gray-700">Property Tax (per year):</span>
                       <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.propertyTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">GST/PST on Groceries (zero-rated):</span>
-                      <span className="font-semibold text-emerald-700">{formatCurrency(0)}</span>
+                      <span className="text-gray-700">Tax on Groceries (12%):</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.groceryTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Tax on Restaurants / Prepared Food:</span>
+                      <span className="text-gray-700">Tax on Eating Out / Restaurants:</span>
                       <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.diningTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Tax on Other Spending:</span>
-                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.otherTax)}</span>
+                      <span className="text-gray-700">Tax on Miscellaneous:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.miscTax)}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-amber-200">
-                      <span className="text-gray-700">Rent (exempt from GST/PST):</span>
-                      <span className="font-semibold text-emerald-700">{formatCurrency(0)}</span>
+                      <span className="text-gray-700">Tax on Fun Activities:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.funTax)}</span>
                     </div>
                     <div className="flex justify-between py-3 bg-amber-100 px-3 rounded-lg">
                       <span className="text-gray-900 font-bold">Total Sales Tax (GST/PST) per Year:</span>
