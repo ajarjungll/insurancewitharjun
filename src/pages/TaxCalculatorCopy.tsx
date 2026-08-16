@@ -195,6 +195,20 @@ const calculateTax = (income: number, brackets: { min: number; max: number; rate
 
 type FilingStatus = 'single' | 'couple';
 
+// Sales tax rates by province (2025/2026)
+const salesTaxRates: Record<Province, { gst: number; pst: number; label: string; hst?: boolean }> = {
+  manitoba: { gst: 0.05, pst: 0.07, label: 'GST 5% + PST 7%' },
+  alberta: { gst: 0.05, pst: 0, label: 'GST 5% (no PST)' },
+  ontario: { gst: 0.13, pst: 0, label: 'HST 13%', hst: true },
+};
+
+// Typical average residential property tax rate (% of assessed value)
+const defaultPropertyTaxRates: Record<Province, number> = {
+  manitoba: 1.3,
+  alberta: 0.7,
+  ontario: 1.1,
+};
+
 const TaxCalculatorCopy = () => {
   const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
   const [selectedProvince, setSelectedProvince] = useState<Province>('manitoba');
