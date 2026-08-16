@@ -195,6 +195,20 @@ const calculateTax = (income: number, brackets: { min: number; max: number; rate
 
 type FilingStatus = 'single' | 'couple';
 
+// Sales tax rates by province (2025/2026)
+const salesTaxRates: Record<Province, { gst: number; pst: number; label: string; hst?: boolean }> = {
+  manitoba: { gst: 0.05, pst: 0.07, label: 'GST 5% + PST 7%' },
+  alberta: { gst: 0.05, pst: 0, label: 'GST 5% (no PST)' },
+  ontario: { gst: 0.13, pst: 0, label: 'HST 13%', hst: true },
+};
+
+// Typical average residential property tax rate (% of assessed value)
+const defaultPropertyTaxRates: Record<Province, number> = {
+  manitoba: 1.3,
+  alberta: 0.7,
+  ontario: 1.1,
+};
+
 const TaxCalculatorCopy = () => {
   const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
   const [selectedProvince, setSelectedProvince] = useState<Province>('manitoba');
@@ -350,6 +364,37 @@ const TaxCalculatorCopy = () => {
       minimumFractionDigits: 2,
     }).format(value);
   };
+
+  const otherTaxes = useMemo(() => {
+    const rates = salesTaxRates[selectedProvince];
+    const combinedRate = rates.gst + rates.pst;
+    const groceries = (parseFloat(monthlyGroceries) || 0) * 12; // basic groceries are zero-rated
+    const dining = (parseFloat(monthlyDining) || 0) * 12;
+    const other = (parseFloat(monthlyOtherSpending) || 0) * 12;
+    const rent = (parseFloat(monthlyRent) || 0) * 12; // residential rent is exempt
+
+    const diningTax = dining * combinedRate;
+    const otherTax = other * combinedRate;
+    const groceryTax = 0;
+    const salesTaxTotal = diningTax + otherTax;
+
+    const value = parseFloat(homeValue) || 0;
+    const rate = propertyTaxRate === '' ? defaultPropertyTaxRates[selectedProvince] : (parseFloat(propertyTaxRate) || 0);
+    const propertyTax = value * (rate / 100);
+
+    const payroll = calculations.totalCppContribution + calculations.eiContribution;
+    const totalTaxBurden = calculations.totalTax + payroll + salesTaxTotal + propertyTax;
+    const burdenRate = calculations.grossIncome > 0 ? (totalTaxBurden / calculations.grossIncome) * 100 : 0;
+    const trueNet = calculations.netIncome - salesTaxTotal - propertyTax;
+
+    return {
+      combinedRate, rates, groceries, dining, other, rent,
+      groceryTax, diningTax, otherTax, salesTaxTotal,
+      propertyTax, propertyRateUsed: rate,
+      payroll, totalTaxBurden, burdenRate, trueNet,
+      taxFreeDays: Math.round((burdenRate / 100) * 365),
+    };
+  }, [selectedProvince, monthlyGroceries, monthlyDining, monthlyOtherSpending, monthlyRent, homeValue, propertyTaxRate, calculations]);
 
   const formatBracket = (min: number, max: number) => {
     if (max === Infinity) return `Over $${min.toLocaleString()}`;
@@ -1125,6 +1170,103 @@ const TaxCalculatorCopy = () => {
                         </div>
                       );
                     })()}
+                  </div>
+                </div>
+              </div>
+
+              {/* Other Taxes: Property + GST/PST */}
+              <div className="mt-12 bg-white/90 backdrop-blur rounded-xl p-6 md:p-8 card-3d border-2 border-amber-200">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                  <Home className="w-6 h-6 mr-2 text-amber-600" />
+                  Property Tax & Sales Tax (GST / PST)
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  See your <strong>total tax burden</strong> — income tax, CPP &amp; EI, property tax and the GST/PST you pay on everyday spending in {provName} ({otherTaxes.rates.label}).
+                </p>
+
+                <div className="grid lg:grid-cols-2 gap-8">
+                  {/* Inputs */}
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="homeValue" className="text-sm font-semibold text-gray-700 mb-1 block">Home / Property Assessed Value</Label>
+                      <Input id="homeValue" type="number" placeholder="e.g. 400000" value={homeValue} onChange={(e) => setHomeValue(e.target.value)} />
+                    </div>
+                    <div>
+                      <Label htmlFor="propertyTaxRate" className="text-sm font-semibold text-gray-700 mb-1 block">
+                        Property Tax Rate (%) — default {defaultPropertyTaxRates[selectedProvince]}% for {provName}
+                      </Label>
+                      <Input id="propertyTaxRate" type="number" step="0.01" placeholder={String(defaultPropertyTaxRates[selectedProvince])} value={propertyTaxRate} onChange={(e) => setPropertyTaxRate(e.target.value)} />
+                    </div>
+                    <div>
+                      <Label htmlFor="monthlyGroceries" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Groceries (basic groceries are tax-free)</Label>
+                      <Input id="monthlyGroceries" type="number" placeholder="e.g. 800" value={monthlyGroceries} onChange={(e) => setMonthlyGroceries(e.target.value)} />
+                    </div>
+                    <div>
+                      <Label htmlFor="monthlyDining" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Restaurants / Prepared Food (taxable)</Label>
+                      <Input id="monthlyDining" type="number" placeholder="e.g. 300" value={monthlyDining} onChange={(e) => setMonthlyDining(e.target.value)} />
+                    </div>
+                    <div>
+                      <Label htmlFor="monthlyOtherSpending" className="text-sm font-semibold text-gray-700 mb-1 block">Other Monthly Taxable Spending (fuel, clothing, services, etc.)</Label>
+                      <Input id="monthlyOtherSpending" type="number" placeholder="e.g. 1200" value={monthlyOtherSpending} onChange={(e) => setMonthlyOtherSpending(e.target.value)} />
+                    </div>
+                    <div>
+                      <Label htmlFor="monthlyRent" className="text-sm font-semibold text-gray-700 mb-1 block">Monthly Rent (exempt — for reference only)</Label>
+                      <Input id="monthlyRent" type="number" placeholder="e.g. 1500" value={monthlyRent} onChange={(e) => setMonthlyRent(e.target.value)} />
+                    </div>
+                  </div>
+
+                  {/* Results */}
+                  <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 space-y-2">
+                    <div className="flex justify-between py-2 border-b border-amber-200">
+                      <span className="text-gray-700">Property Tax ({otherTaxes.propertyRateUsed}%):</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.propertyTax)}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-amber-200">
+                      <span className="text-gray-700">GST/PST on Groceries (zero-rated):</span>
+                      <span className="font-semibold text-emerald-700">{formatCurrency(0)}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-amber-200">
+                      <span className="text-gray-700">Tax on Restaurants / Prepared Food:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.diningTax)}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-amber-200">
+                      <span className="text-gray-700">Tax on Other Spending:</span>
+                      <span className="font-semibold text-red-600">{formatCurrency(otherTaxes.otherTax)}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-amber-200">
+                      <span className="text-gray-700">Rent (exempt from GST/PST):</span>
+                      <span className="font-semibold text-emerald-700">{formatCurrency(0)}</span>
+                    </div>
+                    <div className="flex justify-between py-3 bg-amber-100 px-3 rounded-lg">
+                      <span className="text-gray-900 font-bold">Total Sales Tax (GST/PST) per Year:</span>
+                      <span className="font-bold text-red-700 text-lg">{formatCurrency(otherTaxes.salesTaxTotal)}</span>
+                    </div>
+
+                    <div className="mt-4 p-4 rounded-lg bg-gradient-to-br from-red-600 to-rose-700 text-white space-y-2">
+                      <h4 className="font-bold text-lg">Your Total Tax Burden</h4>
+                      <div className="flex justify-between text-sm"><span>Income Tax (Federal + {provName}):</span><span className="font-semibold">{formatCurrency(calculations.totalTax)}</span></div>
+                      <div className="flex justify-between text-sm"><span>CPP + EI:</span><span className="font-semibold">{formatCurrency(otherTaxes.payroll)}</span></div>
+                      <div className="flex justify-between text-sm"><span>Property Tax:</span><span className="font-semibold">{formatCurrency(otherTaxes.propertyTax)}</span></div>
+                      <div className="flex justify-between text-sm"><span>Sales Tax (GST/PST):</span><span className="font-semibold">{formatCurrency(otherTaxes.salesTaxTotal)}</span></div>
+                      <div className="flex justify-between pt-2 border-t border-white/40 text-lg font-bold">
+                        <span>Total Taxes Paid:</span><span>{formatCurrency(otherTaxes.totalTaxBurden)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm"><span>Total Tax Rate on Gross Income:</span><span className="font-semibold">{otherTaxes.burdenRate.toFixed(2)}%</span></div>
+                    </div>
+
+                    <div className="flex justify-between py-3 bg-emerald-100 px-3 rounded-lg mt-2">
+                      <span className="text-gray-900 font-bold">Money Left After All Taxes:</span>
+                      <span className="font-bold text-emerald-700 text-lg">{formatCurrency(otherTaxes.trueNet)}</span>
+                    </div>
+
+                    {calculations.grossIncome > 0 && (
+                      <p className="text-xs text-gray-600 pt-2">
+                        You work roughly <strong>{otherTaxes.taxFreeDays} days a year</strong> just to pay taxes. Monthly all-in tax cost: <strong>{formatCurrency(otherTaxes.totalTaxBurden / 12)}</strong>.
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      Estimates only. Property tax varies by municipality and mill rate; sales tax assumes all listed spending is taxable at {(otherTaxes.combinedRate * 100).toFixed(0)}%.
+                    </p>
                   </div>
                 </div>
               </div>
