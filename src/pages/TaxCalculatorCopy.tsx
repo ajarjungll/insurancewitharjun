@@ -582,6 +582,17 @@ const TaxCalculatorCopy = () => {
                     <span className="font-semibold">{(yearData.cpp1Rate * 100).toFixed(2)}%</span>
                   </div>
                 </div>
+                <div className="mt-3 p-3 bg-white/70 rounded-lg text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Max CPP deducted ({(yearData.cpp1Rate * 100).toFixed(2)}%):</span>
+                    <span className="font-bold text-purple-800">
+                      {formatCurrency((yearData.cpp1MaxEarnings - yearData.cppExemption) * yearData.cpp1Rate)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    (${yearData.cpp1MaxEarnings.toLocaleString()} − ${yearData.cppExemption.toLocaleString()}) × {(yearData.cpp1Rate * 100).toFixed(2)}%
+                  </p>
+                </div>
               </div>
 
               {yearData.cpp2Rate > 0 ? (
@@ -603,6 +614,17 @@ const TaxCalculatorCopy = () => {
                       <span className="text-gray-600">Rate:</span>
                       <span className="font-semibold">{(yearData.cpp2Rate * 100).toFixed(2)}%</span>
                     </div>
+                  </div>
+                  <div className="mt-3 p-3 bg-white/70 rounded-lg text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Max CPP2 deducted ({(yearData.cpp2Rate * 100).toFixed(2)}%):</span>
+                      <span className="font-bold text-indigo-800">
+                        {formatCurrency((yearData.cpp2MaxEarnings - yearData.cpp1MaxEarnings) * yearData.cpp2Rate)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">
+                      (${yearData.cpp2MaxEarnings.toLocaleString()} − ${yearData.cpp1MaxEarnings.toLocaleString()}) × {(yearData.cpp2Rate * 100).toFixed(2)}%
+                    </p>
                   </div>
                 </div>
               ) : (
