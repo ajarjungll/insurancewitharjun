@@ -1176,6 +1176,7 @@ const TaxCalculatorCopy = () => {
 
               {/* CTA Section */}
               <div className="mt-12 bg-gradient-to-r from-emerald-600 to-teal-600 p-8 rounded-xl text-white text-center card-3d">
+                {null}
                 <h3 className="text-2xl font-bold mb-4">Need Help Maximizing Your Tax Savings?</h3>
                 <p className="mb-6 text-emerald-100">
                   Get personalized advice on RRSP and FHSA contributions to optimize your tax situation.
