@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Menu, X } from 'lucide-react';
 import Logo3D from './Logo3D';
@@ -7,7 +7,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
   const location = useLocation();
 
   const navItems = [
@@ -24,29 +24,39 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const prevScrollY = lastScrollY.current;
+      const delta = scrollTop - prevScrollY;
       
-      // Determine if scrolled
+      // Determine if scrolled past threshold for compact top bar
       setIsScrolled(scrollTop > 50);
       
-      // Header visibility logic
-      if (scrollTop === 0) {
-        // At the top - always show header
+      // Header visibility logic with delta threshold for smoother mobile behavior
+      if (scrollTop <= 10) {
+        // Near the top - always show header
         setIsHeaderVisible(true);
-      } else if (scrollTop < lastScrollY) {
+      } else if (delta > 10) {
+        // Scrolling down - hide header
+        setIsHeaderVisible(false);
+      } else if (delta < -10) {
         // Scrolling up - show header
         setIsHeaderVisible(true);
-      } else if (scrollTop > lastScrollY && scrollTop > 100) {
-        // Scrolling down and past 100px - hide header
-        setIsHeaderVisible(false);
       }
+      // If delta is between -10 and 10, keep current state (prevent flicker)
       
-      setLastScrollY(scrollTop);
+      lastScrollY.current = scrollTop;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
+
+  // Close mobile menu when header is hidden via scroll
+  useEffect(() => {
+    if (!isHeaderVisible && isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }, [isHeaderVisible, isMenuOpen]);
 
   return (
     <header className={`bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 ${
