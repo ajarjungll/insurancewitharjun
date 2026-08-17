@@ -7,6 +7,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const lastScrollY = useRef(0);
   const location = useLocation();
 
@@ -23,6 +24,14 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path;
 
   useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const onChange = () => setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
+    setIsMobile(mql.matches);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || window.pageYOffset;
       const prevScrollY = lastScrollY.current;
@@ -31,25 +40,32 @@ const Header = () => {
       // Determine if scrolled past threshold for compact top bar
       setIsScrolled(scrollTop > 50);
       
-      // Header visibility logic with delta threshold for smoother mobile behavior
-      if (scrollTop <= 10) {
-        // Near the top - always show header
-        setIsHeaderVisible(true);
-      } else if (delta > 10) {
-        // Scrolling down - hide header
-        setIsHeaderVisible(false);
-      } else if (delta < -10) {
-        // Scrolling up - show header
-        setIsHeaderVisible(true);
+      if (isMobile) {
+        // Mobile behavior: only visible at the top of the page
+        if (scrollTop <= 10) {
+          setIsHeaderVisible(true);
+        } else if (delta > 0) {
+          // Scrolling down while not at top - hide
+          setIsHeaderVisible(false);
+        }
+        // Scrolling up while not at top - keep hidden
+      } else {
+        // Desktop behavior: auto-hide on scroll down, show on scroll up
+        if (scrollTop <= 10) {
+          setIsHeaderVisible(true);
+        } else if (delta > 10) {
+          setIsHeaderVisible(false);
+        } else if (delta < -10) {
+          setIsHeaderVisible(true);
+        }
       }
-      // If delta is between -10 and 10, keep current state (prevent flicker)
       
       lastScrollY.current = scrollTop;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobile]);
 
   // Close mobile menu when header is hidden via scroll
   useEffect(() => {
