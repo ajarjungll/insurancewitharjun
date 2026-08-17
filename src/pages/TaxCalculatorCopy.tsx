@@ -202,13 +202,6 @@ const salesTaxRates: Record<Province, { gst: number; pst: number; label: string;
   ontario: { gst: 0.13, pst: 0, label: 'HST 13%', hst: true },
 };
 
-// Typical average residential property tax rate (% of assessed value)
-const defaultPropertyTaxRates: Record<Province, number> = {
-  manitoba: 1.3,
-  alberta: 0.7,
-  ontario: 1.1,
-};
-
 const TaxCalculatorCopy = () => {
   const [selectedYear, setSelectedYear] = useState<TaxYear>(2026);
   const [selectedProvince, setSelectedProvince] = useState<Province>('manitoba');
