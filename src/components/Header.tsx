@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Menu, X } from 'lucide-react';
 import Logo3D from './Logo3D';
+import { Button } from '@/components/ui/button';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,11 +80,11 @@ const Header = () => {
     }`}>
       {/* Top Bar - Keep unchanged */}
       <div className={`bg-blue-900 text-white transition-all duration-300 ${isScrolled ? 'py-0.5 text-xs' : 'py-3'}`}>
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
+        <div className="container mx-auto px-4 flex flex-wrap justify-between items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 min-w-0">
+            <div className="flex items-center space-x-2 shrink-0">
               <Phone size={isScrolled ? 12 : 18} />
-              <a href="tel:+14313382078" className={`click-to-call text-white hover:text-blue-200 ${isScrolled ? 'text-xs' : 'text-base'}`}>
+              <a href="tel:+14313382078" className={`click-to-call whitespace-nowrap text-white hover:text-blue-200 ${isScrolled ? 'text-xs' : 'text-base'}`}>
                 (431) 338-2078
               </a>
             </div>
@@ -108,7 +109,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation - Keep buttons normal size */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden 2xl:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -131,17 +132,19 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button - Keep normal size */}
-          <button
-            className="lg:hidden btn-3d rounded-lg bg-gray-100 p-2"
+          <Button variant="ghost" size="icon"
+            className="2xl:hidden btn-3d rounded-lg bg-gray-100 p-2 shrink-0"
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t pt-4">
+          <div className="2xl:hidden mt-4 pb-4 border-t pt-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}

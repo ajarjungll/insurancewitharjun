@@ -396,9 +396,9 @@ const TaxCalculator = () => {
         {/* Year & Province Selection */}
         <section className="py-8 bg-gray-100/80">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+            <div className="flex flex-col xl:flex-row flex-wrap justify-center items-center gap-6">
               {/* Year Tabs */}
-              <div className="flex gap-4">
+              <div className="flex flex-wrap justify-center gap-4 max-w-full" role="group" aria-label="Tax year">
                 {([2020, 2025, 2026] as TaxYear[]).map((year) => (
                   <Button
                     key={year}
@@ -415,7 +415,7 @@ const TaxCalculator = () => {
               </div>
 
               {/* Province Selector */}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap justify-center gap-3 max-w-full" role="group" aria-label="Province">
                 {(['manitoba', 'alberta', 'ontario'] as Province[]).map((prov) => (
                   <Button
                     key={prov}
