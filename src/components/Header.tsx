@@ -108,7 +108,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation - Keep buttons normal size */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden 2xl:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -132,7 +132,9 @@ const Header = () => {
 
           {/* Mobile Menu Button - Keep normal size */}
           <button
-            className="lg:hidden btn-3d rounded-lg bg-gray-100 p-2"
+            className="2xl:hidden btn-3d rounded-lg bg-gray-100 p-2 shrink-0"
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -141,7 +143,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t pt-4">
+          <div className="2xl:hidden mt-4 pb-4 border-t pt-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}

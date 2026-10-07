@@ -1,0 +1,3 @@
+- [ ] Fit tax-year and province choices on iPad without changing tax calculations.
+- [ ] Correct shared and page-specific tablet overflow while preserving mobile layouts.
+- [ ] Verify all pages at iPad portrait and landscape widths.
