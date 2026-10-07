@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
@@ -60,9 +60,9 @@ const Footer = () => {
                   (431) 338-2078
                 </a>
               </div>
-              <div className="flex items-center space-x-2">
-                <Mail size={16} />
-                <a href="mailto:insurancewitharjun@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+              <div className="flex items-center space-x-2 min-w-0">
+                <Mail size={16} className="shrink-0" />
+                <a href="mailto:insurancewitharjun@gmail.com" className="text-gray-300 hover:text-white transition-colors min-w-0 break-words">
                   insurancewitharjun@gmail.com
                 </a>
               </div>
