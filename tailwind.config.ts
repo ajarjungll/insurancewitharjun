@@ -19,6 +19,12 @@ export default {
 		},
 		extend: {
 			colors: {
+				quote: {
+					brand: 'hsl(var(--quote-brand))',
+					tint: 'hsl(var(--quote-tint))',
+					success: 'hsl(var(--quote-success))',
+					'success-tint': 'hsl(var(--quote-success-tint))',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

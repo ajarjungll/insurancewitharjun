@@ -38,6 +38,15 @@ All colors MUST be HSL.
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+    --quote-brand: 215 76% 38%;
+    --quote-tint: 210 70% 96%;
+    --quote-success: 155 65% 30%;
+    --quote-success-tint: 150 45% 95%;
+    --quote-button-start: 208 90% 97%;
+    --quote-button-end: 212 75% 87%;
+    --quote-shadow: 215 40% 15%;
+    --quote-button-gradient: linear-gradient(180deg, hsl(var(--quote-button-start)), hsl(var(--quote-button-end)));
+    --quote-card-shadow: 0 12px 28px -12px hsl(var(--quote-shadow) / .3), 0 4px 8px -4px hsl(var(--quote-shadow) / .2);
 
     --sidebar-background: 0 0% 98%;
 
@@ -92,6 +101,13 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --quote-brand: 210 90% 75%;
+    --quote-tint: 215 35% 17%;
+    --quote-success: 150 55% 70%;
+    --quote-success-tint: 155 30% 15%;
+    --quote-button-start: 215 35% 25%;
+    --quote-button-end: 215 40% 20%;
+    --quote-shadow: 0 0% 0%;
   }
 }
 
@@ -106,6 +122,20 @@ All colors MUST be HSL.
 }
 
 @layer components {
+  .quote-card {
+    box-shadow: var(--quote-card-shadow);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .quote-card:hover { transform: translateY(-3px) scale(1.005); }
+  .quote-control {
+    background-image: var(--quote-button-gradient);
+    box-shadow: var(--quote-card-shadow);
+  }
+  .quote-control:hover { transform: translateY(1px); }
+  @media (prefers-reduced-motion: reduce) {
+    .quote-card, .quote-control { transition: none; }
+    .quote-card:hover, .quote-control:hover { transform: none; }
+  }
   /* Enhanced 3D Button Styles */
   .btn-3d {
     @apply shadow-xl transform transition-all duration-300 active:scale-95 active:shadow-lg;
