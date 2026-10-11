@@ -1,5 +1,5 @@
 - [x] Fit tax-year and province choices on iPad without changing tax calculations.
 - [x] Correct shared tablet header/footer overflow without changing phone breakpoints.
 - [x] Verify all 27 pages at 768, 810, and 1080px tablet widths in Chromium and WebKit; verify tax selections and menu navigation.
-- [ ] Simplify Super Visa inputs and present company-specific plans, prices, and details.
-- [ ] Verify comparison selections, payment estimates, and phone/iPad layouts.
+- [x] Simplify Super Visa inputs and present company-specific plans, prices, and details.
+- [x] Verify comparison selections, payment estimates, and phone/iPad layouts.

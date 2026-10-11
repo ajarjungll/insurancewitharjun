@@ -63,13 +63,6 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --quote-brand: 210 90% 75%;
-    --quote-tint: 215 35% 17%;
-    --quote-success: 150 55% 70%;
-    --quote-success-tint: 155 30% 15%;
-    --quote-button-start: 215 35% 25%;
-    --quote-button-end: 215 40% 20%;
-    --quote-shadow: 0 0% 0%;
   }
 
   .dark {
@@ -108,6 +101,13 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --quote-brand: 210 90% 75%;
+    --quote-tint: 215 35% 17%;
+    --quote-success: 150 55% 70%;
+    --quote-success-tint: 155 30% 15%;
+    --quote-button-start: 215 35% 25%;
+    --quote-button-end: 215 40% 20%;
+    --quote-shadow: 0 0% 0%;
   }
 }
 
