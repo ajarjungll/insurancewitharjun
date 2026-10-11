@@ -3,3 +3,5 @@
 - [x] Verify all 27 pages at 768, 810, and 1080px tablet widths in Chromium and WebKit; verify tax selections and menu navigation.
 - [x] Simplify Super Visa inputs and present company-specific plans, prices, and details.
 - [x] Verify comparison selections, payment estimates, and phone/iPad layouts.
+- [ ] Add Destination Canada from the July 2026 sheet, retain source and save rates/rules to memory.
+- [ ] Verify Destination Canada rates, deductible discounts, eligibility and visitor/Super Visa selections.
