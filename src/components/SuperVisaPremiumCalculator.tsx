@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
+import { destinationQuote, destinationDeductibles, type DestinationDeductible } from '@/data/destinationCanadaRates';
+import destinationRateSheet from '@/assets/destination-canada-rates.pdf.asset.json';
 
 type PlanTier = 'STANDARD' | 'ENHANCED';
 type PayMode = 'annual' | 'monthly';
-type Coverage = 100000 | 150000 | 300000 | 500000 | 1000000 | 2000000;
+type Coverage = 25000 | 50000 | 100000 | 150000 | 200000 | 250000 | 300000 | 500000 | 1000000 | 2000000;
 type CommonDed = 0 | 100 | 500 | 1000;
 
 // -------- INSURE CANADA (fixed annual schedule) --------
@@ -120,7 +122,7 @@ const GMS_RATES: Record<GmsBand, GmsCovRow> = {
   },
 };
 
-const COVERAGES: Coverage[] = [100000, 150000, 300000, 500000, 1000000, 2000000];
+const COVERAGES: Coverage[] = [25000, 50000, 100000, 150000, 200000, 250000, 300000, 500000, 1000000, 2000000];
 const GMS_MAX_COVERAGE = 150000;
 const COMMON_DEDUCTIBLES: CommonDed[] = [0, 100, 500, 1000];
 const MONTHLY_FEE = 120;
@@ -171,6 +173,8 @@ type QuotePlan = { name: string; annual: number | null };
 type CompanyQuote = {
   key: string; name: string; logo: string; band: string | null;
   plans: QuotePlan[]; note?: string; details: string[];
+  sourceUrl?: string;
+  monthlyQuoteOnly?: boolean;
 };
 
 const SuperVisaPremiumCalculator: React.FC = () => {
@@ -179,15 +183,18 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const [preExisting, setPreExisting] = useState(false);
   const [deductible, setDeductible] = useState<CommonDed>(0);
   const [payMode, setPayMode] = useState<PayMode>('annual');
+  const [purpose, setPurpose] = useState<'supervisa' | 'visitor'>('supervisa');
+  const [destinationDeductible, setDestinationDeductible] = useState<DestinationDeductible>(0);
   const age = Number(ageInput);
-  const validAge = ageInput.trim() !== '' && Number.isInteger(age) && age >= 0 && age <= 89;
+  const validAge = ageInput.trim() !== '' && Number.isInteger(age) && age >= 0 && age <= 120;
   const ib = validAge ? icBand(age) : null;
   const rb = validAge ? rimiBand(age) : null;
   const gb = validAge ? gmsBand(age) : null;
   const quotedCoverage = coverage === 100000 || coverage === 150000 ? coverage : null;
+  const dc = destinationQuote(validAge ? age : -1, coverage, preExisting ? '1' : '2', destinationDeductible);
 
   const icPrice = (tier: PlanTier) => {
-    if (!ib) return null;
+    if (!ib || coverage < 100000) return null;
     const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][deductible];
     return row[preExisting ? 0 : 1];
   };
@@ -210,7 +217,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const companies: CompanyQuote[] = [
     { key: 'insure-canada', name: 'Insure Canada', logo: '/partner-logos/insure-canada.png', band: ib,
       plans: [{ name: 'Standard', annual: icPrice('STANDARD') }, { name: 'Enhanced', annual: icPrice('ENHANCED') }],
-      note: 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
+      note: coverage < 100000 ? 'No rate for this visitor coverage in the available schedule.' : 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
     { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rb,
       plans: [{ name: 'Standard', annual: rimiPrice('STANDARD') }, { name: 'Enhanced', annual: rimiPrice('ENHANCED') }],
       note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 80 && deductible < 500 ? 'A $500 or $1,000 deductible is required at age 80+.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
@@ -219,6 +226,18 @@ const SuperVisaPremiumCalculator: React.FC = () => {
       plans: [{ name: 'Visitors to Canada', annual: gb && quotedCoverage ? GMS_RATES[gb][quotedCoverage][deductible] : null }],
       note: !gb ? 'Available for ages under 80.' : coverage > GMS_MAX_COVERAGE ? 'Maximum coverage is $150,000.' : undefined,
       details: ['One plan — no Standard / Enhanced tiers.', 'Pre-existing conditions must be stable for 180 days before coverage begins, subject to policy eligibility and exclusions.', 'Coverage options in this comparison: $100,000 or $150,000.', 'Deductible and benefit limits are subject to the GMS policy wording.'] },
+    { key: 'destination-canada', name: 'Destination Canada', logo: '/partner-logos/destination-canada.png', band: dc.band,
+      plans: [{ name: preExisting ? 'Option 1 — stable pre-existing conditions' : 'Option 2 — no pre-existing conditions', annual: dc.annual }],
+      monthlyQuoteOnly: true, sourceUrl: destinationRateSheet.url,
+      note: preExisting && age >= 80 ? 'Option 1 is available only through age 79.' : age >= 86 ? 'Age 86+: $25,000 visitor coverage only, with a mandatory $500 deductible. Not eligible for Super Visa coverage.' : age >= 80 ? 'Ages 80–85: Option 2 offers $25,000 or $50,000 visitor coverage only. No Super Visa rate.' : coverage > 300000 ? 'The supplied sheet has rates up to $300,000 only.' : undefined,
+      details: [
+        'Rate schedule effective July 1, 2026. Annual premium = daily rate × 365, less the deductible discount; minimum premium $25.',
+        preExisting ? `Option 1 covers eligible pre-existing conditions stable immediately before the effective date: 90 days at ages 0–59, 120 days at ages 60–69, 180 days at ages 70–79.${dc.stability ? ` Your required stability: ${dc.stability} days.` : ''}` : 'Option 2 excludes all pre-existing medical conditions, regardless of stability.',
+        'Optional deductibles, ages 0–85: $250 (10% off), $500 (15%), $1,000 (20%), $2,500 (30%), $5,000 (35%), $10,000 (40%). No $100 deductible.',
+        'Monthly plan requires at least 180 days and $50,000 coverage. Installments, fees and upfront payment must be confirmed with the broker.',
+        'Sickness waiting period: 48 hours if bought within 30 days after departure; 7 days if bought 30 days or more after departure. Confirm the exact 30-day boundary with the broker.',
+        'Waiting period waived when purchased before departure or before existing health coverage expires with no gap.',
+      ] },
   ];
   const controlClass = 'h-12 w-full rounded-md border border-input bg-background px-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-ring';
 
@@ -229,22 +248,25 @@ const SuperVisaPremiumCalculator: React.FC = () => {
           <div className="mb-8 flex items-start gap-4">
             <ShieldCheck className="mt-1 h-10 w-10 shrink-0 text-quote-brand drop-shadow-lg" aria-hidden="true" />
             <div>
-              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Super Visa Insurance Calculator</h2>
+              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Visitors & Super Visa Insurance Calculator</h2>
               <p className="mt-2 text-muted-foreground">Compare company plans · 365-day coverage · Prices in CAD</p>
             </div>
           </div>
 
+          <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Insurance purpose">
+            {(['supervisa', 'visitor'] as const).map(value => <Button key={value} variant={purpose === value ? 'default' : 'quote'} aria-pressed={purpose === value} onClick={() => { setPurpose(value); if (value === 'supervisa' && coverage < 100000) setCoverage(100000); }}>{value === 'supervisa' ? 'Super Visa' : 'Visitors to Canada'}</Button>)}
+          </div>
           <div className="grid gap-5 border-y border-border py-6 sm:grid-cols-3">
             <div>
               <label htmlFor="supervisa-age" className="mb-2 block text-sm font-semibold">Traveller’s age</label>
-              <Input id="supervisa-age" type="number" min={0} max={89} step={1} value={ageInput}
+              <Input id="supervisa-age" type="number" min={0} max={120} step={1} value={ageInput}
                 onChange={e => setAgeInput(e.target.value)} className={controlClass} aria-invalid={!validAge} aria-describedby={!validAge ? 'supervisa-age-error' : undefined} />
-              {!validAge && <p id="supervisa-age-error" className="mt-2 text-sm text-destructive">Enter a whole-number age from 0 to 89.</p>}
+              {!validAge && <p id="supervisa-age-error" className="mt-2 text-sm text-destructive">Enter a whole-number age from 0 to 120.</p>}
             </div>
             <div>
               <label htmlFor="supervisa-coverage" className="mb-2 block text-sm font-semibold">Coverage amount</label>
               <select id="supervisa-coverage" value={coverage} onChange={e => setCoverage(Number(e.target.value) as Coverage)} className={controlClass}>
-                {COVERAGES.map(c => <option key={c} value={c}>{fmtCov(c)}</option>)}
+                {COVERAGES.filter(c => purpose === 'visitor' || c >= 100000).map(c => <option key={c} value={c}>{fmtCov(c)}</option>)}
               </select>
             </div>
             <div>
@@ -271,17 +293,30 @@ const SuperVisaPremiumCalculator: React.FC = () => {
             </div>
           </div>
 
-          {validAge ? <div className="grid items-stretch gap-5 xl:grid-cols-3" aria-live="polite">
+          {validAge ? <div className="grid items-stretch gap-5 xl:grid-cols-2" aria-live="polite">
             {companies.map(company => <article key={company.key} aria-label={`${company.name} plans`} className="quote-card flex min-w-0 flex-col rounded-lg border border-border bg-card p-5 sm:p-6">
               <div className="flex min-h-16 items-center justify-between gap-4">
                 <img src={company.logo} alt={`${company.name} logo`} className="h-12 w-32 object-contain object-left drop-shadow-md" />
                 <span className="text-right text-xs text-muted-foreground">Age group<br /><strong className="text-foreground">{company.band ?? 'Not eligible'}</strong></span>
               </div>
               <h4 className="mt-4 text-xl font-bold">{company.name}</h4>
+              {company.key === 'destination-canada' && <div className="mt-4 space-y-3">
+                <div><label htmlFor="destination-option" className="mb-1 block text-sm font-medium">Destination Canada plan</label>
+                  <select id="destination-option" className={controlClass} value={preExisting ? '1' : '2'} onChange={e => setPreExisting(e.target.value === '1')}>
+                    <option value="1">Option 1 — with stable pre-existing</option><option value="2">Option 2 — no pre-existing</option>
+                  </select>
+                </div>
+                <div><label htmlFor="destination-deductible" className="mb-1 block text-sm font-medium">Destination Canada deductible</label>
+                  <select id="destination-deductible" className={controlClass} value={dc.deductible} disabled={age >= 86} onChange={e => setDestinationDeductible(Number(e.target.value) as DestinationDeductible)}>
+                    {(age >= 86 ? [500] : destinationDeductibles).map(d => <option key={d} value={d}>{fmt(d)}</option>)}
+                  </select>
+                  <p className="mt-2 text-xs text-muted-foreground">{age >= 86 ? 'Mandatory $500 deductible; no discount.' : `${Math.round(dc.discount * 100)}% deductible discount · Destination Canada only`}</p>
+                </div>
+              </div>}
               <div className="my-4 divide-y divide-border border-y border-border">
                 {company.plans.map(plan => <div key={plan.name} className="py-4">
                   <div className="mb-2 text-sm font-semibold text-quote-brand">{plan.name}</div>
-                  {plan.annual == null ? <p className="text-sm font-medium text-muted-foreground">No rate for this selection</p> : <>
+                  {plan.annual == null ? <p className="text-sm font-medium text-muted-foreground">No rate for this selection</p> : company.monthlyQuoteOnly && payMode === 'monthly' ? <div className="space-y-2"><p className="font-semibold text-quote-brand">{dc.monthlyEligible ? 'Contact Arjun for monthly terms' : 'Monthly plan unavailable below $50,000'}</p><p className="text-sm text-muted-foreground">Annual premium: {fmt(plan.annual)} · No monthly fee or installment amount is supplied in this rate sheet.</p></div> : <>
                     <div className="flex flex-wrap items-baseline gap-x-2">
                       <strong className="text-3xl text-foreground">{fmt(payMode === 'annual' ? plan.annual : plan.annual / 12)}</strong>
                       <span className="text-sm text-muted-foreground">/ {payMode === 'annual' ? 'year' : 'month'}</span>
@@ -300,12 +335,12 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                   {company.details.map(line => <li key={line} className="flex items-start gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-quote-success" /><span>{line}</span></li>)}
                 </ul>
               </details>
-              <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>
+              {company.sourceUrl ? <div className="mt-auto flex flex-col gap-2"><Button asChild variant="quote"><a href={company.sourceUrl} target="_blank" rel="noopener noreferrer">July 2026 rate sheet <ArrowRight /></a></Button><Button asChild variant="outline"><a href="tel:+14313382078">Ask Arjun for a quote</a></Button></div> : <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>}
             </article>)}
           </div> : <p className="border-y border-border py-8 text-muted-foreground">Enter the traveller’s age to see company prices.</p>}
 
           <div className="mt-6 space-y-2 text-xs leading-relaxed text-muted-foreground">
-            {payMode === 'monthly' && <p><strong className="text-foreground">Monthly estimates:</strong> upfront = last two months of premium + one $120 fee. Company payment availability and fees must be confirmed before purchase.</p>}
+            {payMode === 'monthly' && <p><strong className="text-foreground">Monthly estimates for Insure Canada, RIMI and GMS:</strong> upfront = last two months of premium + one $120 fee. Company payment availability and fees must be confirmed before purchase. Destination Canada requires a broker quote; this formula is not applied.</p>}
             <p>Rate-sheet estimates, not binding quotes. Benefits, eligibility and stability requirements vary by company. Final premiums and selected coverage are confirmed before issuance.</p>
           </div>
         </div>
