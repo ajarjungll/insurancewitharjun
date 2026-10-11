@@ -1,5 +1,9 @@
-import React, { useMemo, useState } from 'react';
-import { Calculator } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Check, ChevronDown, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
 
 type PlanTier = 'STANDARD' | 'ENHANCED';
 type PayMode = 'annual' | 'monthly';
@@ -163,305 +167,146 @@ function gmsBand(age: number): GmsBand | null {
   return null;
 }
 
+type QuotePlan = { name: string; annual: number | null };
+type CompanyQuote = {
+  key: string; name: string; logo: string; band: string | null;
+  plans: QuotePlan[]; note?: string; details: string[];
+};
+
 const SuperVisaPremiumCalculator: React.FC = () => {
-  const [age, setAge] = useState<number>(45);
+  const [ageInput, setAgeInput] = useState('45');
   const [coverage, setCoverage] = useState<Coverage>(100000);
-  const [tier, setTier] = useState<PlanTier>('STANDARD');
-  const [preExisting, setPreExisting] = useState<boolean>(false);
+  const [preExisting, setPreExisting] = useState(false);
   const [deductible, setDeductible] = useState<CommonDed>(0);
   const [payMode, setPayMode] = useState<PayMode>('annual');
+  const age = Number(ageInput);
+  const validAge = ageInput.trim() !== '' && Number.isInteger(age) && age >= 0 && age <= 89;
+  const ib = validAge ? icBand(age) : null;
+  const rb = validAge ? rimiBand(age) : null;
+  const gb = validAge ? gmsBand(age) : null;
+  const quotedCoverage = coverage === 100000 || coverage === 150000 ? coverage : null;
 
-  const validAge = age >= 0 && age <= 89;
-  const ib = icBand(age);
-  const rb = rimiBand(age);
-  const gb = gmsBand(age);
-
-  const icPremium = useMemo<number | null>(() => {
+  const icPrice = (tier: PlanTier) => {
     if (!ib) return null;
-    const icDed = deductible as ICDed;
-    const table = tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED;
-    const [a, b] = table[ib][icDed];
-    return preExisting ? a : b;
-  }, [ib, tier, preExisting, deductible]);
-
-  const rimiPremium = useMemo<number | null>(() => {
-    if (!rb) return null;
-    const table = tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED;
-    const row = (table[rb] as any)[coverage];
-    if (!row) return null;
-    const dailyRate = preExisting ? row[1] : row[0];
-    if (dailyRate == null) return null;
-    const is80Plus = age >= 80;
-    const discount = is80Plus ? RIMI_DED_DISCOUNT_80PLUS[deductible] : RIMI_DED_DISCOUNT_UNDER80[deductible];
-    if (discount == null) return null;
-    return dailyRate * (1 - discount) * 365;
-  }, [rb, tier, preExisting, coverage, deductible, age]);
-
-  const gmsPremium = useMemo<number | null>(() => {
-    if (!gb) return null;
-    if (coverage > GMS_MAX_COVERAGE) return null;
-    const row = (GMS_RATES[gb] as any)[coverage];
-    if (!row) return null;
-    return row[deductible];
-  }, [gb, coverage, deductible]);
-
-  const insurers: Array<{
-    key: string; name: string; logo: string; band: string | null; annual: number | null; note?: string;
-  }> = [
-    {
-      key: 'insure-canada',
-      name: 'Insure Canada',
-      logo: '/partner-logos/insure-canada.png',
-      band: ib,
-      annual: icPremium,
-      note:
-        coverage > 150000
-          ? 'Rate for this coverage not published — please request a manual quote. Insure Canada uses a fixed annual schedule (coverage selector does not affect price).'
-          : 'Uses fixed annual schedule (coverage selection not applied).',
-    },
-    {
-      key: 'rimi',
-      name: 'RIMI',
-      logo: '/partner-logos/rimi.png',
-      band: rb,
-      annual: rimiPremium,
-      note: rb && coverage > 150000 ? 'Rate for this coverage not published in our table — please request a manual quote.' : undefined,
-    },
-    {
-      key: 'gms',
-      name: 'GMS',
-      logo: '/partner-logos/gms.jpg',
-      band: gb,
-      annual: gmsPremium,
-      note: !gb
-        ? 'GMS does not cover ages 80+.'
-        : coverage > GMS_MAX_COVERAGE
-          ? '⚠️ GMS maximum coverage is $150,000. Please select $100,000 or $150,000, or choose RIMI / Insure Canada for higher coverage.'
-          : preExisting
-            ? 'GMS offers a single plan covering pre-existing conditions — conditions must be stable for more than 180 days prior to the effective date.'
-            : undefined,
-    },
-  ];
-
-  const monthlyFee = payMode === 'monthly' ? MONTHLY_FEE : 0;
-  const computeBreakdown = (annual: number) => {
-    const monthly = annual / 12;
-    const totalPayable = annual + monthlyFee;
-    const upfront = payMode === 'monthly' ? monthly * 2 + MONTHLY_FEE : annual;
-    return { monthly, totalPayable, upfront };
+    const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][deductible];
+    return row[preExisting ? 0 : 1];
   };
-
-  const availableAnnuals = insurers
-    .map(i => i.annual)
-    .filter((v): v is number => v != null);
-  const minAnnual = availableAnnuals.length ? Math.min(...availableAnnuals) : null;
+  const rimiPrice = (tier: PlanTier) => {
+    if (!rb || !quotedCoverage) return null;
+    const row = (tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED)[rb][quotedCoverage];
+    const rate = row[preExisting ? 1 : 0];
+    const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[deductible];
+    if (rate == null || discount == null) return null;
+    return rate * (1 - discount) * 365;
+  };
+  const stability = age <= 69 ? '90 days' : '180 days';
+  const mshDetails = [
+    'Hospital room: Standard covers ward rate; Enhanced covers semi-private.',
+    'Prescription benefit: Standard up to $500; Enhanced up to $1,000.',
+    'Accidental dental: Standard up to $1,000; Enhanced up to $3,000.',
+    'Repatriation: Standard up to $5,000; Enhanced up to $10,000.',
+    preExisting ? `Plan 2: pre-existing conditions must be stable for ${stability}; medical declaration and eligibility rules apply.` : 'Plan 1: all pre-existing conditions are excluded.',
+  ];
+  const companies: CompanyQuote[] = [
+    { key: 'insure-canada', name: 'Insure Canada', logo: '/partner-logos/insure-canada.png', band: ib,
+      plans: [{ name: 'Standard', annual: icPrice('STANDARD') }, { name: 'Enhanced', annual: icPrice('ENHANCED') }],
+      note: 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
+    { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rb,
+      plans: [{ name: 'Standard', annual: rimiPrice('STANDARD') }, { name: 'Enhanced', annual: rimiPrice('ENHANCED') }],
+      note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 80 && deductible < 500 ? 'A $500 or $1,000 deductible is required at age 80+.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
+      details: mshDetails },
+    { key: 'gms', name: 'GMS', logo: '/partner-logos/gms.jpg', band: gb,
+      plans: [{ name: 'Visitors to Canada', annual: gb && quotedCoverage ? GMS_RATES[gb][quotedCoverage][deductible] : null }],
+      note: !gb ? 'Available for ages under 80.' : coverage > GMS_MAX_COVERAGE ? 'Maximum coverage is $150,000.' : undefined,
+      details: ['One plan — no Standard / Enhanced tiers.', 'Pre-existing conditions must be stable for 180 days before coverage begins, subject to policy eligibility and exclusions.', 'Coverage options in this comparison: $100,000 or $150,000.', 'Deductible and benefit limits are subject to the GMS policy wording.'] },
+  ];
+  const controlClass = 'h-12 w-full rounded-md border border-input bg-background px-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-ring';
 
   return (
-    <section id="calculator" className="py-16 bg-gradient-to-br from-blue-50 to-white scroll-mt-24">
+    <section id="calculator" className="scroll-mt-24 bg-quote-tint/70 py-12 sm:py-16">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <Calculator className="w-10 h-10 text-blue-700" />
-              <h2 className="text-4xl font-bold text-gray-900">Super Visa Insurance — Compare 3 Insurers</h2>
-            </div>
-            <p className="text-gray-600 mb-4">Live comparison of Insure Canada, RIMI, and GMS annual premiums.</p>
-            <div className="flex items-center justify-center gap-6 flex-wrap">
-              <img src="/partner-logos/insure-canada.png" alt="Insure Canada" className="h-10 w-auto object-contain" />
-              <img src="/partner-logos/rimi.png" alt="RIMI" className="h-10 w-auto object-contain" />
-              <img src="/partner-logos/gms.jpg" alt="GMS" className="h-10 w-auto object-contain" />
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 flex items-start gap-4">
+            <ShieldCheck className="mt-1 h-10 w-10 shrink-0 text-quote-brand drop-shadow-lg" aria-hidden="true" />
+            <div>
+              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Super Visa Insurance Calculator</h2>
+              <p className="mt-2 text-muted-foreground">Compare company plans · 365-day coverage · Prices in CAD</p>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Inputs */}
-            <div className="bg-white p-8 rounded-2xl card-3d border space-y-6 lg:col-span-1">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Age (0–89)</label>
-                <input
-                  type="number"
-                  min={0}
-                  max={89}
-                  value={age}
-                  onChange={(e) => setAge(Number(e.target.value))}
-                  className="w-full h-11 rounded-md border border-input px-3 text-base"
-                />
-                {!validAge && <p className="text-xs text-red-600 mt-1">Age must be between 0 and 89.</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Coverage Amount</label>
-                <select
-                  value={coverage}
-                  onChange={(e) => setCoverage(Number(e.target.value) as Coverage)}
-                  className="w-full h-11 rounded-md border border-input px-3 text-base bg-white font-semibold"
-                >
-                  {COVERAGES.map((c) => (
-                    <option key={c} value={c}>
-                      {fmtCov(c)}
-                    </option>
-                  ))}
-                </select>
-                <p className="text-xs text-gray-500 mt-1">
-                  Super Visa requires $100,000 minimum coverage. GMS caps coverage at $150,000; RIMI &amp; Insure Canada offer higher limits.
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Plan Tier</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {(['STANDARD', 'ENHANCED'] as PlanTier[]).map((t) => (
-                    <button key={t} onClick={() => setTier(t)}
-                      className={`h-11 rounded-md border font-semibold transition ${
-                        tier === t ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}>
-                      {t.charAt(0) + t.slice(1).toLowerCase()}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Pre-existing Conditions</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button onClick={() => setPreExisting(true)}
-                    className={`h-11 rounded-md border font-semibold transition text-sm ${
-                      preExisting ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}>
-                    With Pre-existing
-                  </button>
-                  <button onClick={() => setPreExisting(false)}
-                    className={`h-11 rounded-md border font-semibold transition text-sm ${
-                      !preExisting ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}>
-                    No Pre-existing
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Deductible (CAD)</label>
-                <div className="grid grid-cols-4 gap-2">
-                  {COMMON_DEDUCTIBLES.map((d) => (
-                    <button key={d} onClick={() => setDeductible(d)}
-                      className={`h-11 rounded-md border font-semibold transition ${
-                        deductible === d ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}>
-                      ${d}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Payment Mode</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button onClick={() => setPayMode('annual')}
-                    className={`h-11 rounded-md border font-semibold transition ${
-                      payMode === 'annual' ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}>
-                    Annual (No Fee)
-                  </button>
-                  <button onClick={() => setPayMode('monthly')}
-                    className={`h-11 rounded-md border font-semibold transition ${
-                      payMode === 'monthly' ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}>
-                    Monthly (+$120 Fee)
-                  </button>
-                </div>
-              </div>
+          <div className="grid gap-5 border-y border-border py-6 sm:grid-cols-3">
+            <div>
+              <label htmlFor="supervisa-age" className="mb-2 block text-sm font-semibold">Traveller’s age</label>
+              <Input id="supervisa-age" type="number" min={0} max={89} step={1} value={ageInput}
+                onChange={e => setAgeInput(e.target.value)} className={controlClass} aria-invalid={!validAge} aria-describedby={!validAge ? 'supervisa-age-error' : undefined} />
+              {!validAge && <p id="supervisa-age-error" className="mt-2 text-sm text-destructive">Enter a whole-number age from 0 to 89.</p>}
             </div>
+            <div>
+              <label htmlFor="supervisa-coverage" className="mb-2 block text-sm font-semibold">Coverage amount</label>
+              <select id="supervisa-coverage" value={coverage} onChange={e => setCoverage(Number(e.target.value) as Coverage)} className={controlClass}>
+                {COVERAGES.map(c => <option key={c} value={c}>{fmtCov(c)}</option>)}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="supervisa-deductible" className="mb-2 block text-sm font-semibold">Deductible</label>
+              <select id="supervisa-deductible" value={deductible} onChange={e => setDeductible(Number(e.target.value) as CommonDed)} className={controlClass}>
+                {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
+              </select>
+            </div>
+            <div className="flex items-center gap-3 sm:col-span-3">
+              <Switch id="supervisa-preexisting" checked={preExisting} onCheckedChange={setPreExisting} />
+              <label htmlFor="supervisa-preexisting" className="text-sm font-medium">Include stable pre-existing conditions</label>
+            </div>
+          </div>
 
-            {/* Results — 3 insurer cards */}
-            <div className="lg:col-span-2 space-y-4">
-              {validAge ? (
-                <>
-                  {minAnnual != null && (
-                    <div className="bg-green-600 text-white rounded-xl px-4 py-3 text-sm font-semibold shadow-md">
-                      Best Price:{' '}
-                      <span className="font-extrabold">
-                        {insurers.find(i => i.annual === minAnnual)?.name}
-                      </span>{' '}
-                      at {fmt(minAnnual)} / year
+          <div className="my-6 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-bold">Company plans & prices</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{preExisting ? 'With stable pre-existing conditions' : 'Without pre-existing conditions'} · GMS includes eligible stable conditions</p>
+            </div>
+            <div className="flex gap-2" role="group" aria-label="Payment frequency">
+              {(['annual', 'monthly'] as PayMode[]).map(mode => <Button key={mode} variant={payMode === mode ? 'default' : 'quote'} aria-pressed={payMode === mode} onClick={() => setPayMode(mode)}>
+                {mode === 'annual' ? 'Yearly' : 'Monthly'}
+              </Button>)}
+            </div>
+          </div>
+
+          {validAge ? <div className="grid items-stretch gap-5 xl:grid-cols-3" aria-live="polite">
+            {companies.map(company => <article key={company.key} aria-label={`${company.name} plans`} className="quote-card flex min-w-0 flex-col rounded-lg border border-border bg-card p-5 sm:p-6">
+              <div className="flex min-h-16 items-center justify-between gap-4">
+                <img src={company.logo} alt={`${company.name} logo`} className="h-12 w-32 object-contain object-left drop-shadow-md" />
+                <span className="text-right text-xs text-muted-foreground">Age group<br /><strong className="text-foreground">{company.band ?? 'Not eligible'}</strong></span>
+              </div>
+              <h4 className="mt-4 text-xl font-bold">{company.name}</h4>
+              <div className="my-4 divide-y divide-border border-y border-border">
+                {company.plans.map(plan => <div key={plan.name} className="py-4">
+                  <div className="mb-2 text-sm font-semibold text-quote-brand">{plan.name}</div>
+                  {plan.annual == null ? <p className="text-sm font-medium text-muted-foreground">No rate for this selection</p> : <>
+                    <div className="flex flex-wrap items-baseline gap-x-2">
+                      <strong className="text-3xl text-foreground">{fmt(payMode === 'annual' ? plan.annual : plan.annual / 12)}</strong>
+                      <span className="text-sm text-muted-foreground">/ {payMode === 'annual' ? 'year' : 'month'}</span>
                     </div>
-                  )}
+                    {payMode === 'monthly' && <dl className="mt-3 space-y-1 text-sm">
+                      <div className="flex flex-wrap justify-between gap-2"><dt className="text-muted-foreground">Upfront estimate</dt><dd className="font-semibold">{fmt(plan.annual / 12 * 2 + MONTHLY_FEE)}</dd></div>
+                      <div className="flex flex-wrap justify-between gap-2"><dt className="text-muted-foreground">Total with fee</dt><dd>{fmt(plan.annual + MONTHLY_FEE)}</dd></div>
+                    </dl>}
+                  </>}
+                </div>)}
+              </div>
+              {company.note && <p className="mb-4 text-xs leading-relaxed text-muted-foreground">{company.note}</p>}
+              <details className="mb-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-2 py-2 text-sm font-semibold text-quote-brand">Plan details <ChevronDown className="h-4 w-4" /></summary>
+                <ul className="mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground">
+                  {company.details.map(line => <li key={line} className="flex items-start gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-quote-success" /><span>{line}</span></li>)}
+                </ul>
+              </details>
+              <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>
+            </article>)}
+          </div> : <p className="border-y border-border py-8 text-muted-foreground">Enter the traveller’s age to see company prices.</p>}
 
-                  <div className="grid md:grid-cols-3 gap-4">
-                    {insurers.map((ins) => {
-                      const isCheapest = ins.annual != null && ins.annual === minAnnual;
-                      return (
-                        <div
-                          key={ins.key}
-                          className={`rounded-2xl p-5 card-3d border-2 flex flex-col ${
-                            isCheapest ? 'border-green-500 bg-gradient-to-br from-white to-green-50' : 'border-gray-200 bg-white'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between mb-3">
-                            <img src={ins.logo} alt={ins.name} className="h-10 w-auto object-contain" />
-                            {isCheapest && (
-                              <span className="text-xs font-bold bg-green-500 text-white px-2 py-1 rounded-full">
-                                BEST
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-lg font-bold text-gray-900">{ins.name}</div>
-                          <div className="text-xs text-gray-500 mb-3">
-                            Age band: <strong>{ins.band ?? '—'}</strong>
-                          </div>
-                          {ins.annual == null ? (
-                            <div className="mt-2 bg-gray-100 rounded-lg p-3 text-sm text-gray-600">
-                              Not available for this selection.
-                              {ins.note && <div className="text-xs mt-1">{ins.note}</div>}
-                            </div>
-                          ) : (() => {
-                            const bd = computeBreakdown(ins.annual);
-                            return (
-                              <div className="space-y-2">
-                                <div className="bg-blue-50 rounded-lg p-3">
-                                  <div className="text-xs text-blue-800">Annual Premium</div>
-                                  <div className="text-2xl font-extrabold text-blue-900">{fmt(ins.annual)}</div>
-                                </div>
-                                {payMode === 'monthly' ? (
-                                  <>
-                                    <div className="bg-gray-50 rounded-lg p-3">
-                                      <div className="text-xs text-gray-600">Monthly Instalment</div>
-                                      <div className="text-lg font-bold text-gray-900">{fmt(bd.monthly)} / mo</div>
-                                    </div>
-                                    <div className="bg-orange-100 rounded-lg p-3">
-                                      <div className="text-xs text-orange-800">Upfront (2 mo + $120 fee)</div>
-                                      <div className="text-lg font-bold text-orange-900">{fmt(bd.upfront)}</div>
-                                    </div>
-                                    <div className="text-xs text-gray-500">Total payable: {fmt(bd.totalPayable)}</div>
-                                  </>
-                                ) : (
-                                  <div className="bg-orange-100 rounded-lg p-3">
-                                    <div className="text-xs text-orange-800">Charged Upfront</div>
-                                    <div className="text-lg font-bold text-orange-900">{fmt(bd.upfront)}</div>
-                                  </div>
-                                )}
-                                <div className="text-xs text-gray-500 mt-1">Coverage: {fmtCov(coverage)}</div>
-                                {ins.note && <div className="text-[11px] text-gray-500 italic">{ins.note}</div>}
-                              </div>
-                            );
-                          })()}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <p className="text-xs text-gray-600 pt-2">
-                    Rates shown are illustrative and based on published rate sheets from each carrier. Medical
-                    declaration may be required above age 70. Insure Canada uses a fixed annual schedule
-                    (coverage selector applies to RIMI &amp; GMS only). GMS does not cover ages 80+. Final
-                    premium is confirmed at issuance.
-                  </p>
-                </>
-              ) : (
-                <div className="bg-white rounded-2xl p-8 border">
-                  <p className="text-gray-600">Enter a valid age (0–89) to compare premiums across all three insurers.</p>
-                </div>
-              )}
-            </div>
+          <div className="mt-6 space-y-2 text-xs leading-relaxed text-muted-foreground">
+            {payMode === 'monthly' && <p><strong className="text-foreground">Monthly estimates:</strong> upfront = last two months of premium + one $120 fee. Company payment availability and fees must be confirmed before purchase.</p>}
+            <p>Rate-sheet estimates, not binding quotes. Benefits, eligibility and stability requirements vary by company. Final premiums and selected coverage are confirmed before issuance.</p>
           </div>
         </div>
       </div>
