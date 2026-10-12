@@ -204,7 +204,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
     if (!rb || !quotedCoverage) return null;
     const row = (tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED)[rb][quotedCoverage];
     const rate = row[preExisting ? 1 : 0];
-    const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[deductible];
+    const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[rimiDeductible];
     if (rate == null || discount == null) return null;
     return rate * (1 - discount) * 365;
   };
