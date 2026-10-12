@@ -4,4 +4,4 @@
 - [x] Simplify Super Visa inputs and present company-specific plans, prices, and details.
 - [x] Verify comparison selections, payment estimates, and phone/iPad layouts.
 - [x] Add Destination Canada from the July 2026 sheet, retain source and save rates/rules to memory.
-- [ ] Verify Destination Canada rates, deductible discounts, eligibility and visitor/Super Visa selections.
+- [x] Verify Destination Canada rates, deductible discounts, eligibility and visitor/Super Visa selections.
