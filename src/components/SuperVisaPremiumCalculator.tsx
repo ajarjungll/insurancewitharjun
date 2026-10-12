@@ -223,7 +223,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
       note: coverage < 100000 ? 'No rate for this visitor coverage in the available schedule.' : 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
     { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rb,
       plans: [{ name: 'Standard', annual: rimiPrice('STANDARD') }, { name: 'Enhanced', annual: rimiPrice('ENHANCED') }],
-      note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 80 && rimiDeductible < 500 ? 'A $500 or $1,000 deductible is required at age 80+.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
+      note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
       details: mshDetails },
     { key: 'gms', name: 'GMS', logo: '/partner-logos/gms.jpg', band: gb,
       plans: [{ name: 'Visitors to Canada', annual: gb && quotedCoverage ? GMS_RATES[gb][quotedCoverage][gmsDeductible] : null }],
