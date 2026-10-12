@@ -300,6 +300,25 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                 <span className="text-right text-xs text-muted-foreground">Age group<br /><strong className="text-foreground">{company.band ?? 'Not eligible'}</strong></span>
               </div>
               <h4 className="mt-4 text-xl font-bold">{company.name}</h4>
+              {company.key === 'insure-canada' && <div className="mt-4">
+                <label htmlFor="ic-deductible" className="mb-1 block text-sm font-medium">Insure Canada deductible</label>
+                <select id="ic-deductible" className={controlClass} value={icDeductible} onChange={e => setIcDeductible(Number(e.target.value) as ICDed)}>
+                  {([0, 100, 250, 500, 1000] as ICDed[]).map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
+                </select>
+              </div>}
+              {company.key === 'rimi' && <div className="mt-4">
+                <label htmlFor="rimi-deductible" className="mb-1 block text-sm font-medium">RIMI deductible</label>
+                <select id="rimi-deductible" className={controlClass} value={rimiDeductible} onChange={e => setRimiDeductible(Number(e.target.value) as CommonDed)}>
+                  {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d} disabled={age >= 80 && d < 500}>{fmt(d)}{d === 0 ? ' — no deductible' : age >= 80 && d < 500 ? ' — not available at age 80+' : ''}</option>)}
+                </select>
+                <p className="mt-2 text-xs text-muted-foreground">{age >= 80 ? 'Age 80+: $500 is the base rate; $1,000 saves 15%.' : rimiDeductible === 0 ? 'No deductible discount.' : `Saves ${Math.round((RIMI_DED_DISCOUNT_UNDER80[rimiDeductible] ?? 0) * 100)}% off the base rate.`}</p>
+              </div>}
+              {company.key === 'gms' && <div className="mt-4">
+                <label htmlFor="gms-deductible" className="mb-1 block text-sm font-medium">GMS deductible</label>
+                <select id="gms-deductible" className={controlClass} value={gmsDeductible} onChange={e => setGmsDeductible(Number(e.target.value) as CommonDed)}>
+                  {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
+                </select>
+              </div>}
               {company.key === 'destination-canada' && <div className="mt-4 space-y-3">
                 <div><label htmlFor="destination-option" className="mb-1 block text-sm font-medium">Destination Canada plan</label>
                   <select id="destination-option" className={controlClass} value={preExisting ? '1' : '2'} onChange={e => setPreExisting(e.target.value === '1')}>
