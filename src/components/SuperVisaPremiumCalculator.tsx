@@ -272,10 +272,8 @@ const SuperVisaPremiumCalculator: React.FC = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="supervisa-deductible" className="mb-2 block text-sm font-semibold">Deductible</label>
-              <select id="supervisa-deductible" value={deductible} onChange={e => setDeductible(Number(e.target.value) as CommonDed)} className={controlClass}>
-                {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
-              </select>
+              <label className="mb-2 block text-sm font-semibold">Deductible</label>
+              <p className="text-sm text-muted-foreground">Each company has its own deductible options — pick one inside each company card below.</p>
             </div>
             <div className="flex items-center gap-3 sm:col-span-3">
               <Switch id="supervisa-preexisting" checked={preExisting} onCheckedChange={setPreExisting} />
