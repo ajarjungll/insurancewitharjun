@@ -181,7 +181,9 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const [ageInput, setAgeInput] = useState('45');
   const [coverage, setCoverage] = useState<Coverage>(100000);
   const [preExisting, setPreExisting] = useState(false);
-  const [deductible, setDeductible] = useState<CommonDed>(0);
+  const [icDeductible, setIcDeductible] = useState<ICDed>(0);
+  const [rimiDeductible, setRimiDeductible] = useState<CommonDed>(0);
+  const [gmsDeductible, setGmsDeductible] = useState<CommonDed>(0);
   const [payMode, setPayMode] = useState<PayMode>('annual');
   const [purpose, setPurpose] = useState<'supervisa' | 'visitor'>('supervisa');
   const [destinationDeductible, setDestinationDeductible] = useState<DestinationDeductible>(0);
@@ -195,14 +197,15 @@ const SuperVisaPremiumCalculator: React.FC = () => {
 
   const icPrice = (tier: PlanTier) => {
     if (!ib || coverage < 100000) return null;
-    const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][deductible];
+    const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][icDeductible];
     return row[preExisting ? 0 : 1];
   };
   const rimiPrice = (tier: PlanTier) => {
     if (!rb || !quotedCoverage) return null;
     const row = (tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED)[rb][quotedCoverage];
     const rate = row[preExisting ? 1 : 0];
-    const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[deductible];
+    const ded: CommonDed = age >= 80 && rimiDeductible < 500 ? 500 : rimiDeductible;
+    const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[ded];
     if (rate == null || discount == null) return null;
     return rate * (1 - discount) * 365;
   };
@@ -220,10 +223,10 @@ const SuperVisaPremiumCalculator: React.FC = () => {
       note: coverage < 100000 ? 'No rate for this visitor coverage in the available schedule.' : 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
     { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rb,
       plans: [{ name: 'Standard', annual: rimiPrice('STANDARD') }, { name: 'Enhanced', annual: rimiPrice('ENHANCED') }],
-      note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 80 && deductible < 500 ? 'A $500 or $1,000 deductible is required at age 80+.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
+      note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
       details: mshDetails },
     { key: 'gms', name: 'GMS', logo: '/partner-logos/gms.jpg', band: gb,
-      plans: [{ name: 'Visitors to Canada', annual: gb && quotedCoverage ? GMS_RATES[gb][quotedCoverage][deductible] : null }],
+      plans: [{ name: 'Visitors to Canada', annual: gb && quotedCoverage ? GMS_RATES[gb][quotedCoverage][gmsDeductible] : null }],
       note: !gb ? 'Available for ages under 80.' : coverage > GMS_MAX_COVERAGE ? 'Maximum coverage is $150,000.' : undefined,
       details: ['One plan — no Standard / Enhanced tiers.', 'Pre-existing conditions must be stable for 180 days before coverage begins, subject to policy eligibility and exclusions.', 'Coverage options in this comparison: $100,000 or $150,000.', 'Deductible and benefit limits are subject to the GMS policy wording.'] },
     { key: 'destination-canada', name: 'Destination Canada', logo: '/partner-logos/destination-canada.png', band: dc.band,
@@ -270,10 +273,8 @@ const SuperVisaPremiumCalculator: React.FC = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="supervisa-deductible" className="mb-2 block text-sm font-semibold">Deductible</label>
-              <select id="supervisa-deductible" value={deductible} onChange={e => setDeductible(Number(e.target.value) as CommonDed)} className={controlClass}>
-                {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
-              </select>
+              <label className="mb-2 block text-sm font-semibold">Deductible</label>
+              <p className="text-sm text-muted-foreground">Each company has its own deductible options — pick one inside each company card below.</p>
             </div>
             <div className="flex items-center gap-3 sm:col-span-3">
               <Switch id="supervisa-preexisting" checked={preExisting} onCheckedChange={setPreExisting} />
@@ -300,6 +301,25 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                 <span className="text-right text-xs text-muted-foreground">Age group<br /><strong className="text-foreground">{company.band ?? 'Not eligible'}</strong></span>
               </div>
               <h4 className="mt-4 text-xl font-bold">{company.name}</h4>
+              {company.key === 'insure-canada' && <div className="mt-4">
+                <label htmlFor="ic-deductible" className="mb-1 block text-sm font-medium">Insure Canada deductible</label>
+                <select id="ic-deductible" className={controlClass} value={icDeductible} onChange={e => setIcDeductible(Number(e.target.value) as ICDed)}>
+                  {([0, 100, 250, 500, 1000] as ICDed[]).map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
+                </select>
+              </div>}
+              {company.key === 'rimi' && <div className="mt-4">
+                <label htmlFor="rimi-deductible" className="mb-1 block text-sm font-medium">RIMI deductible</label>
+                <select id="rimi-deductible" className={controlClass} value={rimiDeductible} onChange={e => setRimiDeductible(Number(e.target.value) as CommonDed)}>
+                  {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d} disabled={age >= 80 && d < 500}>{fmt(d)}{d === 0 ? ' — no deductible' : age >= 80 && d < 500 ? ' — not available at age 80+' : ''}</option>)}
+                </select>
+                <p className="mt-2 text-xs text-muted-foreground">{age >= 80 ? 'Age 80+: $500 is the base rate; $1,000 saves 15%.' : rimiDeductible === 0 ? 'No deductible discount.' : `Saves ${Math.round((RIMI_DED_DISCOUNT_UNDER80[rimiDeductible] ?? 0) * 100)}% off the base rate.`}</p>
+              </div>}
+              {company.key === 'gms' && <div className="mt-4">
+                <label htmlFor="gms-deductible" className="mb-1 block text-sm font-medium">GMS deductible</label>
+                <select id="gms-deductible" className={controlClass} value={gmsDeductible} onChange={e => setGmsDeductible(Number(e.target.value) as CommonDed)}>
+                  {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
+                </select>
+              </div>}
               {company.key === 'destination-canada' && <div className="mt-4 space-y-3">
                 <div><label htmlFor="destination-option" className="mb-1 block text-sm font-medium">Destination Canada plan</label>
                   <select id="destination-option" className={controlClass} value={preExisting ? '1' : '2'} onChange={e => setPreExisting(e.target.value === '1')}>
