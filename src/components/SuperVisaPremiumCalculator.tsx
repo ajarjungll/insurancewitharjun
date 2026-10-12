@@ -181,7 +181,9 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const [ageInput, setAgeInput] = useState('45');
   const [coverage, setCoverage] = useState<Coverage>(100000);
   const [preExisting, setPreExisting] = useState(false);
-  const [deductible, setDeductible] = useState<CommonDed>(0);
+  const [icDeductible, setIcDeductible] = useState<ICDed>(0);
+  const [rimiDeductible, setRimiDeductible] = useState<CommonDed>(0);
+  const [gmsDeductible, setGmsDeductible] = useState<CommonDed>(0);
   const [payMode, setPayMode] = useState<PayMode>('annual');
   const [purpose, setPurpose] = useState<'supervisa' | 'visitor'>('supervisa');
   const [destinationDeductible, setDestinationDeductible] = useState<DestinationDeductible>(0);
@@ -195,7 +197,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
 
   const icPrice = (tier: PlanTier) => {
     if (!ib || coverage < 100000) return null;
-    const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][deductible];
+    const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][icDeductible];
     return row[preExisting ? 0 : 1];
   };
   const rimiPrice = (tier: PlanTier) => {
