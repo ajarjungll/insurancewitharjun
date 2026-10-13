@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { ArrowRight, Check, ChevronDown, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { destinationQuote, destinationDeductibles, type DestinationDeductible } from '@/data/destinationCanadaRates';
-import destinationRateSheet from '@/assets/destination-canada-rates.pdf.asset.json';
 
 type PlanTier = 'STANDARD' | 'ENHANCED';
 type PayMode = 'annual' | 'monthly';
@@ -176,7 +174,6 @@ type QuotePlan = { name: string; annual: number | null };
 type CompanyQuote = {
   key: string; name: string; logo: string; band: string | null;
   plans: QuotePlan[]; note?: string; details: string[];
-  sourceUrl?: string;
   monthlyQuoteOnly?: boolean;
 };
 
