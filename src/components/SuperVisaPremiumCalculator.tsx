@@ -357,7 +357,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                   {company.details.map(line => <li key={line} className="flex items-start gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-quote-success" /><span>{line}</span></li>)}
                 </ul>
               </details>
-              {company.sourceUrl ? <div className="mt-auto flex flex-col gap-2"><Button asChild variant="quote"><a href={company.sourceUrl} target="_blank" rel="noopener noreferrer">July 2026 rate sheet <ArrowRight /></a></Button><Button asChild variant="outline"><a href="tel:+14313382078">Ask Arjun for a quote</a></Button></div> : <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>}
+              {company.key === 'destination-canada' ? <div className="mt-auto flex flex-col gap-2"><Button asChild variant="outline"><a href="tel:+14313382078">Ask Arjun for a quote</a></Button></div> : <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>}
             </article>)}
           </div> : <p className="border-y border-border py-8 text-muted-foreground">Enter the traveller’s age to see company prices.</p>}
 
