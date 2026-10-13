@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { ArrowRight, Check, ChevronDown, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { destinationQuote, destinationDeductibles, type DestinationDeductible } from '@/data/destinationCanadaRates';
-import destinationRateSheet from '@/assets/destination-canada-rates.pdf.asset.json';
 
 type PlanTier = 'STANDARD' | 'ENHANCED';
 type PayMode = 'annual' | 'monthly';
@@ -176,7 +174,6 @@ type QuotePlan = { name: string; annual: number | null };
 type CompanyQuote = {
   key: string; name: string; logo: string; band: string | null;
   plans: QuotePlan[]; note?: string; details: string[];
-  sourceUrl?: string;
   monthlyQuoteOnly?: boolean;
 };
 
@@ -236,7 +233,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
       details: ['One plan — no Standard / Enhanced tiers.', 'Pre-existing conditions must be stable for 180 days before coverage begins, subject to policy eligibility and exclusions.', 'Coverage options in this comparison: $100,000 or $150,000.', 'Deductible and benefit limits are subject to the GMS policy wording.'] },
     { key: 'destination-canada', name: 'Destination Canada', logo: '/partner-logos/destination-canada.png', band: dc.band,
       plans: [{ name: preExisting ? 'Option 1 — stable pre-existing conditions' : 'Option 2 — no pre-existing conditions', annual: dc.annual }],
-      monthlyQuoteOnly: true, sourceUrl: destinationRateSheet.url,
+      monthlyQuoteOnly: true,
       note: preExisting && age >= 80 ? 'Option 1 is available only through age 79.' : age >= 86 ? 'Age 86+: $25,000 visitor coverage only, with a mandatory $500 deductible. Not eligible for Super Visa coverage.' : age >= 80 ? 'Ages 80–85: Option 2 offers $25,000 or $50,000 visitor coverage only. No Super Visa rate.' : coverage > 300000 ? 'The supplied sheet has rates up to $300,000 only.' : undefined,
       details: [
         'Rate schedule effective July 1, 2026. Annual premium = daily rate × 365, less the deductible discount; minimum premium $25.',
@@ -267,9 +264,9 @@ const SuperVisaPremiumCalculator: React.FC = () => {
           <div className="grid gap-5 border-y border-border py-6 sm:grid-cols-3">
             <div>
               <label htmlFor="supervisa-age" className="mb-2 block text-sm font-semibold">Traveller’s age</label>
-              <Input id="supervisa-age" type="number" min={0} max={120} step={1} value={ageInput}
-                onChange={e => setAgeInput(e.target.value)} className={controlClass} aria-invalid={!validAge} aria-describedby={!validAge ? 'supervisa-age-error' : undefined} />
-              {!validAge && <p id="supervisa-age-error" className="mt-2 text-sm text-destructive">Enter a whole-number age from 0 to 120.</p>}
+              <select id="supervisa-age" value={ageInput} onChange={e => setAgeInput(e.target.value)} className={controlClass}>
+                {Array.from({ length: 121 }, (_, a) => <option key={a} value={a}>{a === 0 ? '0 (under 1 year)' : a}</option>)}
+              </select>
             </div>
             <div>
               <label htmlFor="supervisa-coverage" className="mb-2 block text-sm font-semibold">Coverage amount</label>
@@ -360,7 +357,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                   {company.details.map(line => <li key={line} className="flex items-start gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-quote-success" /><span>{line}</span></li>)}
                 </ul>
               </details>
-              {company.sourceUrl ? <div className="mt-auto flex flex-col gap-2"><Button asChild variant="quote"><a href={company.sourceUrl} target="_blank" rel="noopener noreferrer">July 2026 rate sheet <ArrowRight /></a></Button><Button asChild variant="outline"><a href="tel:+14313382078">Ask Arjun for a quote</a></Button></div> : <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>}
+              {company.key === 'destination-canada' ? <div className="mt-auto flex flex-col gap-2"><Button asChild variant="outline"><a href="tel:+14313382078">Ask Arjun for a quote</a></Button></div> : <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>}
             </article>)}
           </div> : <p className="border-y border-border py-8 text-muted-foreground">Enter the traveller’s age to see company prices.</p>}
 
