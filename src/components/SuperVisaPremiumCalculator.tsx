@@ -15,8 +15,10 @@ type CommonDed = 0 | 100 | 500 | 1000;
 // -------- INSURE CANADA (fixed annual schedule) --------
 const IC_AGE_BANDS = ['0-25','26-35','36-40','41-54','55-59','60-64','65-69','70-74','75-79','80-84'] as const;
 type ICBand = typeof IC_AGE_BANDS[number];
-type ICDed = 0 | 100 | 250 | 500 | 1000;
-type ICRow = Record<ICDed, [number, number]>; // [Plan A (with pre-existing), Plan B (no pre-existing)]
+type ICDed = 0 | 100 | 250 | 500 | 1000 | 3000;
+type ICTableDed = Exclude<ICDed, 3000>;
+type RimiDed = 0 | 100 | 250 | 500 | 1000 | 3000;
+type ICRow = Record<ICTableDed, [number, number]>; // [Plan A (with pre-existing), Plan B (no pre-existing)]
 
 const IC_STANDARD: Record<ICBand, ICRow> = {
   '0-25':  { 0:[1157.05,1124.20], 100:[1099.19,1067.99], 250:[1041.34,1011.78], 500:[983.49,955.57], 1000:[925.64,899.36] },
@@ -78,9 +80,10 @@ const RIMI_ENHANCED: Record<RimiBand, RimiCovRow> = {
 };
 
 // Deductible discount for ages 0-79 (RIMI)
-const RIMI_DED_DISCOUNT_UNDER80: Record<CommonDed, number | null> = { 0: 0, 100: 0.05, 500: 0.15, 1000: 0.20 };
+const RIMI_DED_DISCOUNT_UNDER80: Record<RimiDed, number | null> = { 0: 0, 100: 0.05, 250: 0.10, 500: 0.15, 1000: 0.20, 3000: 0.30 };
 // Deductible discount for ages 80+ (RIMI): $0 & $100 not applicable, $500 = base, $1000 = 15% off
-const RIMI_DED_DISCOUNT_80PLUS: Record<CommonDed, number | null> = { 0: null, 100: null, 500: 0, 1000: 0.15 };
+const RIMI_DED_DISCOUNT_80PLUS: Record<RimiDed, number | null> = { 0: null, 100: null, 250: null, 500: 0, 1000: 0.15, 3000: 0.25 };
+const RIMI_DEDUCTIBLES: RimiDed[] = [0, 100, 250, 500, 1000, 3000];
 
 // -------- GMS (Annual, single plan) --------
 const GMS_AGE_BANDS = ['Under 18','18-34','35-54','55-59','60-64','65-69','70-74','75-79'] as const;
@@ -182,7 +185,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const [coverage, setCoverage] = useState<Coverage>(100000);
   const [preExisting, setPreExisting] = useState(false);
   const [icDeductible, setIcDeductible] = useState<ICDed>(0);
-  const [rimiDeductible, setRimiDeductible] = useState<CommonDed>(0);
+  const [rimiDeductible, setRimiDeductible] = useState<RimiDed>(0);
   const [gmsDeductible, setGmsDeductible] = useState<CommonDed>(0);
   const [payMode, setPayMode] = useState<PayMode>('annual');
   const [purpose, setPurpose] = useState<'supervisa' | 'visitor'>('supervisa');
@@ -197,14 +200,16 @@ const SuperVisaPremiumCalculator: React.FC = () => {
 
   const icPrice = (tier: PlanTier) => {
     if (!ib || coverage < 100000) return null;
-    const row = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib][icDeductible];
+    const table = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib];
+    // $3,000 deductible = 30% off the $0 rate (same discount ladder as the schedule: 5/10/15/20%)
+    const row: [number, number] = icDeductible === 3000 ? [table[0][0] * 0.7, table[0][1] * 0.7] : table[icDeductible];
     return row[preExisting ? 0 : 1];
   };
   const rimiPrice = (tier: PlanTier) => {
     if (!rb || !quotedCoverage) return null;
     const row = (tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED)[rb][quotedCoverage];
     const rate = row[preExisting ? 1 : 0];
-    const ded: CommonDed = age >= 80 && rimiDeductible < 500 ? 500 : rimiDeductible;
+    const ded: RimiDed = age >= 80 && rimiDeductible < 500 ? 500 : rimiDeductible;
     const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[ded];
     if (rate == null || discount == null) return null;
     return rate * (1 - discount) * 365;
@@ -304,15 +309,15 @@ const SuperVisaPremiumCalculator: React.FC = () => {
               {company.key === 'insure-canada' && <div className="mt-4">
                 <label htmlFor="ic-deductible" className="mb-1 block text-sm font-medium">Insure Canada deductible</label>
                 <select id="ic-deductible" className={controlClass} value={icDeductible} onChange={e => setIcDeductible(Number(e.target.value) as ICDed)}>
-                  {([0, 100, 250, 500, 1000] as ICDed[]).map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
+                  {([0, 100, 250, 500, 1000, 3000] as ICDed[]).map(d => <option key={d} value={d}>{fmt(d)}{d === 0 ? ' — no deductible' : ''}</option>)}
                 </select>
               </div>}
               {company.key === 'rimi' && <div className="mt-4">
                 <label htmlFor="rimi-deductible" className="mb-1 block text-sm font-medium">RIMI deductible</label>
-                <select id="rimi-deductible" className={controlClass} value={rimiDeductible} onChange={e => setRimiDeductible(Number(e.target.value) as CommonDed)}>
-                  {COMMON_DEDUCTIBLES.map(d => <option key={d} value={d} disabled={age >= 80 && d < 500}>{fmt(d)}{d === 0 ? ' — no deductible' : age >= 80 && d < 500 ? ' — not available at age 80+' : ''}</option>)}
+                <select id="rimi-deductible" className={controlClass} value={rimiDeductible} onChange={e => setRimiDeductible(Number(e.target.value) as RimiDed)}>
+                  {RIMI_DEDUCTIBLES.map(d => <option key={d} value={d} disabled={age >= 80 && d < 500}>{fmt(d)}{d === 0 ? ' — no deductible' : age >= 80 && d < 500 ? ' — not available at age 80+' : ''}</option>)}
                 </select>
-                <p className="mt-2 text-xs text-muted-foreground">{age >= 80 ? 'Age 80+: $500 is the base rate; $1,000 saves 15%.' : rimiDeductible === 0 ? 'No deductible discount.' : `Saves ${Math.round((RIMI_DED_DISCOUNT_UNDER80[rimiDeductible] ?? 0) * 100)}% off the base rate.`}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{age >= 80 ? `Age 80+: $500 is the base rate; ${rimiDeductible >= 1000 ? `${fmt(rimiDeductible)} saves ${Math.round((RIMI_DED_DISCOUNT_80PLUS[rimiDeductible] ?? 0) * 100)}%.` : '$1,000 saves 15%, $3,000 saves 25%.'}` : rimiDeductible === 0 ? 'No deductible discount.' : `Saves ${Math.round((RIMI_DED_DISCOUNT_UNDER80[rimiDeductible] ?? 0) * 100)}% off the base rate.`}</p>
               </div>}
               {company.key === 'gms' && <div className="mt-4">
                 <label htmlFor="gms-deductible" className="mb-1 block text-sm font-medium">GMS deductible</label>
