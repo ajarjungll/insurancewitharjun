@@ -31,6 +31,7 @@ export interface InsurerPolicyPageProps {
   documentFileName: string;
   documentLabel: string;
   documentDescription: string;
+  additionalDocuments?: { url: string; fileName: string; label: string; description: string }[];
   highlights: { label: string; value: string }[];
   benefits: string[];
   planComparison?: PlanComparison;
@@ -164,6 +165,14 @@ const InsurerPolicyPage: React.FC<InsurerPolicyPageProps> = (p) => {
                 <p className="text-gray-600 mb-4">{p.documentDescription}</p>
                 <span className="inline-block font-semibold text-green-700">Download PDF →</span>
               </a>
+              {p.additionalDocuments?.map(document => (
+                <a key={document.url} href={document.url} download={document.fileName} target="_blank" rel="noopener noreferrer" className="quote-card block rounded-lg border border-border bg-quote-success-tint p-6 sm:p-8">
+                  <Download className="mb-4 h-10 w-10 text-quote-success drop-shadow-lg" />
+                  <h2 className="mb-2 text-2xl font-bold text-foreground">{document.label}</h2>
+                  <p className="mb-4 text-muted-foreground">{document.description}</p>
+                  <span className="font-semibold text-quote-success">Download PDF →</span>
+                </a>
+              ))}
             </div>
           </div>
         </section>

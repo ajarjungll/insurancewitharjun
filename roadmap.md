@@ -5,3 +5,5 @@
 - [x] Verify comparison selections, payment estimates, and phone/iPad layouts.
 - [x] Add Destination Canada from the July 2026 sheet, retain source and save rates/rules to memory.
 - [x] Verify Destination Canada rates, deductible discounts, eligibility and visitor/Super Visa selections.
+- [ ] Add Destination Canada policy and benefits page with both retained PDFs and comparison links.
+- [ ] Save verified policy terms in memory and verify documents, calculator details, and page layouts.
