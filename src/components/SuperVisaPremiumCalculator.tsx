@@ -9,6 +9,7 @@ type PlanTier = 'STANDARD' | 'ENHANCED';
 type PayMode = 'annual' | 'monthly';
 type Coverage = 25000 | 50000 | 100000 | 150000 | 200000 | 250000 | 300000 | 500000 | 1000000 | 2000000;
 type CommonDed = 0 | 100 | 500 | 1000;
+type ApplicantMode = 'individual' | 'couple';
 
 // -------- INSURE CANADA (fixed annual schedule) --------
 const IC_AGE_BANDS = ['0-25','26-35','36-40','41-54','55-59','60-64','65-69','70-74','75-79','80-84'] as const;
@@ -170,15 +171,40 @@ function gmsBand(age: number): GmsBand | null {
   return null;
 }
 
-type QuotePlan = { name: string; annual: number | null };
+// -------- Date of birth helpers --------
+type Dob = { day: string; month: string; year: string };
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const THIS_YEAR = new Date().getFullYear();
+const daysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
+
+type DobResult = { age: number } | { error: string } | null;
+function parseDob(dob: Dob): DobResult {
+  if (!dob.day || !dob.month || !dob.year) return null;
+  const d = Number(dob.day), m = Number(dob.month), y = Number(dob.year);
+  if (!Number.isInteger(d) || !Number.isInteger(m) || !Number.isInteger(y) || m < 1 || m > 12 || y < THIS_YEAR - 120 || y > THIS_YEAR) return { error: 'Enter a valid date of birth.' };
+  if (d < 1 || d > daysInMonth(m, y)) return { error: `${MONTHS[m - 1]} ${y} has only ${daysInMonth(m, y)} days.` };
+  const today = new Date();
+  const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const birth = new Date(y, m - 1, d);
+  if (birth > todayMidnight) return { error: 'Date of birth cannot be in the future.' };
+  let age = todayMidnight.getFullYear() - y;
+  if (todayMidnight.getMonth() < m - 1 || (todayMidnight.getMonth() === m - 1 && todayMidnight.getDate() < d)) age -= 1;
+  return { age };
+}
+
 type CompanyQuote = {
-  key: string; name: string; logo: string; band: string | null;
-  plans: QuotePlan[]; note?: string; details: string[];
+  key: string; name: string; logo: string;
+  band: (age: number) => string | null;
+  plans: { name: string; quote: (age: number) => number | null }[];
+  note?: (ages: number[]) => string | undefined;
+  details: string[];
   monthlyQuoteOnly?: boolean;
 };
 
 const SuperVisaPremiumCalculator: React.FC = () => {
-  const [ageInput, setAgeInput] = useState('45');
+  const [applicantMode, setApplicantMode] = useState<ApplicantMode>('individual');
+  const [dob1, setDob1] = useState<Dob>({ day: '1', month: '1', year: '1981' });
+  const [dob2, setDob2] = useState<Dob>({ day: '', month: '', year: '' });
   const [coverage, setCoverage] = useState<Coverage>(100000);
   const [preExisting, setPreExisting] = useState(false);
   const [icDeductible, setIcDeductible] = useState<ICDed>(0);
@@ -187,57 +213,67 @@ const SuperVisaPremiumCalculator: React.FC = () => {
   const [payMode, setPayMode] = useState<PayMode>('annual');
   const [purpose, setPurpose] = useState<'supervisa' | 'visitor'>('supervisa');
   const [destinationDeductible, setDestinationDeductible] = useState<DestinationDeductible>(0);
-  const age = Number(ageInput);
-  const validAge = ageInput.trim() !== '' && Number.isInteger(age) && age >= 0 && age <= 120;
-  const ib = validAge ? icBand(age) : null;
-  const rb = validAge ? rimiBand(age) : null;
-  const gb = validAge ? gmsBand(age) : null;
-  const quotedCoverage = coverage === 100000 || coverage === 150000 ? coverage : null;
-  const dc = destinationQuote(validAge ? age : -1, coverage, preExisting ? '1' : '2', destinationDeductible);
 
-  const icPrice = (tier: PlanTier) => {
-    if (!ib || coverage < 100000) return null;
-    const table = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[ib];
+  const parsed1 = parseDob(dob1);
+  const parsed2 = parseDob(dob2);
+  const dobs = applicantMode === 'couple' ? [parsed1, parsed2] : [parsed1];
+  const firstError = dobs.find(p => p && 'error' in p);
+  const ages: number[] | null = firstError ? null
+    : dobs.some(p => p == null) ? null
+    : dobs.map(p => (p as { age: number }).age);
+
+  const quotedCoverage = coverage === 100000 || coverage === 150000 ? coverage : null;
+
+  const icPrice = (age: number, tier: PlanTier): number | null => {
+    const band = icBand(age);
+    if (!band || coverage < 100000) return null;
+    const table = (tier === 'STANDARD' ? IC_STANDARD : IC_ENHANCED)[band];
     // $3,000 deductible = 30% off the $0 rate (same discount ladder as the schedule: 5/10/15/20%)
     const row: [number, number] = icDeductible === 3000 ? [table[0][0] * 0.7, table[0][1] * 0.7] : table[icDeductible];
     return row[preExisting ? 0 : 1];
   };
-  const rimiPrice = (tier: PlanTier) => {
-    if (!rb || !quotedCoverage) return null;
-    const row = (tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED)[rb][quotedCoverage];
+  const rimiPrice = (age: number, tier: PlanTier): number | null => {
+    const band = rimiBand(age);
+    if (!band || !quotedCoverage) return null;
+    const row = (tier === 'STANDARD' ? RIMI_STANDARD : RIMI_ENHANCED)[band][quotedCoverage];
     const rate = row[preExisting ? 1 : 0];
     const ded: RimiDed = age >= 80 && rimiDeductible < 500 ? 500 : rimiDeductible;
     const discount = (age >= 80 ? RIMI_DED_DISCOUNT_80PLUS : RIMI_DED_DISCOUNT_UNDER80)[ded];
     if (rate == null || discount == null) return null;
     return rate * (1 - discount) * 365;
   };
-  const stability = age <= 69 ? '90 days' : '180 days';
+  const gmsPrice = (age: number): number | null => {
+    const band = gmsBand(age);
+    return band && quotedCoverage ? GMS_RATES[band][quotedCoverage][gmsDeductible] : null;
+  };
+  const dcQuote = (age: number) => destinationQuote(age, coverage, preExisting ? '1' : '2', destinationDeductible);
+
   const mshDetails = [
     'Hospital room: Standard covers ward rate; Enhanced covers semi-private.',
     'Prescription benefit: Standard up to $500; Enhanced up to $1,000.',
     'Accidental dental: Standard up to $1,000; Enhanced up to $3,000.',
     'Repatriation: Standard up to $5,000; Enhanced up to $10,000.',
-    preExisting ? `Plan 2: pre-existing conditions must be stable for ${stability}; medical declaration and eligibility rules apply.` : 'Plan 1: all pre-existing conditions are excluded.',
+    preExisting ? 'Plan 2: pre-existing conditions must be stable for 90 days (ages 0–69) or 180 days (age 70+); medical declaration and eligibility rules apply.' : 'Plan 1: all pre-existing conditions are excluded.',
   ];
   const companies: CompanyQuote[] = [
-    { key: 'insure-canada', name: 'Insure Canada', logo: '/partner-logos/insure-canada.png', band: ib,
-      plans: [{ name: 'Standard', annual: icPrice('STANDARD') }, { name: 'Enhanced', annual: icPrice('ENHANCED') }],
-      note: coverage < 100000 ? 'No rate for this visitor coverage in the available schedule.' : 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
-    { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rb,
-      plans: [{ name: 'Standard', annual: rimiPrice('STANDARD') }, { name: 'Enhanced', annual: rimiPrice('ENHANCED') }],
-      note: !rb ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : age >= 85 && preExisting ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
+    { key: 'insure-canada', name: 'Insure Canada', logo: '/partner-logos/insure-canada.png', band: icBand,
+      plans: [{ name: 'Standard', quote: a => icPrice(a, 'STANDARD') }, { name: 'Enhanced', quote: a => icPrice(a, 'ENHANCED') }],
+      note: () => coverage < 100000 ? 'No rate for this visitor coverage in the available schedule.' : 'Fixed annual rate-sheet estimate. The selected coverage amount is not applied to this schedule; confirm your coverage and price with Arjun.', details: mshDetails },
+    { key: 'rimi', name: 'RIMI', logo: '/partner-logos/rimi.png', band: rimiBand,
+      plans: [{ name: 'Standard', quote: a => rimiPrice(a, 'STANDARD') }, { name: 'Enhanced', quote: a => rimiPrice(a, 'ENHANCED') }],
+      note: list => list.some(a => a > 89) ? 'Rates available through age 89.' : !quotedCoverage ? 'Request a quote for coverage above $150,000.' : preExisting && list.some(a => a >= 85) ? 'Pre-existing condition coverage is not available at age 85+.' : undefined,
       details: mshDetails },
-    { key: 'gms', name: 'GMS', logo: '/partner-logos/gms.jpg', band: gb,
-      plans: [{ name: 'Visitors to Canada', annual: gb && quotedCoverage ? GMS_RATES[gb][quotedCoverage][gmsDeductible] : null }],
-      note: !gb ? 'Available for ages under 80.' : coverage > GMS_MAX_COVERAGE ? 'Maximum coverage is $150,000.' : undefined,
+    { key: 'gms', name: 'GMS', logo: '/partner-logos/gms.jpg', band: gmsBand,
+      plans: [{ name: 'Visitors to Canada', quote: gmsPrice }],
+      note: list => list.some(a => a >= 80) ? 'Available for ages under 80.' : coverage > GMS_MAX_COVERAGE ? 'Maximum coverage is $150,000.' : undefined,
       details: ['One plan — no Standard / Enhanced tiers.', 'Pre-existing conditions must be stable for 180 days before coverage begins, subject to policy eligibility and exclusions.', 'Coverage options in this comparison: $100,000 or $150,000.', 'Deductible and benefit limits are subject to the GMS policy wording.'] },
-    { key: 'destination-canada', name: 'Destination Canada', logo: '/partner-logos/destination-canada.png', band: dc.band,
-      plans: [{ name: preExisting ? 'Option 1 — stable pre-existing conditions' : 'Option 2 — no pre-existing conditions', annual: dc.annual }],
+    { key: 'destination-canada', name: 'Destination Canada', logo: '/partner-logos/destination-canada.png', band: a => dcQuote(a).band,
+      plans: [{ name: preExisting ? 'Option 1 — stable pre-existing conditions' : 'Option 2 — no pre-existing conditions', quote: a => dcQuote(a).annual }],
       monthlyQuoteOnly: true,
-      note: preExisting && age >= 80 ? 'Option 1 is available only through age 79.' : age >= 86 ? 'Age 86+: $25,000 visitor coverage only, with a mandatory $500 deductible. Not eligible for Super Visa coverage.' : age >= 80 ? 'Ages 80–85: Option 2 offers $25,000 or $50,000 visitor coverage only. No Super Visa rate.' : coverage > 300000 ? 'The supplied sheet has rates up to $300,000 only.' : undefined,
+      note: list => preExisting && list.some(a => a >= 80) ? 'Option 1 is available only through age 79.' : list.some(a => a >= 86) ? 'Age 86+: $25,000 visitor coverage only, with a mandatory $500 deductible. Not eligible for Super Visa coverage.' : list.some(a => a >= 80) ? 'Ages 80–85: Option 2 offers $25,000 or $50,000 visitor coverage only. No Super Visa rate.' : coverage > 300000 ? 'The supplied sheet has rates up to $300,000 only.' : undefined,
       details: [
         'Rate schedule effective July 1, 2026. Annual premium = daily rate × 365, less the deductible discount; minimum premium $25.',
-        preExisting ? `Option 1 covers eligible pre-existing conditions stable immediately before the effective date: 90 days at ages 0–59, 120 days at ages 60–69, 180 days at ages 70–79.${dc.stability ? ` Your required stability: ${dc.stability} days.` : ''}` : 'Option 2 excludes all pre-existing medical conditions, regardless of stability.',
+        preExisting ? 'Option 1 covers eligible pre-existing conditions stable immediately before the effective date: 90 days at ages 0–59, 120 days at ages 60–69, 180 days at ages 70–79.' : 'Option 2 excludes all pre-existing medical conditions, regardless of stability.',
         'Optional deductibles, ages 0–85: $250 (10% off), $500 (15%), $1,000 (20%), $2,500 (30%), $5,000 (35%), $10,000 (40%). No $100 deductible.',
         'Monthly plan requires at least 180 days and $50,000 coverage. Installments, fees and upfront payment must be confirmed with the broker.',
         'Sickness waiting period: 48 hours if bought within 30 days after departure; 7 days if bought 30 days or more after departure. Confirm the exact 30-day boundary with the broker.',
@@ -245,6 +281,45 @@ const SuperVisaPremiumCalculator: React.FC = () => {
       ] },
   ];
   const controlClass = 'h-12 w-full rounded-md border border-input bg-background px-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-ring';
+
+  const renderDobPicker = (idPrefix: string, label: string, dob: Dob, setDob: (d: Dob) => void, parsed: DobResult) => {
+    const maxDay = dob.month && dob.year ? daysInMonth(Number(dob.month), Number(dob.year)) : 31;
+    return (
+      <fieldset>
+        <legend className="mb-2 text-sm font-semibold">{label}</legend>
+        <div className="grid grid-cols-3 gap-2">
+          <div>
+            <label htmlFor={`${idPrefix}-day`} className="mb-1 block text-xs text-muted-foreground">Day</label>
+            <select id={`${idPrefix}-day`} value={dob.day} onChange={e => setDob({ ...dob, day: e.target.value })} className={controlClass}>
+              <option value="">DD</option>
+              {Array.from({ length: maxDay }, (_, i) => i + 1).map(d => <option key={d} value={d}>{d}</option>)}
+            </select>
+          </div>
+          <div>
+            <label htmlFor={`${idPrefix}-month`} className="mb-1 block text-xs text-muted-foreground">Month</label>
+            <select id={`${idPrefix}-month`} value={dob.month} onChange={e => setDob({ ...dob, month: e.target.value })} className={controlClass}>
+              <option value="">MM</option>
+              {MONTHS.map((name, i) => <option key={name} value={i + 1}>{name}</option>)}
+            </select>
+          </div>
+          <div>
+            <label htmlFor={`${idPrefix}-year`} className="mb-1 block text-xs text-muted-foreground">Year</label>
+            <select id={`${idPrefix}-year`} value={dob.year} onChange={e => setDob({ ...dob, year: e.target.value })} className={controlClass}>
+              <option value="">YYYY</option>
+              {Array.from({ length: 121 }, (_, i) => THIS_YEAR - i).map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+          </div>
+        </div>
+        {parsed && 'error' in parsed
+          ? <p className="mt-2 text-sm font-medium text-destructive">{parsed.error}</p>
+          : parsed && 'age' in parsed
+            ? <p className="mt-2 text-sm text-muted-foreground">Age today: <strong className="text-foreground">{parsed.age}</strong> — age group is assigned automatically.</p>
+            : <p className="mt-2 text-sm text-muted-foreground">Select day, month and year.</p>}
+      </fieldset>
+    );
+  };
+
+  const anyAge80Plus = ages?.some(a => a >= 80) ?? false;
 
   return (
     <section id="calculator" className="scroll-mt-24 bg-quote-tint/70 py-12 sm:py-16">
@@ -261,24 +336,19 @@ const SuperVisaPremiumCalculator: React.FC = () => {
           <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Insurance purpose">
             {(['supervisa', 'visitor'] as const).map(value => <Button key={value} variant={purpose === value ? 'default' : 'quote'} aria-pressed={purpose === value} onClick={() => { setPurpose(value); if (value === 'supervisa' && coverage < 100000) setCoverage(100000); }}>{value === 'supervisa' ? 'Super Visa' : 'Visitors to Canada'}</Button>)}
           </div>
-          <div className="grid gap-5 border-y border-border py-6 sm:grid-cols-3">
-            <div>
-              <label htmlFor="supervisa-age" className="mb-2 block text-sm font-semibold">Traveller’s age</label>
-              <select id="supervisa-age" value={ageInput} onChange={e => setAgeInput(e.target.value)} className={controlClass}>
-                {Array.from({ length: 121 }, (_, a) => <option key={a} value={a}>{a === 0 ? '0 (under 1 year)' : a}</option>)}
-              </select>
-            </div>
+          <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Individual or couple">
+            {(['individual', 'couple'] as const).map(value => <Button key={value} variant={applicantMode === value ? 'default' : 'quote'} aria-pressed={applicantMode === value} onClick={() => setApplicantMode(value)}>{value === 'individual' ? 'Individual' : 'Couple'}</Button>)}
+          </div>
+          <div className="grid gap-5 border-y border-border py-6 sm:grid-cols-2 xl:grid-cols-3">
+            {renderDobPicker('applicant1', applicantMode === 'couple' ? 'Applicant 1 — date of birth' : 'Traveller’s date of birth', dob1, setDob1, parsed1)}
+            {applicantMode === 'couple' && renderDobPicker('applicant2', 'Applicant 2 — date of birth', dob2, setDob2, parsed2)}
             <div>
               <label htmlFor="supervisa-coverage" className="mb-2 block text-sm font-semibold">Coverage amount</label>
               <select id="supervisa-coverage" value={coverage} onChange={e => setCoverage(Number(e.target.value) as Coverage)} className={controlClass}>
                 {COVERAGES.filter(c => purpose === 'visitor' || c >= 100000).map(c => <option key={c} value={c}>{fmtCov(c)}</option>)}
               </select>
             </div>
-            <div>
-              <label className="mb-2 block text-sm font-semibold">Deductible</label>
-              <p className="text-sm text-muted-foreground">Each company has its own deductible options — pick one inside each company card below.</p>
-            </div>
-            <div className="flex items-center gap-3 sm:col-span-3">
+            <div className="flex items-center gap-3 sm:col-span-2 xl:col-span-3">
               <Switch id="supervisa-preexisting" checked={preExisting} onCheckedChange={setPreExisting} />
               <label htmlFor="supervisa-preexisting" className="text-sm font-medium">Include stable pre-existing conditions</label>
             </div>
@@ -287,7 +357,7 @@ const SuperVisaPremiumCalculator: React.FC = () => {
           <div className="my-6 flex flex-wrap items-center justify-between gap-4">
             <div>
               <h3 className="text-xl font-bold">Company plans & prices</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{preExisting ? 'With stable pre-existing conditions' : 'Without pre-existing conditions'} · GMS includes eligible stable conditions</p>
+              <p className="mt-1 text-sm text-muted-foreground">{applicantMode === 'couple' ? 'Couple — each applicant rated on their own age' : 'Individual'} · {preExisting ? 'With stable pre-existing conditions' : 'Without pre-existing conditions'} · GMS includes eligible stable conditions</p>
             </div>
             <div className="flex gap-2" role="group" aria-label="Payment frequency">
               {(['annual', 'monthly'] as PayMode[]).map(mode => <Button key={mode} variant={payMode === mode ? 'default' : 'quote'} aria-pressed={payMode === mode} onClick={() => setPayMode(mode)}>
@@ -296,11 +366,14 @@ const SuperVisaPremiumCalculator: React.FC = () => {
             </div>
           </div>
 
-          {validAge ? <div className="grid items-stretch gap-5 xl:grid-cols-2" aria-live="polite">
-            {companies.map(company => <article key={company.key} aria-label={`${company.name} plans`} className="quote-card flex min-w-0 flex-col rounded-lg border border-border bg-card p-5 sm:p-6">
+          {ages ? <div className="grid items-stretch gap-5 xl:grid-cols-2" aria-live="polite">
+            {companies.map(company => {
+              const bands = ages.map(a => company.band(a));
+              const note = company.note?.(ages);
+              return <article key={company.key} aria-label={`${company.name} plans`} className="quote-card flex min-w-0 flex-col rounded-lg border border-border bg-card p-5 sm:p-6">
               <div className="flex min-h-16 items-center justify-between gap-4">
                 <img src={company.logo} alt={`${company.name} logo`} className="h-12 w-32 object-contain object-left drop-shadow-md" />
-                <span className="text-right text-xs text-muted-foreground">Age group<br /><strong className="text-foreground">{company.band ?? 'Not eligible'}</strong></span>
+                <span className="text-right text-xs text-muted-foreground">Age group{ages.length > 1 ? 's' : ''}<br /><strong className="text-foreground">{bands.map((b, i) => ages.length > 1 ? `A${i + 1}: ${b ?? 'Not eligible'}` : b ?? 'Not eligible').join(' · ')}</strong></span>
               </div>
               <h4 className="mt-4 text-xl font-bold">{company.name}</h4>
               {company.key === 'insure-canada' && <div className="mt-4">
@@ -312,9 +385,9 @@ const SuperVisaPremiumCalculator: React.FC = () => {
               {company.key === 'rimi' && <div className="mt-4">
                 <label htmlFor="rimi-deductible" className="mb-1 block text-sm font-medium">RIMI deductible</label>
                 <select id="rimi-deductible" className={controlClass} value={rimiDeductible} onChange={e => setRimiDeductible(Number(e.target.value) as RimiDed)}>
-                  {RIMI_DEDUCTIBLES.map(d => <option key={d} value={d} disabled={age >= 80 && d < 500}>{fmt(d)}{d === 0 ? ' — no deductible' : age >= 80 && d < 500 ? ' — not available at age 80+' : ''}</option>)}
+                  {RIMI_DEDUCTIBLES.map(d => <option key={d} value={d} disabled={anyAge80Plus && d < 500}>{fmt(d)}{d === 0 ? ' — no deductible' : anyAge80Plus && d < 500 ? ' — not available at age 80+' : ''}</option>)}
                 </select>
-                <p className="mt-2 text-xs text-muted-foreground">{age >= 80 ? `Age 80+: $500 is the base rate; ${rimiDeductible >= 1000 ? `${fmt(rimiDeductible)} saves ${Math.round((RIMI_DED_DISCOUNT_80PLUS[rimiDeductible] ?? 0) * 100)}%.` : '$1,000 saves 15%, $3,000 saves 25%.'}` : rimiDeductible === 0 ? 'No deductible discount.' : `Saves ${Math.round((RIMI_DED_DISCOUNT_UNDER80[rimiDeductible] ?? 0) * 100)}% off the base rate.`}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{anyAge80Plus ? `Age 80+: $500 is the base rate; ${rimiDeductible >= 1000 ? `${fmt(rimiDeductible)} saves ${Math.round((RIMI_DED_DISCOUNT_80PLUS[rimiDeductible] ?? 0) * 100)}%.` : '$1,000 saves 15%, $3,000 saves 25%.'}` : rimiDeductible === 0 ? 'No deductible discount.' : `Saves ${Math.round((RIMI_DED_DISCOUNT_UNDER80[rimiDeductible] ?? 0) * 100)}% off the base rate.`}</p>
               </div>}
               {company.key === 'gms' && <div className="mt-4">
                 <label htmlFor="gms-deductible" className="mb-1 block text-sm font-medium">GMS deductible</label>
@@ -329,28 +402,49 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                   </select>
                 </div>
                 <div><label htmlFor="destination-deductible" className="mb-1 block text-sm font-medium">Destination Canada deductible</label>
-                  <select id="destination-deductible" className={controlClass} value={dc.deductible} disabled={age >= 86} onChange={e => setDestinationDeductible(Number(e.target.value) as DestinationDeductible)}>
-                    {(age >= 86 ? [500] : destinationDeductibles).map(d => <option key={d} value={d}>{fmt(d)}</option>)}
+                  <select id="destination-deductible" className={controlClass} value={dcQuote(ages[0]).deductible} disabled={ages.some(a => a >= 86)} onChange={e => setDestinationDeductible(Number(e.target.value) as DestinationDeductible)}>
+                    {(ages.some(a => a >= 86) ? [500] : destinationDeductibles).map(d => <option key={d} value={d}>{fmt(d)}</option>)}
                   </select>
-                  <p className="mt-2 text-xs text-muted-foreground">{age >= 86 ? 'Mandatory $500 deductible; no discount.' : `${Math.round(dc.discount * 100)}% deductible discount · Destination Canada only`}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">{ages.some(a => a >= 86) ? 'Mandatory $500 deductible for the applicant aged 86+; no discount.' : `${Math.round(dcQuote(ages[0]).discount * 100)}% deductible discount · Destination Canada only`}</p>
                 </div>
               </div>}
               <div className="my-4 divide-y divide-border border-y border-border">
-                {company.plans.map(plan => <div key={plan.name} className="py-4">
+                {company.plans.map(plan => {
+                  const perApplicant = ages.map(a => plan.quote(a));
+                  const combined = perApplicant.every(p => p != null) && perApplicant.length > 1 ? perApplicant.reduce<number>((sum, p) => sum + (p ?? 0), 0) : null;
+                  return <div key={plan.name} className="py-4">
                   <div className="mb-2 text-sm font-semibold text-quote-brand">{plan.name}</div>
-                  {plan.annual == null ? <p className="text-sm font-medium text-muted-foreground">No rate for this selection</p> : company.monthlyQuoteOnly && payMode === 'monthly' ? <div className="space-y-2"><p className="font-semibold text-quote-brand">{dc.monthlyEligible ? 'Contact Arjun for monthly terms' : 'Monthly plan unavailable below $50,000'}</p><p className="text-sm text-muted-foreground">Annual premium: {fmt(plan.annual)} · No monthly fee or installment amount is supplied in this rate sheet.</p></div> : <>
-                    <div className="flex flex-wrap items-baseline gap-x-2">
-                      <strong className="text-3xl text-foreground">{fmt(payMode === 'annual' ? plan.annual : plan.annual / 12)}</strong>
-                      <span className="text-sm text-muted-foreground">/ {payMode === 'annual' ? 'year' : 'month'}</span>
-                    </div>
-                    {payMode === 'monthly' && <dl className="mt-3 space-y-1 text-sm">
-                      <div className="flex flex-wrap justify-between gap-2"><dt className="text-muted-foreground">Upfront estimate</dt><dd className="font-semibold">{fmt(plan.annual / 12 * 2 + MONTHLY_FEE)}</dd></div>
-                      <div className="flex flex-wrap justify-between gap-2"><dt className="text-muted-foreground">Total with fee</dt><dd>{fmt(plan.annual + MONTHLY_FEE)}</dd></div>
-                    </dl>}
+                  {company.monthlyQuoteOnly && payMode === 'monthly' ? <div className="space-y-2">
+                    {perApplicant.map((p, i) => <p key={i} className="text-sm text-muted-foreground">{ages.length > 1 ? `Applicant ${i + 1}: ` : ''}{p == null ? 'No rate for this selection' : `Annual premium: ${fmt(p)}`}</p>)}
+                    {combined != null && <p className="text-sm text-muted-foreground">Combined annual: {fmt(combined)}</p>}
+                    <p className="font-semibold text-quote-brand">{ages.some(a => dcQuote(a).monthlyEligible) ? 'Contact Arjun for monthly terms' : 'Monthly plan unavailable below $50,000'}</p>
+                    <p className="text-sm text-muted-foreground">No monthly fee or installment amount is supplied in this rate sheet.</p>
+                  </div> : perApplicant.every(p => p == null) ? <p className="text-sm font-medium text-muted-foreground">No rate for this selection</p> : <>
+                    {perApplicant.map((p, i) => <div key={i} className={ages.length > 1 ? 'mb-3' : ''}>
+                      {ages.length > 1 && <p className="mb-1 text-xs font-medium text-muted-foreground">Applicant {i + 1} (age {ages[i]})</p>}
+                      {p == null ? <p className="text-sm font-medium text-muted-foreground">No rate for this selection</p> : <>
+                        <div className="flex flex-wrap items-baseline gap-x-2">
+                          <strong className="text-3xl text-foreground">{fmt(payMode === 'annual' ? p : p / 12)}</strong>
+                          <span className="text-sm text-muted-foreground">/ {payMode === 'annual' ? 'year' : 'month'}</span>
+                        </div>
+                        {payMode === 'monthly' && <dl className="mt-3 space-y-1 text-sm">
+                          <div className="flex flex-wrap justify-between gap-2"><dt className="text-muted-foreground">Upfront estimate</dt><dd className="font-semibold">{fmt(p / 12 * 2 + MONTHLY_FEE)}</dd></div>
+                          <div className="flex flex-wrap justify-between gap-2"><dt className="text-muted-foreground">Total with fee</dt><dd>{fmt(p + MONTHLY_FEE)}</dd></div>
+                        </dl>}
+                      </>}
+                    </div>)}
+                    {combined != null && <div className="mt-3 border-t border-border pt-3">
+                      <p className="mb-1 text-xs font-medium text-muted-foreground">Couple total (both applicants)</p>
+                      <div className="flex flex-wrap items-baseline gap-x-2">
+                        <strong className="text-3xl text-quote-brand">{fmt(combined)}</strong>
+                        <span className="text-sm text-muted-foreground">/ year</span>
+                      </div>
+                    </div>}
                   </>}
-                </div>)}
+                </div>;
+                })}
               </div>
-              {company.note && <p className="mb-4 text-xs leading-relaxed text-muted-foreground">{company.note}</p>}
+              {note && <p className="mb-4 text-xs leading-relaxed text-muted-foreground">{note}</p>}
               <details className="mb-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-2 py-2 text-sm font-semibold text-quote-brand">Plan details <ChevronDown className="h-4 w-4" /></summary>
                 <ul className="mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground">
@@ -358,11 +452,13 @@ const SuperVisaPremiumCalculator: React.FC = () => {
                 </ul>
               </details>
               {company.key === 'destination-canada' ? <div className="mt-auto flex flex-col gap-2"><Button asChild variant="outline"><a href="tel:+14313382078">Ask Arjun for a quote</a></Button></div> : <Button asChild variant="quote" className="mt-auto w-full"><Link to={`/insurance-types/super-visa/${company.key}`}>Full policy & benefits <ArrowRight /></Link></Button>}
-            </article>)}
-          </div> : <p className="border-y border-border py-8 text-muted-foreground">Enter the traveller’s age to see company prices.</p>}
+            </article>;
+            })}
+          </div> : <p className="border-y border-border py-8 text-muted-foreground">{firstError && 'error' in firstError ? firstError.error : `Enter the ${applicantMode === 'couple' ? 'applicants’ dates of birth' : 'traveller’s date of birth'} to see company prices.`}</p>}
 
           <div className="mt-6 space-y-2 text-xs leading-relaxed text-muted-foreground">
-            {payMode === 'monthly' && <p><strong className="text-foreground">Monthly estimates for Insure Canada, RIMI and GMS:</strong> upfront = last two months of premium + one $120 fee. Company payment availability and fees must be confirmed before purchase. Destination Canada requires a broker quote; this formula is not applied.</p>}
+            {applicantMode === 'couple' && <p><strong className="text-foreground">Couple pricing:</strong> each applicant is rated on their own age group. None of the stored company schedules publish a separate couple rate, so the couple total is the sum of the two individual premiums — confirm any couple pricing with Arjun before purchase.</p>}
+            {payMode === 'monthly' && <p><strong className="text-foreground">Monthly estimates for Insure Canada, RIMI and GMS:</strong> upfront = last two months of premium + one $120 fee per applicant. Company payment availability and fees must be confirmed before purchase. Destination Canada requires a broker quote; this formula is not applied.</p>}
             <p>Rate-sheet estimates, not binding quotes. Benefits, eligibility and stability requirements vary by company. Final premiums and selected coverage are confirmed before issuance.</p>
           </div>
         </div>
