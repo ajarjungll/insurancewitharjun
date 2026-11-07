@@ -1,3 +1,5 @@
+# Roadmap
+
 - [x] Fit tax-year and province choices on iPad without changing tax calculations.
 - [x] Correct shared tablet header/footer overflow without changing phone breakpoints.
 - [x] Verify all 27 pages at 768, 810, and 1080px tablet widths in Chromium and WebKit; verify tax selections and menu navigation.
@@ -5,5 +7,7 @@
 - [x] Verify comparison selections, payment estimates, and phone/iPad layouts.
 - [x] Add Destination Canada from the July 2026 sheet, retain source and save rates/rules to memory.
 - [x] Verify Destination Canada rates, deductible discounts, eligibility and visitor/Super Visa selections.
-- [ ] Add Destination Canada policy and benefits page with both retained PDFs and comparison links.
-- [ ] Save verified policy terms in memory and verify documents, calculator details, and page layouts.
+- [x] Add Destination Canada policy and benefits page with both retained PDFs and comparison links.
+- [x] Save verified policy terms in memory and verify documents, calculator details, and page layouts.
+- [x] Build Canada Child Benefit calculator page with 2026–2027 CRA rates, dynamic children, month-by-month age handling, AFNI adjustments, CDB note, disclaimers and CRA links.
+- [x] Add vitest setup and engine tests (thresholds, child-count bands, age transitions, zero-benefit cases) — 20 tests passing; verify page in browser at desktop and iPad widths.

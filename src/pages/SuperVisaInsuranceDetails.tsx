@@ -303,6 +303,17 @@ const SuperVisaInsuranceDetails = () => {
                   />
                   <span className="mt-3 text-sm font-semibold text-blue-700">View RIMI plan details →</span>
                 </Link>
+                <Link
+                  to="/insurance-types/super-visa/destination-canada"
+                  className="bg-white p-6 rounded-2xl card-3d border flex flex-col items-center justify-center min-h-[160px]"
+                >
+                  <img
+                    src="/partner-logos/destination-canada.png"
+                    alt="Destination Canada — Super Visa Insurance Partner"
+                    className="max-h-20 w-auto object-contain"
+                  />
+                  <span className="mt-3 text-sm font-semibold text-blue-700">View Destination Canada details →</span>
+                </Link>
               </div>
             </div>
           </div>

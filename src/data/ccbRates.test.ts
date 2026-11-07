@@ -105,22 +105,29 @@ describe("full CCB calculation", () => {
   });
 
   it("handles a child turning 6 mid-year month by month", () => {
-    // Born 10 Sep 2020: under 6 for Jul–Aug 2026, age 6–17 for Sep 2026–Jun 2027.
+    // Born 10 Sep 2020: under 6 for Jul–Sep 2026 (still 5 on Sep 1), age 6–17 from Oct 2026.
     const result = calculateCcb({ afni: 0, childrenDob: [new Date(2020, 8, 10)], period });
-    expect(result.maxBenefit).toBeCloseTo((2 * 8157) / 12 + (10 * 6883) / 12, 2);
+    expect(result.maxBenefit).toBeCloseTo((3 * 8157) / 12 + (9 * 6883) / 12, 2);
   });
 
-  it("stops payments the month a child turns 18", () => {
-    // Born 20 Aug 2008: eligible only for July 2026.
+  it("stops payments the month after a child turns 18", () => {
+    // Born 20 Aug 2008: under 18 on Jul 1 and Aug 1, so Jul–Aug 2026 are payable; Sep 2026 is not.
     const result = calculateCcb({ afni: 0, childrenDob: [new Date(2008, 7, 20)], period });
     expect(result.eligibleChildren).toBe(1);
-    expect(result.maxBenefit).toBeCloseTo(6883 / 12, 2);
+    expect(result.maxBenefit).toBeCloseTo((2 * 6883) / 12, 2);
   });
 
-  it("excludes children who are 18+ or not yet born for the whole period", () => {
+  it("pays a child born during the benefit period from the birth month", () => {
+    // Born 1 Jun 2027: eligible for June 2027 only.
+    const result = calculateCcb({ afni: 0, childrenDob: [new Date(2027, 5, 1)], period });
+    expect(result.eligibleChildren).toBe(1);
+    expect(result.maxBenefit).toBeCloseTo(8157 / 12, 2);
+  });
+
+  it("excludes children who are 18+ or born after the period ends", () => {
     const result = calculateCcb({
       afni: 0,
-      childrenDob: [new Date(2007, 0, 1), new Date(2027, 5, 1)],
+      childrenDob: [new Date(2007, 0, 1), new Date(2027, 7, 1)],
       period,
     });
     expect(result.eligibleChildren).toBe(0);

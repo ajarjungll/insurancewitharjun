@@ -30,7 +30,9 @@ import GmsSuperVisaDetails from "./pages/GmsSuperVisaDetails";
 import InsureCanadaSuperVisaDetails from "./pages/InsureCanadaSuperVisaDetails";
 import RimiSuperVisaDetails from "./pages/RimiSuperVisaDetails";
 import ManulifeSuperVisaDetails from "./pages/ManulifeSuperVisaDetails";
+import DestinationCanadaSuperVisaDetails from "./pages/DestinationCanadaSuperVisaDetails";
 import CppEiContributions from "./pages/CppEiContributions";
+import CcbCalculator from "./pages/CcbCalculator";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import NotFound from "./pages/NotFound";
@@ -75,12 +77,14 @@ const App = () => (
           <Route path="/insurance-types/super-visa/insure-canada" element={<InsureCanadaSuperVisaDetails />} />
           <Route path="/insurance-types/super-visa/rimi" element={<RimiSuperVisaDetails />} />
           <Route path="/insurance-types/super-visa/manulife" element={<ManulifeSuperVisaDetails />} />
+          <Route path="/insurance-types/super-visa/destination-canada" element={<DestinationCanadaSuperVisaDetails />} />
           <Route path="/investment-types" element={<InvestmentTypes />} />
           <Route path="/investment-types/rrsp" element={<RRSPDetails />} />
           <Route path="/investment-types/fhsa" element={<FHSADetails />} />
           <Route path="/investment-types/tfsa" element={<TFSADetails />} />
           <Route path="/investment-types/resp" element={<RESPDetails />} />
           <Route path="/tax-calculator" element={<TaxCalculator />} />
+          <Route path="/ccb-calculator" element={<CcbCalculator />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

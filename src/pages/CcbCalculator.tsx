@@ -136,13 +136,14 @@ const CcbCalculator = () => {
   };
 
   const incomeField = (
+    id: string,
     label: string,
     value: string,
     onChange: (v: string) => void,
     help?: string
   ) => (
     <div>
-      <label className="block text-sm font-semibold text-blue-900 mb-1">
+      <label htmlFor={id} className="block text-sm font-semibold text-blue-900 mb-1">
         {label}
         {help && (
           <span className="ml-1 inline-flex items-center text-blue-500" title={help} aria-label={help}>
@@ -153,6 +154,7 @@ const CcbCalculator = () => {
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 font-semibold">$</span>
         <input
+          id={id}
           type="number"
           min="0"
           step="100"
@@ -282,13 +284,15 @@ const CcbCalculator = () => {
 
           <div className="grid md:grid-cols-2 gap-4">
             {incomeField(
-              status === 'couple' ? 'Your net income (line 23600)' : 'Your net income (line 23600)',
+              'own-income',
+              'Your net income (line 23600)',
               ownIncome,
               setOwnIncome,
               'Use line 23600 (net income) of your tax return — not your gross salary.'
             )}
             {status === 'couple' &&
               incomeField(
+                'spouse-income',
                 "Spouse's or common-law partner's net income",
                 spouseIncome,
                 setSpouseIncome,
@@ -308,10 +312,10 @@ const CcbCalculator = () => {
 
           {showAdvanced && (
             <div className="grid md:grid-cols-2 gap-4 mt-4 bg-blue-50 rounded-xl p-4">
-              {incomeField('UCCB income received', uccbReceived, setUccbReceived)}
-              {incomeField('RDSP income received', rdspReceived, setRdspReceived)}
-              {incomeField('UCCB amounts repaid', uccbRepaid, setUccbRepaid)}
-              {incomeField('RDSP amounts repaid', rdspRepaid, setRdspRepaid)}
+              {incomeField('uccb-received', 'UCCB income received', uccbReceived, setUccbReceived)}
+              {incomeField('rdsp-received', 'RDSP income received', rdspReceived, setRdspReceived)}
+              {incomeField('uccb-repaid', 'UCCB amounts repaid', uccbRepaid, setUccbRepaid)}
+              {incomeField('rdsp-repaid', 'RDSP amounts repaid', rdspRepaid, setRdspRepaid)}
             </div>
           )}
 

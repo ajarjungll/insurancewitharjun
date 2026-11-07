@@ -17,6 +17,7 @@ const Header = () => {
     { name: 'Insurance Types', path: '/insurance-types' },
     { name: 'Investment Types', path: '/investment-types' },
     { name: 'Tax Calculator', path: '/tax-calculator' },
+    { name: 'CCB Calculator', path: '/ccb-calculator' },
     { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
